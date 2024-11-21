@@ -1,0 +1,13 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Present myself and some of my projects",
+  "scripts": {
+    "dev": "docker compose up --build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@radix-ui/react-separator": "^1.0.3"
+  }
+}

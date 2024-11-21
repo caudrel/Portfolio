@@ -1,0 +1,74 @@
+html {
+  font-size: $size-default;
+  scroll-behavior: smooth;
+  @media (min-width: $from-tiny) and (max-width: $to-small) {
+    font-size: $size-tiny;
+  }
+  @media (min-width: $from-small) and (max-width: $to-medium) {
+    font-size: $size-small;
+  }
+  @media (min-width: $from-medium) and (max-width: $to-large) {
+    font-size: $size-medium;
+  }
+  @media (min-width: $from-large) and (max-width: $to-big) {
+    font-size: $size-large;
+  }
+  @media (min-width: $from-big) and (max-width: $to-huge) {
+    font-size: $size-big;
+  }
+  @media (min-width: $from-huge) and (max-width: $to-enormous) {
+    font-size: $size-huge;
+  }
+  @media (min-width: $from-enormous) and (max-width: $to-gigantic) {
+    font-size: $size-enormous;
+  }
+  @media (min-width: $from-gigantic) and (max-width: $to-colossal) {
+    font-size: $size-gigantic;
+  }
+  @media (min-width: $from-colossal) {
+    font-size: $size-colossal;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: "Genos", sans-serif;
+  font-optical-sizing: auto;
+  margin: 0;
+}
+
+h1 {
+  font-size: 3.6rem;
+  font-weight: 400;
+  color: $color-beige;
+  text-shadow: 0 2px 4px $color-navy;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: 400;
+  color: $color-beige;
+  text-shadow: 0 2px 4px $color-indigo;
+  margin-bottom: 1.8rem;
+}
+
+p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1 rem;
+  color: $color-beige;
+  text-shadow: 0 2px 4px $color-fushia;
+}
+
+li {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1 rem;
+  color: $color-beige;
+  text-shadow: 0 2px 4px $color-fushia;
+}
