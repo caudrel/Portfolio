@@ -1,0 +1,38 @@
+.profil {
+  border-radius: 50%;
+  height: 35vh;
+  width: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  height: 100vh;
+  background-image: url("/backgroung.jpg");
+  background-size: cover;
+  background-color: $color-fushia;
+
+  ul {
+    padding: 0;
+  }
+  li {
+    text-shadow: 0 2px 4px $color-fushia;
+  }
+
+  li {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 1s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
