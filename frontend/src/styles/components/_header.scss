@@ -1,0 +1,67 @@
+@use "../abstracts/color" as color;
+@use "../abstracts/mixin" as mixin;
+@use "../abstracts/media-query" as media;
+
+.header {
+  // background-color: color.$color-indigo;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0.5rem 0;
+
+  @include mixin.frame;
+
+  .icons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &.scrolled {
+    background-color: rgba(255, 251, 251, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .social {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: $color-turquoise;
+    background-image: radial-gradient(100% 100% at 100% 0, color.$color-turquoise 0, color.$color-blue 100%);
+    color: color.$color-beige;
+    height: 30px;
+    width: 30px;
+
+    &.scrolled {
+      color: color.$color-beige;
+      background-image: radial-gradient(100% 100% at 100% 0, color.$color-turquoise 0, color.$color-blue 100%);
+    }
+
+    @media (min-width: media.$from-micro) {
+      height: 40px;
+      width: 40px;
+    }
+
+    &:hover,
+    :focus {
+      // background-image: radial-gradient(100% 100% at 100% 0, color.$color-sunshine 0, color.$color-warm 100%);
+
+      color: white;
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+
+      @media (min-width: media.$from-micro) {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}

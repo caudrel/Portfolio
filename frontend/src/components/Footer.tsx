@@ -1,9 +1,7 @@
-import Link from "next/link";
-
 export default function Footer() {
   return (
-    <footer className="header">
-      {/* <div className="main-menu">
+    <footer className="footer frame">
+      {/* <div>
         <h1>
           <Link href="/" className="button logo link-button">
             <span className="mobile-short-label">TGC</span>

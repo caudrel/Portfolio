@@ -1,0 +1,47 @@
+@use "../abstracts/color" as color;
+@use "../abstracts/mixin" as mixin;
+
+.projects {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-image: linear-gradient(180deg, color.$color-blue, color.$color-sunshine);
+  min-height: 100vh;
+
+  @include mixin.frame;
+  @include mixin.section;
+
+  .projects-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    row-gap: 2rem;
+  }
+
+  .project-card {
+    margin: 1rem;
+    background-color: color.$color-beige;
+    width: 20rem;
+    box-shadow: 0 4px 8px 0 rgba(31, 90, 255, 0.2), 0 6px 20px 0 rgba(31, 90, 255, 0.19);
+    border-radius: 10px;
+
+    h3 {
+      color: color.$color-dark;
+      font-family: "Gotham Book", sans-serif;
+    }
+
+    p {
+      color: color.$color-grey;
+    }
+
+    .illustration {
+      width: 20rem;
+      height: 12.5rem;
+      object-fit: cover;
+    }
+
+    .project-card-body {
+      padding: 0.5rem;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+@use "../abstracts/color" as color;
+@use "../abstracts/mixin" as mixin;
+
+.project-prez {
+  background-image: linear-gradient(180deg, color.$color-blue, color.$color-sunshine);
+  min-height: 100vh;
+
+  .project-frame {
+    background-image: linear-gradient(180deg, color.$color-sunshine, color.$color-beige);
+    border-radius: 17px;
+    margin: 4rem;
+    padding: 2rem;
+
+    .project-pic {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .technos {
+      display: flex;
+
+      li {
+        margin-right: 1rem;
+
+        .tech-icon {
+          background-color: color.$color-sunshine;
+        }
+      }
+    }
+
+    h1 {
+      color: color.$color-navy;
+    }
+
+    p {
+      color: color.$color-grey;
+    }
+  }
+
+  @include mixin.frame;
+  @include mixin.section;
+}
