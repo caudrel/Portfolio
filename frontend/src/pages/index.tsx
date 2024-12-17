@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Layout from "../components/Layout";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import Link from "next/link";
+import Projects from "@/components/Projects";
 
 export default function Home() {
-  const languages = ["Laravel", "Symfony", "Next.js", "Node.js", "SQL"];
+  const languages = useMemo(() => ["Laravel", "Symfony", "Next.js", "Node.js", "SQL"], []);
   const [currentLanguage, setCurrentLanguage] = useState<string>(""); // Stocke la langue actuelle
   const [index, setIndex] = useState<number>(0); // Suivi de l'index
 
@@ -19,17 +21,108 @@ export default function Home() {
   return (
     <>
       <Layout title="Accueil - Portfolio CAudrel">
-        <div className="title">
-          <Image className="profil profilPic" src="/profil.jpg" alt="Photo Aurelie" width={180} height={180} priority />
+        <section className="title">
+          <Image className="picbb" src="/aurelpetitedetour.png" alt="Photo Aurelie" width={180} height={180} priority />
           <h1>AURELIE LOZACH</h1>
-          <h2>Full Stack</h2>
+          <h2>Full Stack Developpeur</h2>
 
           <ul>
             <li key={currentLanguage}>{currentLanguage}</li>
           </ul>
 
           <footer />
-        </div>
+        </section>
+        <section className="about">
+          <p className="text-stroke bg-light">MA RECONVERSION</p>
+          <div className="fiche">
+            <div className="photo">
+              <Image className="picnow" src="/aurelPont.jpeg" alt="Photo Aurelie" width={180} height={236} />
+            </div>
+
+            <div className="experience">
+              <div className="paragraph">
+                <p>
+                  Après 10 années d'expérience en tant que Chef de Produit dans le textile, mon passage à la French Tech Bordeaux durant les trois
+                  dernières années a éveillé mon envie de me réorienter vers le développement web.
+                </p>
+
+                <p>
+                  Je me suis formée aux technologies PHP et Symfony au cours d'un bootcamp, puis sur TypeScript, React.js, Next.js, Node.js, Laravel,
+                  Docker et GraphQL avec Apollo lors d'une alternance en agence.
+                </p>
+
+                <p>
+                  Ma polyvalence, combinant expertise en gestion de projet, compétences techniques et une approche orientée client, me permet
+                  d’apporter une vision globale et concrète aux projets web.
+                </p>
+              </div>
+              <div className="list">
+                <ul className="list1">
+                  <li aria-label="date de naissance">
+                    <strong>Anniversaire : </strong>11/11/1977
+                  </li>
+                  <li>
+                    <strong>Adresse : </strong>Bordeaux
+                  </li>
+                  <li>
+                    <strong>Tel : </strong>06 84 65 04 90
+                  </li>
+                </ul>
+                <ul className="list2">
+                  <li>
+                    <strong>Diplômes : </strong>
+                    <ul>
+                      <li>CDA 2024</li>
+                      <li>DWWM 2023</li>
+                      <li>
+                        <Link
+                          href="https://www.esce.fr/program/programme-grande-ecole-grade-de-master-2/"
+                          aria-label="lien vers mon école de commerce"
+                        >
+                          ESCE
+                        </Link>
+                        2020
+                      </li>
+                      <li>Bac S spé math 1996</li>
+                    </ul>
+                  </li>
+
+                  <li>
+                    <strong>Technos : </strong>
+                    <ul>
+                      <li>PHP (Laravel, Symfony)</li>
+                      <li>JS (React, Next, Node)</li>
+                      <li>SQL, GraphQL, Apollo, Docker, CI, CD</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <svg
+          className="waves"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28"
+          preserveAspectRatio="none"
+          shapeRendering="auto"
+        >
+          <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+          </defs>
+          <g className="parallax">
+            <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(31, 90, 255,0.4" />
+            <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(31, 90, 255,0.2)" />
+            <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(31, 90, 255,0.1)" />
+            <use xlinkHref="#gentle-wave" x="48" y="7" fill="rgba(31, 90, 255,0.6" />
+          </g>
+        </svg>
+
+        <Projects />
+
+        <footer />
       </Layout>
     </>
   );
