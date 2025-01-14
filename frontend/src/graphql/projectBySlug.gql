@@ -13,6 +13,7 @@ query ProjectBySlug($slug: String!) {
     team_members {
       name
       linkedin
+      src_icon
     }
     technologies {
       name

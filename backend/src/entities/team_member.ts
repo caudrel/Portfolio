@@ -17,6 +17,10 @@ export class TeamMember extends BaseEntity {
   @Field(() => String, { nullable: true })
   linkedin: string | null;
 
+  @Column({ length: 300, nullable: true })
+  @Field()
+  src_icon: string;
+
   @ManyToMany(() => Project, (project) => project.team_members)
   @Field(() => [Project])
   projects: Project[];
@@ -31,6 +35,10 @@ export class TeamMemberWOProjectRelation {
   @Column({ length: 100 })
   @Field()
   name: string;
+
+  @Column({ length: 300, nullable: true })
+  @Field()
+  src_icon: string;
 
   @Column("text", { nullable: true })
   @Field(() => String, { nullable: true })

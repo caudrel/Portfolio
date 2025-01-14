@@ -12,6 +12,7 @@ query Projects($technologyIds: [Int!]) {
       id
       name
       linkedin
+      src_icon
     }
     technologies {
       id

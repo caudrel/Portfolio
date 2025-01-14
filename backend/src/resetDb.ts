@@ -48,11 +48,13 @@ async function main() {
   const jeremie = TeamMember.create({
     name: "Jérémie Pourageaux",
     linkedin: "https://www.linkedin.com/in/jeremie-pourageaux/",
+    src_icon: "/team_members_pics/jeremie.jpeg",
   });
 
   const leopold = TeamMember.create({
     name: "Léopold Lesaulnier",
     linkedin: "https://www.linkedin.com/in/leopoldlesaulnier/",
+    src_icon: "/team_members_pics/leopold.jpeg",
   });
 
   const easygift = Project.create({
