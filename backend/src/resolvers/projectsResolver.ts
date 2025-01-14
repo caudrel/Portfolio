@@ -50,6 +50,7 @@ class ProjectsResolver {
         id: member.id,
         name: member.name,
         linkedin: member.linkedin,
+        src_icon: member.src_icon,
       })) as TeamMemberWOProjectRelation[],
     }));
   }

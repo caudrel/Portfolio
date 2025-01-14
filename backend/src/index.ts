@@ -1,4 +1,3 @@
-// console.log("coucou");
 import "reflect-metadata";
 import express from "express";
 import { expressMiddleware } from "@apollo/server/express4";
@@ -9,6 +8,8 @@ import db from "./db";
 import schema from "./schema";
 import http from "http";
 import { User } from "./entities/user";
+
+require("events").EventEmitter.defaultMaxListeners = 20;
 
 const port = 4000;
 
@@ -27,12 +28,14 @@ const httpServer = http.createServer(app);
 
 schema.then(async (schema) => {
   await db.initialize();
+
   const server = new ApolloServer<MyContext>({
     schema,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
   await server.start();
+
   app.use(
     "/",
     cors<cors.CorsRequest>({
@@ -51,10 +54,3 @@ schema.then(async (schema) => {
   await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
   console.log(`graphql server listening on http://localhost:${port}/`);
 });
-
-// buildSchema({ resolvers: [TechnologiesResolver, ProjectsResolver, UsersResolver, TeamMembersResolver] }).then(async (schema) => {
-//   await db.initialize();
-//   const server = new ApolloServer({ schema });
-//   const { url } = await startStandaloneServer(server, { listen: { port } });
-//   console.log(`graphql server listening on ${url}`);
-// });

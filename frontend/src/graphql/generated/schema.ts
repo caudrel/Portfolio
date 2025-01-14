@@ -16,6 +16,23 @@ export type Scalars = {
   DateTimeISO: string;
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  createTeamMember: TeamMember;
+  createTechnology: Technology;
+};
+
+
+export type MutationCreateTeamMemberArgs = {
+  linkedin?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+export type MutationCreateTechnologyArgs = {
+  data: TechnologyInput;
+};
+
 export type Project = {
   __typename?: 'Project';
   area_of_improvement?: Maybe<Scalars['String']>;
@@ -75,6 +92,7 @@ export type TeamMember = {
   linkedin?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   projects: Array<Project>;
+  src_icon: Scalars['String'];
 };
 
 export type TeamMemberWoProjectRelation = {
@@ -82,6 +100,7 @@ export type TeamMemberWoProjectRelation = {
   id: Scalars['Int'];
   linkedin?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  src_icon: Scalars['String'];
 };
 
 export type Technology = {
@@ -89,6 +108,11 @@ export type Technology = {
   id: Scalars['Int'];
   name: Scalars['String'];
   projects?: Maybe<Array<Project>>;
+  src_icon: Scalars['String'];
+};
+
+export type TechnologyInput = {
+  name: Scalars['String'];
   src_icon: Scalars['String'];
 };
 
@@ -111,19 +135,26 @@ export type User = {
   validated_email?: Maybe<Scalars['DateTimeISO']>;
 };
 
+export type CreateTechnologyMutationVariables = Exact<{
+  data: TechnologyInput;
+}>;
+
+
+export type CreateTechnologyMutation = { __typename?: 'Mutation', createTechnology: { __typename?: 'Technology', id: number, name: string, src_icon: string } };
+
 export type ProjectBySlugQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type ProjectBySlugQuery = { __typename?: 'Query', projectBySlug?: { __typename?: 'Project', id: number, title: string, slug: string, completion_date: string, duration: string, excerpt: string, description: string, area_of_improvement?: string | null, src_picture?: string | null, src_video?: string | null, created_at: string, updated_at: string, team_members?: Array<{ __typename?: 'TeamMember', name: string, linkedin?: string | null }> | null, technologies: Array<{ __typename?: 'Technology', name: string, src_icon: string }> } | null };
+export type ProjectBySlugQuery = { __typename?: 'Query', projectBySlug?: { __typename?: 'Project', id: number, title: string, slug: string, completion_date: string, duration: string, excerpt: string, description: string, area_of_improvement?: string | null, src_picture?: string | null, src_video?: string | null, created_at: string, updated_at: string, team_members?: Array<{ __typename?: 'TeamMember', name: string, linkedin?: string | null, src_icon: string }> | null, technologies: Array<{ __typename?: 'Technology', name: string, src_icon: string }> } | null };
 
 export type ProjectsQueryVariables = Exact<{
   technologyIds?: InputMaybe<Array<Scalars['Int']> | Scalars['Int']>;
 }>;
 
 
-export type ProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'ProjectCard', id: number, title: string, slug: string, completion_date: string, excerpt: string, prof_env: boolean, company_name?: string | null, src_picture?: string | null, team_members?: Array<{ __typename?: 'TeamMemberWOProjectRelation', id: number, name: string, linkedin?: string | null }> | null, technologies: Array<{ __typename?: 'TechnologyWOProjectRelation', id: number, name: string, src_icon: string }> }> | null };
+export type ProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'ProjectCard', id: number, title: string, slug: string, completion_date: string, excerpt: string, prof_env: boolean, company_name?: string | null, src_picture?: string | null, team_members?: Array<{ __typename?: 'TeamMemberWOProjectRelation', id: number, name: string, linkedin?: string | null, src_icon: string }> | null, technologies: Array<{ __typename?: 'TechnologyWOProjectRelation', id: number, name: string, src_icon: string }> }> | null };
 
 export type TechnologiesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -131,6 +162,41 @@ export type TechnologiesQueryVariables = Exact<{ [key: string]: never; }>;
 export type TechnologiesQuery = { __typename?: 'Query', technologies?: Array<{ __typename?: 'Technology', id: number, name: string, src_icon: string }> | null };
 
 
+export const CreateTechnologyDocument = gql`
+    mutation CreateTechnology($data: TechnologyInput!) {
+  createTechnology(data: $data) {
+    id
+    name
+    src_icon
+  }
+}
+    `;
+export type CreateTechnologyMutationFn = Apollo.MutationFunction<CreateTechnologyMutation, CreateTechnologyMutationVariables>;
+
+/**
+ * __useCreateTechnologyMutation__
+ *
+ * To run a mutation, you first call `useCreateTechnologyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTechnologyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTechnologyMutation, { data, loading, error }] = useCreateTechnologyMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateTechnologyMutation(baseOptions?: Apollo.MutationHookOptions<CreateTechnologyMutation, CreateTechnologyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTechnologyMutation, CreateTechnologyMutationVariables>(CreateTechnologyDocument, options);
+      }
+export type CreateTechnologyMutationHookResult = ReturnType<typeof useCreateTechnologyMutation>;
+export type CreateTechnologyMutationResult = Apollo.MutationResult<CreateTechnologyMutation>;
+export type CreateTechnologyMutationOptions = Apollo.BaseMutationOptions<CreateTechnologyMutation, CreateTechnologyMutationVariables>;
 export const ProjectBySlugDocument = gql`
     query ProjectBySlug($slug: String!) {
   projectBySlug(slug: $slug) {
@@ -147,6 +213,7 @@ export const ProjectBySlugDocument = gql`
     team_members {
       name
       linkedin
+      src_icon
     }
     technologies {
       name
@@ -200,6 +267,7 @@ export const ProjectsDocument = gql`
       id
       name
       linkedin
+      src_icon
     }
     technologies {
       id

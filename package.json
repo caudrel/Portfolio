@@ -6,8 +6,5 @@
     "dev": "docker compose up --build"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@radix-ui/react-separator": "^1.0.3"
-  }
+  "license": "ISC"
 }

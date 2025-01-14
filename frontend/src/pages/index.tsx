@@ -33,7 +33,8 @@ export default function Home() {
           <footer />
         </section>
         <section className="about">
-          <p className="text-stroke bg-light">MA RECONVERSION</p>
+          <p className="text-stroke bg-light">RECONVERSION</p>
+
           <div className="fiche">
             <div className="photo">
               <Image className="picnow" src="/aurelPont.jpeg" alt="Photo Aurelie" width={180} height={236} />
@@ -42,8 +43,8 @@ export default function Home() {
             <div className="experience">
               <div className="paragraph">
                 <p>
-                  Après 10 années d'expérience en tant que Chef de Produit dans le textile, mon passage à la French Tech Bordeaux durant les trois
-                  dernières années a éveillé mon envie de me réorienter vers le développement web.
+                  Après 10 années d'expérience en tant que Chef de Produit dans le textile, mon passage à la French Tech Bordeaux de 2020 à 2023 a
+                  éveillé mon envie de me réorienter vers le développement web.
                 </p>
 
                 <p>
@@ -81,7 +82,7 @@ export default function Home() {
                         >
                           ESCE
                         </Link>
-                        2020
+                        2000
                       </li>
                       <li>Bac S spé math 1996</li>
                     </ul>
