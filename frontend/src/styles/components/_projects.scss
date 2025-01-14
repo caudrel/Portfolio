@@ -1,12 +1,17 @@
 @use "../abstracts/color" as color;
 @use "../abstracts/mixin" as mixin;
+@use "../abstracts/media-query" as media;
 
 .display-techno-btn {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
+  align-items: center;
+  gap: 0.6rem;
+
+  @media (min-width: media.$from-tiny) {
+    gap: 1rem;
+  }
 }
 
 .button-techno {
@@ -16,11 +21,11 @@
   color: color.$color-indigo;
   cursor: pointer;
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 2.5;
+  line-height: 2;
   outline: transparent;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   text-align: center;
   text-decoration: none;
   transition: box-shadow 0.2s ease-in-out;
@@ -28,6 +33,17 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   white-space: nowrap;
+
+  @media (min-width: media.$from-tiny) {
+    font-size: 16px;
+    line-height: 2.5;
+    padding: 0 1rem;
+  }
+
+  &.selected {
+    background: linear-gradient(to bottom right, color.$color-indigo, color.$color-warm);
+    color: color.$color-sunshine;
+  }
 }
 
 .button-62:not([disabled]):focus {

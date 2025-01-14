@@ -3,7 +3,9 @@
 @use "../abstracts/media-query" as media;
 
 .header {
-  // background-color: color.$color-indigo;
+  // background-color: rgba(75, 40, 183, 0.65);
+  // background-color: inherit;
+  //background-color: rgba(0, 0, 0, 0.7);
   position: fixed;
   top: 0;
   width: 100%;
@@ -22,7 +24,7 @@
   }
 
   &.scrolled {
-    background-color: rgba(255, 251, 251, 0.9);
+    background-color: rgba(255, 251, 251, 0.65);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 
@@ -36,11 +38,6 @@
     color: color.$color-beige;
     height: 30px;
     width: 30px;
-
-    &.scrolled {
-      color: color.$color-beige;
-      background-image: radial-gradient(100% 100% at 100% 0, color.$color-turquoise 0, color.$color-blue 100%);
-    }
 
     @media (min-width: media.$from-micro) {
       height: 40px;

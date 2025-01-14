@@ -6,7 +6,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 700); // Seuil de défilement
+      setIsScrolled(window.scrollY > 730); // Seuil de défilement
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -27,6 +27,12 @@ export default function Header() {
             </svg>
           </Link> */}
 
+          <button className="btn-secondary">
+            <Link href="/">home</Link>
+          </button>
+          <button className="btn-secondary">
+            <Link href="/admin/technologies">Create Technologies</Link>
+          </button>
           <Link
             href="mailto:lozachaurelie@gmail.com"
             className={`social ${isScrolled ? "scrolled" : ""}`}
