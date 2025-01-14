@@ -16,6 +16,23 @@ export type Scalars = {
   DateTimeISO: string;
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  createTeamMember: TeamMember;
+  createTechnology: Technology;
+};
+
+
+export type MutationCreateTeamMemberArgs = {
+  linkedin?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+export type MutationCreateTechnologyArgs = {
+  data: TechnologyInput;
+};
+
 export type Project = {
   __typename?: 'Project';
   area_of_improvement?: Maybe<Scalars['String']>;
@@ -75,6 +92,7 @@ export type TeamMember = {
   linkedin?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   projects: Array<Project>;
+  src_icon: Scalars['String'];
 };
 
 export type TeamMemberWoProjectRelation = {
@@ -82,6 +100,7 @@ export type TeamMemberWoProjectRelation = {
   id: Scalars['Int'];
   linkedin?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  src_icon: Scalars['String'];
 };
 
 export type Technology = {
@@ -89,6 +108,11 @@ export type Technology = {
   id: Scalars['Int'];
   name: Scalars['String'];
   projects?: Maybe<Array<Project>>;
+  src_icon: Scalars['String'];
+};
+
+export type TechnologyInput = {
+  name: Scalars['String'];
   src_icon: Scalars['String'];
 };
 
