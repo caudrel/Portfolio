@@ -1,20 +1,18 @@
 import { useCreateTechnologyMutation, useTechnologiesQuery } from "@/graphql/generated/schema";
 import { FormEvent, useEffect, useState } from "react";
 import Layout from "@/components/Layout";
-import { useRouter } from "next/router";
 
 export default function Technologies() {
-  const { data: technologiesData, loading: technologiesLoading, error: technologiesError } = useTechnologiesQuery({});
+  const { data: technologiesData, loading: technologiesLoading, error: technologiesError, refetch } = useTechnologiesQuery({});
 
   const [createTechnology] = useCreateTechnologyMutation();
-  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const formJSON: any = Object.fromEntries(formData.entries());
-    const res = await createTechnology({ variables: { data: { ...formJSON } } });
-    router.push(`/admin/technologies`);
+    await createTechnology({ variables: { data: { ...formJSON } } });
+    await refetch();
   };
 
   return (

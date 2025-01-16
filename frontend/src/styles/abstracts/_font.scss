@@ -134,7 +134,9 @@ h4 {
   margin-bottom: 0.5rem;
 }
 
-p {
+p,
+input,
+textarea {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 1 rem;

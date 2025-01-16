@@ -1,5 +1,5 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable } from "typeorm";
-import { ObjectType, Field, Int } from "type-graphql";
+import { ObjectType, Field, Int, InputType } from "type-graphql";
 import { IsDateString, IsNotEmpty, Length } from "class-validator";
 import { TeamMember } from "./team_member";
 import { Technology } from "./technology";
@@ -90,6 +90,10 @@ export class ProjectCard {
   @Field()
   slug: string;
 
+  @Column({ length: 200 })
+  @Field()
+  duration: string;
+
   @Column({ type: "date" })
   @Field(() => String)
   completion_date: Date;
@@ -115,4 +119,51 @@ export class ProjectCard {
 
   @Field(() => [TechnologyWOProjectRelation])
   technologies: TechnologyWOProjectRelation[];
+}
+
+@InputType()
+export class ProjectInput {
+  @Field()
+  @IsNotEmpty()
+  @Length(1, 20)
+  title: string;
+
+  @Field()
+  @IsDateString({}, { message: "La date doit être au format ISO (YYYY-MM-DD)." })
+  completion_date: string;
+
+  @Field()
+  @IsNotEmpty()
+  @Length(1, 200)
+  duration: string;
+
+  @Field()
+  @IsNotEmpty()
+  @Length(1, 250)
+  excerpt: string;
+
+  @Field()
+  @IsNotEmpty()
+  description: string;
+
+  @Field(() => String, { nullable: true })
+  area_of_improvement: string | null;
+
+  @Field(() => Boolean, { defaultValue: false })
+  prof_env: boolean;
+
+  @Field(() => String, { nullable: true })
+  company_name: string | null;
+
+  @Field(() => String, { nullable: true })
+  src_picture: string | null;
+
+  @Field(() => String, { nullable: true })
+  src_video: string | null;
+
+  @Field(() => [Int], { nullable: true })
+  team_members: number[] | null;
+
+  @Field(() => [Int])
+  technologies: number[];
 }
