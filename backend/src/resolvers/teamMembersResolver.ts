@@ -1,5 +1,7 @@
 import { Resolver, Query, Mutation, Arg } from "type-graphql";
-import { TeamMember } from "../entities/team_member";
+import { MemberInput, TeamMember } from "../entities/team_member";
+import { validate } from "class-validator";
+import { GraphQLError } from "graphql";
 
 @Resolver(TeamMember)
 class TeamMembersResolver {
@@ -10,12 +12,22 @@ class TeamMembersResolver {
   }
 
   @Mutation(() => TeamMember)
-  async createTeamMember(@Arg("name") name: string, @Arg("linkedin", { nullable: true }) linkedin: string): Promise<TeamMember> {
+  async createTeamMember(@Arg("data", { validate: true }) data: MemberInput): Promise<TeamMember> {
     const teamMember = new TeamMember();
-    teamMember.name = name;
-    teamMember.linkedin = linkedin;
-    await teamMember.save();
-    return teamMember;
+    let { name, src_icon, linkedin } = data;
+    const finalSrc = `/team_members_pics/${src_icon}`;
+
+    Object.assign(teamMember, { name, linkedin, src_icon: finalSrc });
+    const errors = await validate(teamMember);
+
+    if (errors.length !== 0) {
+      throw new GraphQLError("données incorrectes", { extensions: { errors } });
+    }
+    const { id } = await teamMember.save();
+
+    return TeamMember.findOneOrFail({
+      where: { id },
+    });
   }
 }
 

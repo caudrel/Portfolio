@@ -21,7 +21,7 @@
 
   .project-card {
     margin: 1rem;
-    background-color: color.$color-beige;
+    background-image: linear-gradient(180deg, color.$color-sunshine, color.$color-beige);
     width: 20rem;
     box-shadow: 0 4px 8px 0 rgba(31, 90, 255, 0.2), 0 6px 20px 0 rgba(31, 90, 255, 0.19);
     border-radius: 10px;
@@ -33,6 +33,7 @@
 
     h3 {
       font-family: "Gotham Book", sans-serif;
+      margin: 0 auto;
     }
 
     h4 {
@@ -64,7 +65,7 @@
         }
 
         svg {
-          margin-left: 1rem;
+          margin-left: 0.5rem;
           height: 2rem;
         }
       }

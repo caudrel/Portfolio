@@ -31,7 +31,13 @@ export default function Header() {
             <Link href="/">home</Link>
           </button>
           <button className="btn-secondary">
-            <Link href="/admin/technologies">Create Technologies</Link>
+            <Link href="/admin/technologies">Add Techno</Link>
+          </button>
+          <button className="btn-secondary">
+            <Link href="/admin/members">Add Member</Link>
+          </button>
+          <button className="btn-secondary">
+            <Link href="/admin/projects">Add Project</Link>
           </button>
           <Link
             href="mailto:lozachaurelie@gmail.com"
