@@ -136,22 +136,16 @@ h4 {
 
 p,
 input,
-textarea {
+textarea,
+span {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
-  font-size: 1 rem;
+  font-size: 1rem;
 }
 
-li {
-  font-family: "Gotham light", sans-serif;
-  color: color.$color-beige;
-}
-
+li,
+a,
 button {
   font-family: "Gotham light", sans-serif;
-  font-size: 0.8rem;
-
-  @media (min-width: media.$from-micro) {
-    font-size: 1rem;
-  }
+  font-size: 1rem;
 }

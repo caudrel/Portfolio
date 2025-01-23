@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Header from "./Header";
 import { ReactNode } from "react";
-import Footer from "./Footer";
 
 interface LayoutProps {
   children: ReactNode;
@@ -18,9 +17,7 @@ export default function Layout({ children, title }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
       <main className="">{children}</main>
-      <Footer />
     </>
   );
 }
