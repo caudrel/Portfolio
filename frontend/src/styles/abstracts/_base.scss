@@ -3,7 +3,8 @@
 * {
   margin: 0;
   box-sizing: border-box;
-  overflow-x: hidden;
+  //overflow-x: hidden;
+  scroll-behavior: smooth;
   overscroll-behavior: none;
   &.no-scroll {
     overflow: hidden;

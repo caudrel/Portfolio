@@ -35,7 +35,7 @@ export default function Projects() {
   if (projectsLoading || technologiesLoading) return <p>Loading...</p>;
   if (projectsError || technologiesError) return <p>Error...</p>;
   return (
-    <section className="projects">
+    <section className="projects" id="projets">
       <p className="text-stroke bg-dark">PROJETS</p>
       <h2>Technologies</h2>
 
