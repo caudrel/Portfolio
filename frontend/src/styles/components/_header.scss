@@ -1,0 +1,261 @@
+@use "../abstracts/color" as color;
+@use "../abstracts/mixin" as mixin;
+@use "../abstracts/media-query" as media;
+
+.header {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+
+  @include mixin.frame;
+
+  &.scrolled {
+    background-color: rgba(255, 251, 251, 0.5);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    @supports (backdrop-filter: blur(15px)) or (-webkit-backdrop-filter: blur(15px)) {
+      backdrop-filter: saturate(180%) blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: color.$color-beige;
+
+      .menu-link {
+        border-radius: 4px;
+        padding: 0.5rem;
+        color: color.$color-beige;
+
+        &:hover {
+          background-image: radial-gradient(100% 100% at 100% 0, color.$color-sunshine 0, color.$color-blue 100%);
+          color: color.$color-beige;
+          box-shadow: 0 4px 7px rgba(0, 0, 0, 0.3);
+        }
+
+        &.scrolled {
+          color: color.$color-blue;
+
+          &:hover {
+            background-image: radial-gradient(100% 100% at 100% 0, color.$color-sunshine 0, color.$color-blue 100%);
+            color: color.$color-beige;
+          }
+        }
+      }
+
+      .admin-dropdown {
+        z-index: inherit;
+        display: inline-block;
+        position: relative;
+
+        .dropdown-button {
+          background: none;
+          border: none;
+          display: flex;
+          align-items: center;
+          gap: 0.2rem;
+          cursor: pointer;
+
+          &.scrolled {
+            color: color.$color-blue;
+          }
+        }
+
+        .dropdown-menu {
+          position: absolute;
+          z-index: 10;
+          top: 100%;
+          right: 0;
+          border-radius: 5px;
+          padding: 1rem;
+          display: none;
+          flex-direction: column;
+          gap: 0.5rem;
+          min-width: 200px;
+          background-color: rgba(71, 30, 179, 0.5);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          color: color.$color-beige;
+
+          &.visible {
+            display: flex; // Affiché lorsqu'on active l'état visible
+            &.scrolled {
+              background-color: rgba(255, 251, 251, 0.9);
+              color: color.$color-blue;
+            }
+          }
+
+          a {
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+
+            &:hover {
+              background-image: radial-gradient(100% 100% at 100% 0, color.$color-sunshine 0, color.$color-blue 100%);
+              color: color.$color-beige;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .nav-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: color.$color-beige;
+
+    &:hover {
+      background-image: radial-gradient(100% 100% at 100% 0, color.$color-sunshine 0, color.$color-blue 100%);
+      transform: scale(1.03);
+    }
+
+    &.scrolled {
+      background-image: radial-gradient(100% 100% at 100% 0, color.$color-turquoise 0, color.$color-blue 100%);
+
+      &:hover {
+        background-image: radial-gradient(100% 100% at 100% 0, color.$color-sunshine 0, color.$color-blue 100%);
+      }
+    }
+  }
+}
+
+.burger-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  .nav-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: color.$color-blue;
+  }
+
+  .burger-button {
+    background: none;
+    color: color.$color-beige;
+    border: none;
+
+    svg {
+      height: 30px;
+      width: auto;
+    }
+  }
+
+  .socialIcons-burger {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .admin-dropdown {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .dropdown-button {
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      margin-bottom: 0.8rem;
+      color: color.$color-navy;
+    }
+  }
+
+  .burger-dropdown {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    background: color.$color-beige;
+    border-radius: 5px;
+    box-shadow: 0 16px 10px rgba(0, 0, 0, 0.3);
+    padding: 1rem 2rem 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 95vh;
+    justify-content: space-between;
+
+    .close-btn-container {
+      display: flex;
+      justify-content: flex-end;
+
+      .burger-close {
+        border: none;
+        padding-bottom: 2rem;
+      }
+    }
+
+    .burger-link-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      a,
+      button {
+        text-align: center;
+      }
+
+      .dropdown-link {
+        display: block;
+        text-decoration: none;
+        color: color.$color-blue;
+        padding: 0.5rem;
+      }
+
+      .menu-link {
+        border-radius: 4px;
+        padding: 0.5rem;
+      }
+    }
+
+    .dropdown-section {
+      position: static;
+      display: flex;
+      flex-direction: column;
+      top: 100%;
+      margin-top: 0.5rem;
+      opacity: 0;
+      gap: 0.8rem;
+
+      &.visible {
+        opacity: 1;
+        transform: scaleY(1);
+
+        a {
+          color: color.$color-navy;
+        }
+      }
+    }
+
+    .socialIcons-burger-container {
+      display: flex;
+      justify-content: space-around;
+
+      .nav-icon {
+        background-image: radial-gradient(100% 100% at 100% 0, color.$color-sunshine 0, color.$color-blue 100%);
+        color: color.$color-beige;
+      }
+    }
+  }
+}

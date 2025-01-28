@@ -1,0 +1,41 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "codegen": "graphql-codegen --config codegen.yml --watch"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.12.2",
+    "bootstrap-icons": "^1.11.3",
+    "graphql": "^16.9.0",
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/introspection": "3.0.1",
+    "@graphql-codegen/typescript": "3.0.2",
+    "@graphql-codegen/typescript-operations": "3.0.2",
+    "@graphql-codegen/typescript-react-apollo": "3.3.7",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "css-loader": "^7.1.2",
+    "eslint": "^9.16.0",
+    "eslint-config-next": "^15.1.0",
+    "eslint-plugin-react": "^7.37.2",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.82.0",
+    "sass-loader": "^16.0.4",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": "^22.11"
+  }
+}

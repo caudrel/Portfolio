@@ -1,0 +1,151 @@
+@use "./color" as color;
+@use "./media-query" as media;
+
+@font-face {
+  font-family: "Gotham Thin";
+  src: url("/fonts/Gotham-Thin.otf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham ThinItalic";
+  src: url("/fonts/Gotham-ThinItalic.otf") format("opentype");
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gotham XLight";
+  src: url("/fonts/Gotham-XLight.otf") format("opentype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham XLightItalic";
+  src: url("/fonts/Gotham-XLightItalic.otf") format("opentype");
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gotham Light";
+  src: url("/fonts/Gotham-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham LightItalic";
+  src: url("/fonts/Gotham-LightItalic.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham Book";
+  src: url("/fonts/Gotham-Book.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham BookItalic";
+  src: url("/fonts/Gotham-BookItalic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gotham Medium";
+  src: url("/fonts/Gotham-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham MediumItalic";
+  src: url("/fonts/Gotham-MediumItalic.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gotham Bold";
+  src: url("/fonts/Gotham-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham BoldItalic";
+  src: url("/fonts/Gotham-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gotham Black";
+  src: url("/fonts/Gotham-Black.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-optical-sizing: auto;
+  margin: 0;
+}
+
+h1 {
+  font-family: "Gotham Thin", sans-serif;
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-family: "Gotham XLight", sans-serif;
+  font-size: 1.3rem;
+  color: color.$color-beige;
+  // text-shadow: 0 2px 4px $color-warm;
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-family: "Gotham Light", sans-serif;
+  font-size: 1.1rem;
+  color: color.$color-beige;
+  // text-shadow: 0 2px 4px $color-warm;
+  margin-bottom: 0.5rem;
+}
+
+h4 {
+  font-family: "Gotham Light", sans-serif;
+  font-size: 0.9rem;
+  color: color.$color-beige;
+  // text-shadow: 0 2px 4px $color-warm;
+  margin-bottom: 0.5rem;
+}
+
+p,
+input,
+textarea,
+span {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+li,
+a,
+button {
+  font-family: "Gotham light", sans-serif;
+  font-size: 1rem;
+}

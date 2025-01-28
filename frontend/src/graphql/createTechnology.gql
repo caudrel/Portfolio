@@ -1,0 +1,7 @@
+mutation CreateTechnology($data: TechnologyInput!) {
+  createTechnology(data: $data) {
+    id
+    name
+    src_icon
+  }
+}

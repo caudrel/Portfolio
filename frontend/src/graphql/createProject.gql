@@ -1,0 +1,29 @@
+mutation CreateProject($data: ProjectInput!) {
+  createProject(data: $data) {
+    id
+    title
+    slug
+    completion_date
+    duration
+    excerpt
+    description
+    area_of_improvement
+    prof_env
+    company_name
+    src_picture
+    src_video
+    team_members {
+      name
+      linkedin
+      src_icon
+      id
+    }
+    technologies {
+      id
+      name
+      src_icon
+    }
+    created_at
+    updated_at
+  }
+}
