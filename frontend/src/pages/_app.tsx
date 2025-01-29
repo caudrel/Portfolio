@@ -1,6 +1,5 @@
 import "@/styles/index.scss";
 import type { AppProps } from "next/app";
-
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
 import { ApolloProvider } from "@apollo/client";

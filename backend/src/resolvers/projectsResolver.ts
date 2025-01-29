@@ -4,6 +4,7 @@ import { TeamMember } from "../entities/team_member";
 import { Technology } from "../entities/technology";
 import { GraphQLError } from "graphql";
 import { validate } from "class-validator";
+import { In } from "typeorm";
 
 @Resolver(Project)
 class ProjectsResolver {
@@ -67,7 +68,7 @@ class ProjectsResolver {
     });
 
     if (team_members && team_members.length > 0) {
-      const members = await TeamMember.findByIds(team_members);
+      const members = await TeamMember.findBy({ id: In(team_members) });
       if (members.length !== team_members.length) {
         throw new GraphQLError("Certains membres de l'équipe spécifiés sont invalides.");
       }
@@ -76,7 +77,7 @@ class ProjectsResolver {
 
     // Chargez les technologies à partir de la base de données
     if (technologies && technologies.length > 0) {
-      const techs = await Technology.findByIds(technologies);
+      const techs = await Technology.findBy({ id: In(technologies) });
       if (techs.length !== technologies.length) {
         throw new GraphQLError("Certaines technologies spécifiées sont invalides.");
       }
