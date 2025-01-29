@@ -29,7 +29,6 @@ export default function Projects() {
           ? prevTechnoIds.filter((id) => id !== technoId) // Supprime si déjà présent
           : [...prevTechnoIds, technoId] // Ajoute sinon
     );
-    console.log(technoIds);
   };
 
   if (projectsLoading || technologiesLoading) return <p>Loading...</p>;
