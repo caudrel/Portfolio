@@ -64,7 +64,6 @@ export default function Projects() {
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsProfEnv(e.target.checked);
-    console.log("isProfEnv", isProfEnv);
   };
 
   if (projectsLoading) return <p>Loading...</p>;
@@ -172,7 +171,6 @@ export default function Projects() {
                   onChange={(e) => {
                     const isChecked = e.target.checked;
                     setIsProfEnv(isChecked);
-                    console.log("isProfEnv", isChecked);
                   }}
                 />
                 <label htmlFor="prof_env">Réalisé en environnement professionnel</label>

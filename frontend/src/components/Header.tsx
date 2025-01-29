@@ -8,11 +8,6 @@ export default function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    console.log("isScrolled:", isScrolled);
-    console.log("menuOpen:", menuOpen);
-  }, [isScrolled, menuOpen]);
-
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
   };
