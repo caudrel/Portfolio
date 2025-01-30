@@ -1,8 +1,8 @@
 query TeamMembers {
-  teamMembers {
-    id
-    name
-    linkedin
-    src_icon
-  }
+    teamMembers {
+        id
+        name
+        linkedin
+        src_icon
+    }
 }

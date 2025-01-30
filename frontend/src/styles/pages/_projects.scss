@@ -1,173 +1,189 @@
-@use "../abstracts/color" as color;
-@use "../abstracts/mixin" as mixin;
+@use '../abstracts/color' as color;
+@use '../abstracts/mixin' as mixin;
 
 .projects-page {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-image: linear-gradient(180deg, color.$color-blue, color.$color-sunshine);
-  min-height: 100vh;
-  gap: 2rem;
-  @include mixin.section;
-
-  .display-projects-table {
-    box-shadow: 0 4px 8px 0 rgba(31, 90, 255, 0.2), 0 6px 20px 0 rgba(31, 90, 255, 0.19);
-    border-radius: 10px;
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      border-spacing: 0;
-      overflow: hidden;
-      border-radius: 10px;
-      border: 1px solid color.$color-indigo;
-    }
-    td,
-    th {
-      text-align: left;
-      padding: 8px;
-      border: 1px solid color.$color-indigo;
-    }
-    th {
-      background-image: linear-gradient(180deg, color.$color-indigo, color.$color-blue);
-      color: color.$color-beige;
-    }
-    tr:nth-child(even) {
-      background-color: color.$color-beige;
-    }
-    tr:first-child th:first-child {
-      border-top-left-radius: 10px;
-    }
-    tr:first-child th:last-child {
-      border-top-right-radius: 10px;
-    }
-    tr:last-child td:first-child {
-      border-bottom-left-radius: 10px;
-    }
-    tr:last-child td:last-child {
-      border-bottom-right-radius: 10px;
-    }
-  }
-
-  .display-member-icons {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-image: linear-gradient(
+        180deg,
+        color.$color-blue,
+        color.$color-sunshine
+    );
+    min-height: 100vh;
+    gap: 2rem;
+    @include mixin.section;
 
-    .member-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      width: 5rem;
+    .display-projects-table {
+        box-shadow:
+            0 4px 8px 0 rgba(31, 90, 255, 0.2),
+            0 6px 20px 0 rgba(31, 90, 255, 0.19);
+        border-radius: 10px;
 
-      p {
-        text-align: center;
-        word-break: break-word;
-        font-size: 0.7rem;
-        font-family: "Gotham Light", sans-serif;
-        color: color.$color-beige;
-      }
-
-      .member-pic {
-        border-radius: 50%;
-        box-shadow: 2px 2px 8px 0 rgba(255, 210, 171, 0.4);
-        margin-top: 0.5rem;
-      }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 1px solid color.$color-indigo;
+        }
+        td,
+        th {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid color.$color-indigo;
+        }
+        th {
+            background-image: linear-gradient(
+                180deg,
+                color.$color-indigo,
+                color.$color-blue
+            );
+            color: color.$color-beige;
+        }
+        tr:nth-child(even) {
+            background-color: color.$color-beige;
+        }
+        tr:first-child th:first-child {
+            border-top-left-radius: 10px;
+        }
+        tr:first-child th:last-child {
+            border-top-right-radius: 10px;
+        }
+        tr:last-child td:first-child {
+            border-bottom-left-radius: 10px;
+        }
+        tr:last-child td:last-child {
+            border-bottom-right-radius: 10px;
+        }
     }
-  }
 
-  .project-form-frame {
-    width: 40%;
-    padding: 2rem;
-    background-image: linear-gradient(180deg, color.$color-sunshine, color.$color-beige);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    box-shadow: 0 4px 8px 0 rgba(31, 90, 255, 0.2), 0 6px 20px 0 rgba(31, 90, 255, 0.19);
-
-    .form {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      width: 100%;
-
-      .labels {
+    .display-member-icons {
         display: flex;
-        flex-direction: column;
-        gap: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: flex-start;
 
-        .two-labels {
-          display: flex;
-          gap: 2rem;
-          flex-direction: row;
-          justify-content: space-between;
+        .member-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            width: 5rem;
+
+            p {
+                text-align: center;
+                word-break: break-word;
+                font-size: 0.7rem;
+                font-family: 'Gotham Light', sans-serif;
+                color: color.$color-beige;
+            }
+
+            .member-pic {
+                border-radius: 50%;
+                box-shadow: 2px 2px 8px 0 rgba(255, 210, 171, 0.4);
+                margin-top: 0.5rem;
+            }
         }
-
-        .label {
-          display: flex;
-          flex-direction: column;
-          font-family: "Roboto", sans-serif;
-          color: color.$color-dark;
-        }
-
-        .checkbox {
-          display: flex;
-        }
-
-        .company {
-          display: block;
-          &.hidden {
-            display: none;
-          }
-        }
-
-        input {
-          width: 100%;
-          padding: 12px 20px;
-          margin: 8px 0;
-          display: inline-block;
-          border: 1px solid color.$color-grey;
-          border-radius: 4px;
-          box-sizing: border-box;
-
-          &[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            padding: 0;
-            margin: 0 8px 0 0;
-            border: 1px solid color.$color-grey;
-            accent-color: color.$color-grey;
-            appearance: auto;
-          }
-        }
-
-        select {
-          width: 100%;
-          padding: 12px 20px;
-          margin: 8px 0;
-          display: inline-block;
-          border: 1px solid color.$color-grey;
-          border-radius: 4px;
-          box-sizing: border-box;
-        }
-
-        textarea {
-          width: 100%;
-          padding: 12px 20px;
-          margin: 8px 0;
-          display: inline-block;
-          border: 1px solid color.$color-grey;
-          border-radius: 4px;
-          box-sizing: border-box;
-        }
-      }
     }
-  }
 
-  .form-validation {
-    display: flex;
-    justify-content: center;
-  }
+    .project-form-frame {
+        width: 40%;
+        padding: 2rem;
+        background-image: linear-gradient(
+            180deg,
+            color.$color-sunshine,
+            color.$color-beige
+        );
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        box-shadow:
+            0 4px 8px 0 rgba(31, 90, 255, 0.2),
+            0 6px 20px 0 rgba(31, 90, 255, 0.19);
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            width: 100%;
+
+            .labels {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+
+                .two-labels {
+                    display: flex;
+                    gap: 2rem;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+
+                .label {
+                    display: flex;
+                    flex-direction: column;
+                    font-family: 'Roboto', sans-serif;
+                    color: color.$color-dark;
+                }
+
+                .checkbox {
+                    display: flex;
+                }
+
+                .company {
+                    display: block;
+                    &.hidden {
+                        display: none;
+                    }
+                }
+
+                input {
+                    width: 100%;
+                    padding: 12px 20px;
+                    margin: 8px 0;
+                    display: inline-block;
+                    border: 1px solid color.$color-grey;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+
+                    &[type='checkbox'] {
+                        width: 20px;
+                        height: 20px;
+                        padding: 0;
+                        margin: 0 8px 0 0;
+                        border: 1px solid color.$color-grey;
+                        accent-color: color.$color-grey;
+                        appearance: auto;
+                    }
+                }
+
+                select {
+                    width: 100%;
+                    padding: 12px 20px;
+                    margin: 8px 0;
+                    display: inline-block;
+                    border: 1px solid color.$color-grey;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                }
+
+                textarea {
+                    width: 100%;
+                    padding: 12px 20px;
+                    margin: 8px 0;
+                    display: inline-block;
+                    border: 1px solid color.$color-grey;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                }
+            }
+        }
+    }
+
+    .form-validation {
+        display: flex;
+        justify-content: center;
+    }
 }

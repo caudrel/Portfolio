@@ -1,5 +1,5 @@
 export default function Register() {
-  <div>
-    <p>Register</p>
-  </div>;
+    ;<div>
+        <p>Register</p>
+    </div>
 }

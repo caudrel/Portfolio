@@ -1,27 +1,27 @@
-@use "media-query";
+@use 'media-query';
 
 * {
-  margin: 0;
-  box-sizing: border-box;
-  //overflow-x: hidden;
-  scroll-behavior: smooth;
-  overscroll-behavior: none;
-  &.no-scroll {
-    overflow: hidden;
-  }
-
-  /*! destyle.css v4.0.0 | MIT License | https://github.com/nicolas-cusan/destyle.css */
-
-  /* Reset box-model and set borders */
-  /* ============================================ */
-  ::before,
-  ::after {
+    margin: 0;
     box-sizing: border-box;
-    border-style: solid;
-    border-width: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+    //overflow-x: hidden;
+    scroll-behavior: smooth;
+    overscroll-behavior: none;
+    &.no-scroll {
+        overflow: hidden;
+    }
+
+    /*! destyle.css v4.0.0 | MIT License | https://github.com/nicolas-cusan/destyle.css */
+
+    /* Reset box-model and set borders */
+    /* ============================================ */
+    ::before,
+    ::after {
+        box-sizing: border-box;
+        border-style: solid;
+        border-width: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 }
 
 /**
@@ -31,9 +31,9 @@
  */
 
 html {
-  line-height: 1.15; /* 1 */
-  -webkit-text-size-adjust: 100%; /* 2 */
-  -webkit-tap-highlight-color: transparent; /* 3*/
+    line-height: 1.15; /* 1 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+    -webkit-tap-highlight-color: transparent; /* 3*/
 }
 
 /**
@@ -41,7 +41,7 @@ html {
  */
 
 main {
-  display: block;
+    display: block;
 }
 
 p,
@@ -53,7 +53,7 @@ iframe,
 form,
 figure,
 dl {
-  margin: 0;
+    margin: 0;
 }
 
 /**
@@ -61,13 +61,13 @@ dl {
  */
 
 a {
-  background-color: transparent;
-  text-decoration: none;
-  color: inherit;
+    background-color: transparent;
+    text-decoration: none;
+    color: inherit;
 }
 
 span {
-  display: inline-block;
+    display: inline-block;
 }
 
 /**
@@ -76,7 +76,7 @@ span {
  */
 
 abbr[title] {
-  text-decoration: underline dotted; /* 2 */
+    text-decoration: underline dotted; /* 2 */
 }
 
 /**
@@ -85,7 +85,7 @@ abbr[title] {
 
 b,
 strong {
-  font-weight: bolder;
+    font-weight: bolder;
 }
 
 /**
@@ -96,8 +96,8 @@ strong {
 code,
 kbd,
 samp {
-  font-family: monospace, monospace; /* 1 */
-  font-size: inherit; /* 2 */
+    font-family: monospace, monospace; /* 1 */
+    font-size: inherit; /* 2 */
 }
 
 /**
@@ -105,7 +105,7 @@ samp {
   */
 
 small {
-  font-size: 80%;
+    font-size: 80%;
 }
 
 /**
@@ -117,7 +117,7 @@ img,
 embed,
 object,
 iframe {
-  vertical-align: bottom;
+    vertical-align: bottom;
 }
 
 /**
@@ -131,16 +131,16 @@ input,
 optgroup,
 select,
 textarea {
-  -webkit-appearance: none; /* 1 */
-  appearance: none;
-  vertical-align: middle;
-  color: inherit;
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  border-radius: 0;
-  text-align: inherit;
-  text-transform: inherit; /* 2 */
+    -webkit-appearance: none; /* 1 */
+    appearance: none;
+    vertical-align: middle;
+    color: inherit;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    text-align: inherit;
+    text-transform: inherit; /* 2 */
 }
 
 /**
@@ -148,17 +148,17 @@ textarea {
  */
 
 button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-  cursor: pointer;
+[type='button'],
+[type='reset'],
+[type='submit'] {
+    cursor: pointer;
 }
 
 button:disabled,
-[type="button"]:disabled,
-[type="reset"]:disabled,
-[type="submit"]:disabled {
-  cursor: default;
+[type='button']:disabled,
+[type='reset']:disabled,
+[type='submit']:disabled {
+    cursor: default;
 }
 
 /**
@@ -166,11 +166,11 @@ button:disabled,
  */
 
 :-moz-focusring {
-  outline: auto;
+    outline: auto;
 }
 
 select:disabled {
-  opacity: inherit;
+    opacity: inherit;
 }
 
 /**
@@ -178,7 +178,7 @@ select:disabled {
 */
 
 option {
-  padding: 0;
+    padding: 0;
 }
 
 /**
@@ -186,7 +186,7 @@ option {
  */
 
 progress {
-  vertical-align: baseline;
+    vertical-align: baseline;
 }
 
 /**
@@ -194,32 +194,32 @@ progress {
 */
 
 textarea {
-  overflow: auto;
+    overflow: auto;
 }
 
 /**
  * Correct the cursor style of increment and decrement buttons in Chrome.
  */
 
-[type="number"]::-webkit-inner-spin-button,
-[type="number"]::-webkit-outer-spin-button {
-  height: auto;
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
+    height: auto;
 }
 
 /**
   * Correct the outline style in Safari.
   */
 
-[type="search"] {
-  outline-offset: -2px; /* 1 */
+[type='search'] {
+    outline-offset: -2px; /* 1 */
 }
 
 /**
   * Remove the inner padding in Chrome and Safari on macOS.
   */
 
-[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
+[type='search']::-webkit-search-decoration {
+    -webkit-appearance: none;
 }
 
 /**
@@ -228,17 +228,17 @@ textarea {
  */
 
 ::-webkit-file-upload-button {
-  -webkit-appearance: button; /* 1 */
-  font: inherit; /* 2 */
+    -webkit-appearance: button; /* 1 */
+    font: inherit; /* 2 */
 }
 
 /**
 * Fix appearance for Firefox
 */
-[type="number"] {
-  -moz-appearance: textfield; /* Pour Firefox */
-  -webkit-appearance: none; /* Pour Chrome, Safari, et les autres basés sur Webkit */
-  appearance: none; /* Propriété standard */
+[type='number'] {
+    -moz-appearance: textfield; /* Pour Firefox */
+    -webkit-appearance: none; /* Pour Chrome, Safari, et les autres basés sur Webkit */
+    appearance: none; /* Propriété standard */
 }
 
 /**
@@ -246,7 +246,7 @@ textarea {
 */
 
 label[for] {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 /*
@@ -254,7 +254,7 @@ label[for] {
  */
 
 details {
-  display: block;
+    display: block;
 }
 
 /*
@@ -262,7 +262,7 @@ details {
 */
 
 summary {
-  display: list-item;
+    display: list-item;
 }
 
 /**
@@ -270,30 +270,30 @@ summary {
 */
 
 table {
-  border-color: inherit; /* 1 */
-  border-collapse: collapse;
+    border-color: inherit; /* 1 */
+    border-collapse: collapse;
 }
 
 caption {
-  text-align: left;
+    text-align: left;
 }
 
 td,
 th {
-  vertical-align: top;
-  padding: 0;
+    vertical-align: top;
+    padding: 0;
 }
 
 th {
-  text-align: left;
-  font-weight: bold;
+    text-align: left;
+    font-weight: bold;
 }
 
 ul,
 ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 $ease: cubic-bezier(0.165, 0.74, 0.44, 1);
