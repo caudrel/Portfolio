@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev ./src/index.ts",
+    "start:prod": "node build/index.js",
     "build": "tsc",
     "resetDB": "ts-node-dev src/resetDb.ts",
     "resetDbTest": "ts-node-dev src/resetDbTest.ts"
