@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ProjectCard } from '../graphql/generated/schema'
+import { ProjectCard } from '@/graphql/generated/schema'
 
 export default function Card({
     title,
