@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Present myself and some of my projects",
   "scripts": {
-    "dev": "docker compose up --build"
+    "dev": "docker compose up --build",
+    "prod": "docker compose -f docker-compose.production.yml up --build",
+    "staging": "docker compose -f docker-compose.staging.yml up --build"
   },
   "author": "",
   "license": "ISC"

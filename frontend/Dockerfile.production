@@ -1,0 +1,23 @@
+FROM node:20.9.0-alpine3.17
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm ci
+
+COPY tsconfig.json tsconfig.json
+
+COPY next.config.ts next.config.ts
+
+COPY src src
+
+COPY public public
+
+ARG NEXT_PUBLIC_APOLLO_URI
+
+ENV NEXT_PUBLIC_APOLLO_URI=${NEXT_PUBLIC_APOLLO_URI}
+
+RUN npm run build
+
+CMD npm start
