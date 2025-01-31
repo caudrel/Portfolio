@@ -15,7 +15,7 @@ services:
 
   backend:
     ports:
-      - 4000:4000
+      - 5000:4000
     environment:
       DB_HOST: db
       DB_PASS: ${DB_PASS-postgres}
@@ -33,6 +33,7 @@ services:
     #   context: ./backend
     #   dockerfile: Dockerfile.production
     image: caudrel/portfolio-server
+    container_name: portfolio-server-staging
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:"]
       interval: 30s

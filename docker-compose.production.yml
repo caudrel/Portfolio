@@ -33,6 +33,7 @@ services:
     #   context: ./backend
     #   dockerfile: Dockerfile.production
     image: caudrel/portfolio-server
+    container_name: portfolio-server-prod
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:4000"]
       interval: 30s
