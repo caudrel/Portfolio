@@ -29,12 +29,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.production
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile.production
     image: caudrel/portfolio-server
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4000/"]
+      test: ["CMD", "curl", "-f", "http://localhost:4000"]
       interval: 30s
       retries: 3
       timeout: 10s
@@ -44,9 +44,9 @@ services:
     environment:
       SECRET_KEY: ${SECRET_KEY:-changeme}
     stop_grace_period: 0s
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.production
+    # build:
+    #   context: ./frontend
+    #   dockerfile: Dockerfile.production
     image: caudrel/portfolio-client
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost:3000 || exit 1"]
