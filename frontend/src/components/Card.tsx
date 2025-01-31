@@ -52,6 +52,7 @@ export default function Card({
           </div> */}
                     <div>
                         <h4>Technologies</h4>
+                        <p>Technologies utilisées :</p>
                         <div>
                             {technologies.length > 0 ? (
                                 <ul className='techno-icons'>
