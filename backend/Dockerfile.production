@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm i
 
 COPY ./tsconfig.json ./tsconfig.json
 
@@ -12,4 +12,4 @@ COPY ./src ./src
 
 RUN npm run build
 
-CMD ["npm", "run", "start:prod"]
+CMD npm run start:prod
