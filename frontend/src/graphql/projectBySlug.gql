@@ -1,25 +1,25 @@
 query ProjectBySlug($slug: String!) {
-  projectBySlug(slug: $slug) {
-    id
-    title
-    slug
-    completion_date
-    duration
-    excerpt
-    description
-    area_of_improvement
-    src_picture
-    src_video
-    team_members {
-      name
-      linkedin
-      src_icon
+    projectBySlug(slug: $slug) {
+        id
+        title
+        slug
+        completion_date
+        duration
+        excerpt
+        description
+        area_of_improvement
+        src_picture
+        src_video
+        team_members {
+            name
+            linkedin
+            src_icon
+        }
+        technologies {
+            name
+            src_icon
+        }
+        created_at
+        updated_at
     }
-    technologies {
-      name
-      src_icon
-    }
-    created_at
-    updated_at
-  }
 }

@@ -7,7 +7,9 @@
     "start:prod": "node build/index.js",
     "build": "tsc",
     "resetDB": "ts-node-dev src/resetDb.ts",
-    "resetDbTest": "ts-node-dev src/resetDbTest.ts"
+    "resetDbTest": "ts-node-dev src/resetDbTest.ts",
+    "prettier:fix": "prettier -w .",
+    "eslint:fix": "eslint --fix src/**/*.ts"
   },
   "keywords": [
     "portfolio"

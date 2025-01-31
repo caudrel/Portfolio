@@ -1,24 +1,24 @@
 query Projects($technologyIds: [Int!]) {
-  projects(technologyIds: $technologyIds) {
-    id
-    title
-    slug
-    completion_date
-    duration
-    excerpt
-    prof_env
-    company_name
-    src_picture
-    team_members {
-      id
-      name
-      linkedin
-      src_icon
+    projects(technologyIds: $technologyIds) {
+        id
+        title
+        slug
+        completion_date
+        duration
+        excerpt
+        prof_env
+        company_name
+        src_picture
+        team_members {
+            id
+            name
+            linkedin
+            src_icon
+        }
+        technologies {
+            id
+            name
+            src_icon
+        }
     }
-    technologies {
-      id
-      name
-      src_icon
-    }
-  }
 }

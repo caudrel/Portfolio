@@ -1,12 +1,12 @@
 overwrite: true
-schema: "http://localhost:4000"
-documents: "**/*.{gql,graphql}"
+schema: 'http://localhost:4000'
+documents: '**/*.{gql,graphql}'
 generates:
-  ./src/graphql/generated/schema.ts:
-    plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-react-apollo"
-    config:
-      scalars:
-        DateTimeISO: string
+    ./src/graphql/generated/schema.ts:
+        plugins:
+            - 'typescript'
+            - 'typescript-operations'
+            - 'typescript-react-apollo'
+        config:
+            scalars:
+                DateTimeISO: string

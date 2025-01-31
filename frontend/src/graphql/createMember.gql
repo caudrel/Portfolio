@@ -1,7 +1,7 @@
 mutation CreateTeamMember($data: MemberInput!) {
-  createTeamMember(data: $data) {
-    name
-    linkedin
-    src_icon
-  }
+    createTeamMember(data: $data) {
+        name
+        linkedin
+        src_icon
+    }
 }

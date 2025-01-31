@@ -1,7 +1,7 @@
-export {};
+export {}
 
 declare global {
-  interface Window {
-    mailgoInitialized?: boolean;
-  }
+    interface Window {
+        mailgoInitialized?: boolean
+    }
 }
