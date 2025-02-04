@@ -6,6 +6,12 @@ on:
       image_name:
         type: string
         required: true
+      image_tag:
+        required: true
+        type: string
+      NEXT_PUBLIC_APOLLO_URI:
+        required: true
+        type: string
     secrets:
       DOCKERHUB_USERNAME:
         required: true
@@ -30,7 +36,7 @@ jobs:
         with:
           push: true
           build-args: |
-            NEXT_PUBLIC_APOLLO_URI=/graphql
+            NEXT_PUBLIC_APOLLO_URI=${{ inputs.NEXT_PUBLIC_APOLLO_URI }}
           context: "{{defaultContext}}:frontend"
           file: "Dockerfile.production"
-          tags: ${{inputs.image_name}}
+          tags: ${{ inputs.image_name }}:${{ inputs.image_tag }}
