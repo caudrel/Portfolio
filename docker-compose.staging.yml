@@ -27,7 +27,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    image: caudrel/portfolio-server
+    image: caudrel/portfolio-server:staging
     container_name: portfolio-server-staging
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:${BACKEND_PORT}"]
@@ -44,7 +44,7 @@ services:
       FRONTEND_PORT: ${FRONTEND_PORT}
     stop_grace_period: 0s
     image: caudrel/portfolio-client
-    container_name: portfolio-client-staging
+    container_name: portfolio-client-staging:staging
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost:${FRONTEND_PORT} || exit 1"]
       interval: 10s
