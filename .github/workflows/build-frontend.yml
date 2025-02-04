@@ -36,7 +36,7 @@ jobs:
         with:
           push: true
           build-args: |
-            NEXT_PUBLIC_APOLLO_URI=${{ inputs.NEXT_PUBLIC_APOLLO_URI }}
+            NEXT_PUBLIC_APOLLO_URI=/graphql
           context: "{{defaultContext}}:frontend"
           file: "Dockerfile.production"
           tags: ${{ inputs.image_name }}:${{ inputs.image_tag }}
