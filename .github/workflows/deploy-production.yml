@@ -12,8 +12,7 @@ jobs:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
-      image_name: caudrel/portfolio-server
-      image_tag: prod
+      image_name: caudrel/portfolio-server-prod
 
   build-and-push-client:
     uses: Caudrel/Portfolio/.github/workflows/build-frontend.yml@main
@@ -21,8 +20,7 @@ jobs:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
-      image_name: caudrel/portfolio-client
-      image_tag: prod
+      image_name: caudrel/portfolio-client-prod
 
   notify-vps:
     needs:

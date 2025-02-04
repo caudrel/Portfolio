@@ -27,13 +27,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    image: caudrel/portfolio-server:prod
+    image: caudrel/portfolio-server-prod
 
   frontend:
     environment:
       SECRET_KEY: ${SECRET_KEY:-changeme}
     stop_grace_period: 0s
-    image: caudrel/portfolio-client:prod
+    image: caudrel/portfolio-client-prod
 
   gateway:
     stop_grace_period: 0s
