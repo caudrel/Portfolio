@@ -6,9 +6,6 @@ on:
       image_name:
         type: string
         required: true
-      image_tag:
-        required: true
-        type: string
     secrets:
       DOCKERHUB_USERNAME:
         required: true
@@ -34,6 +31,6 @@ jobs:
           push: true
           context: "{{defaultContext}}:backend"
           file: "Dockerfile.production"
-          tags: ${{ inputs.image_name }}:${{ inputs.image_tag }}
+          tags: ${{ inputs.image_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
