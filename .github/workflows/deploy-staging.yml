@@ -23,7 +23,6 @@ jobs:
     with:
       image_name: caudrel/portfolio-client
       image_tag: staging
-      NEXT_PUBLIC_APOLLO_URI: https://staging.caudrel.com/graphql
 
   notify-vps:
     needs:
