@@ -41,7 +41,6 @@ services:
   frontend:
     environment:
       SECRET_KEY: ${SECRET_KEY:-changeme}
-      FRONTEND_PORT: ${FRONTEND_PORT}
     stop_grace_period: 0s
     image: caudrel/portfolio-client:prod
     container_name: portfolio-client-prod

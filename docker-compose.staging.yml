@@ -6,7 +6,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASS-postgres}
       PGUSER: ${DB_USER-postgres}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -h localhost -p ${DB_PORT} -U ${DB_USER-postgres}"]
+      test: ["CMD-SHELL", "pg_isready -h localhost -p 5432 -U ${DB_USER-postgres}"]
       interval: 2s
       timeout: 5s
       retries: 10
@@ -41,7 +41,6 @@ services:
   frontend:
     environment:
       SECRET_KEY: ${SECRET_KEY:-changeme}
-      FRONTEND_PORT: ${FRONTEND_PORT}
     stop_grace_period: 0s
     image: caudrel/portfolio-client:staging
     container_name: portfolio-client-staging
