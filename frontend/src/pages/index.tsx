@@ -34,7 +34,7 @@ export default function Home() {
                         priority
                     />
                     <h1>AURELIE LOZACH</h1>
-                    <h2>Full Stack Developpeur</h2>
+                    <h2>Full Stack Developpeuse</h2>
 
                     <ul>
                         <li key={currentLanguage}>{currentLanguage}</li>
