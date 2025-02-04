@@ -13,6 +13,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
       image_name: caudrel/portfolio-server
+      image_tag: staging
 
   build-and-push-client:
     uses: Caudrel/Portfolio/.github/workflows/build-frontend.yml@main
@@ -21,6 +22,8 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
       image_name: caudrel/portfolio-client
+      image_tag: staging
+      NEXT_PUBLIC_APOLLO_URI: https://staging.caudrel.com/graphql
 
   notify-vps:
     needs:

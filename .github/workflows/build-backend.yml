@@ -31,7 +31,6 @@ jobs:
           push: true
           context: "{{defaultContext}}:backend"
           file: "Dockerfile.production"
-          tags: ${{inputs.image_name}}
-          #tags: crazygift2024/easy-gift-server:staging
+          tags: ${{ inputs.image_name }}:${{ inputs.image_tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
