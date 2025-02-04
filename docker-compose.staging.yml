@@ -43,8 +43,8 @@ services:
       SECRET_KEY: ${SECRET_KEY:-changeme}
       FRONTEND_PORT: ${FRONTEND_PORT}
     stop_grace_period: 0s
-    image: caudrel/portfolio-client
-    container_name: portfolio-client-staging:staging
+    image: caudrel/portfolio-client:staging
+    container_name: portfolio-client-staging
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost:${FRONTEND_PORT} || exit 1"]
       interval: 10s
