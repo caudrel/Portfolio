@@ -23,7 +23,6 @@ jobs:
     with:
       image_name: caudrel/portfolio-client
       image_tag: prod
-      NEXT_PUBLIC_APOLLO_URI: https://caudrel.com/graphql
 
   notify-vps:
     needs:
