@@ -6,6 +6,9 @@ on:
       image_name:
         type: string
         required: true
+      image_tag:
+        required: true
+        type: string
     secrets:
       DOCKERHUB_USERNAME:
         required: true
