@@ -31,4 +31,4 @@ jobs:
       - name: Call VPS webhook to update staging
         uses: wei/curl@master
         with:
-          args: https://ops.caudrel.com/hooks/update-staging
+          args: -H "Content-Type:application/json" https://ops.caudrel.com/hooks/update-staging
