@@ -12,7 +12,7 @@ jobs:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
-      image_name: caudrel/portfolio-server-staging
+      image_name: caudrel/portfolio-server
 
   build-and-push-client:
     uses: Caudrel/Portfolio/.github/workflows/build-frontend.yml@dev
@@ -20,7 +20,7 @@ jobs:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
-      image_name: caudrel/portfolio-client-staging
+      image_name: caudrel/portfolio-client
 
   notify-vps:
     needs:
@@ -31,4 +31,4 @@ jobs:
       - name: Call VPS webhook to update staging
         uses: wei/curl@master
         with:
-          args: https://ops.caudrel.com/hooks/update-staging
+          args: -H "Content-Type:application/json" https://ops.caudrel.com/hooks/update-staging
