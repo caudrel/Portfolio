@@ -3,8 +3,11 @@ import Layout from '../components/Layout'
 import { useEffect, useState, useMemo } from 'react'
 import Link from 'next/link'
 import Projects from '@/components/Projects'
+import { connectedUserEmail } from '@/utils/checkConnection'
 
 export default function Home() {
+    const email = connectedUserEmail()
+    console.log('email', email)
     const languages = useMemo(
         () => ['Laravel', 'Symfony', 'Next.js', 'Node.js', 'SQL'],
         []
@@ -21,6 +24,8 @@ export default function Home() {
         return () => clearInterval(interval) // Nettoyage au démontage
     }, [index, languages])
 
+    // console.log('ctx', ctx.user)
+
     return (
         <>
             <Layout title='Accueil - Portfolio CAudrel'>
@@ -34,7 +39,7 @@ export default function Home() {
                         priority
                     />
                     <h1>AURELIE LOZACH</h1>
-                    <h2>Full Stack Developpeuse test</h2>
+                    <h2>Full Stack Developpeuse - Chef de projet</h2>
 
                     <ul>
                         <li key={currentLanguage}>{currentLanguage}</li>
