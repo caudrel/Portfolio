@@ -13,7 +13,22 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  DateTimeISO: string;
+};
+
+export type EmailInput = {
+  email: Scalars['String'];
+};
+
+export type InputLogin = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type InputRegisterValidation = {
+  first_name: Scalars['String'];
+  last_name: Scalars['String'];
+  password: Scalars['String'];
+  token: Scalars['String'];
 };
 
 export type MemberInput = {
@@ -24,9 +39,21 @@ export type MemberInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  confirmRegister: ResponseMessage;
   createProject: Project;
   createTeamMember: TeamMember;
   createTechnology: Technology;
+  forgotPassword: ResponseMessage;
+  googleAuth: ResponseMessage;
+  logout: Scalars['Boolean'];
+  refreshToken: Scalars['String'];
+  registerVisitor: ResponseMessage;
+  resetPassword: ResponseMessage;
+};
+
+
+export type MutationConfirmRegisterArgs = {
+  data: InputRegisterValidation;
 };
 
 
@@ -42,6 +69,27 @@ export type MutationCreateTeamMemberArgs = {
 
 export type MutationCreateTechnologyArgs = {
   data: TechnologyInput;
+};
+
+
+export type MutationForgotPasswordArgs = {
+  email: Scalars['String'];
+};
+
+
+export type MutationGoogleAuthArgs = {
+  token: Scalars['String'];
+};
+
+
+export type MutationRegisterVisitorArgs = {
+  data: EmailInput;
+};
+
+
+export type MutationResetPasswordArgs = {
+  newPassword: Scalars['String'];
+  token: Scalars['String'];
 };
 
 export type Project = {
@@ -96,11 +144,18 @@ export type ProjectInput = {
 
 export type Query = {
   __typename?: 'Query';
+  getRole: Array<UserWoPassword>;
+  login: ResponseMessage;
   projectBySlug?: Maybe<Project>;
   projects?: Maybe<Array<ProjectCard>>;
   teamMembers?: Maybe<Array<TeamMember>>;
   technologies?: Maybe<Array<Technology>>;
-  users: Array<User>;
+  users: Array<UserWoPassword>;
+};
+
+
+export type QueryLoginArgs = {
+  infos: InputLogin;
 };
 
 
@@ -111,6 +166,12 @@ export type QueryProjectBySlugArgs = {
 
 export type QueryProjectsArgs = {
   technologyIds?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+export type ResponseMessage = {
+  __typename?: 'ResponseMessage';
+  message: Scalars['String'];
+  success: Scalars['Boolean'];
 };
 
 export type TeamMember = {
@@ -150,8 +211,8 @@ export type TechnologyWoProjectRelation = {
   src_icon: Scalars['String'];
 };
 
-export type User = {
-  __typename?: 'User';
+export type UserWoPassword = {
+  __typename?: 'UserWOPassword';
   created_at: Scalars['String'];
   email: Scalars['String'];
   first_name: Scalars['String'];
@@ -159,7 +220,6 @@ export type User = {
   last_name: Scalars['String'];
   modified_at: Scalars['String'];
   role: Scalars['String'];
-  validated_email?: Maybe<Scalars['DateTimeISO']>;
 };
 
 export type CreateTeamMemberMutationVariables = Exact<{
