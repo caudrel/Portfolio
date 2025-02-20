@@ -1,13 +1,13 @@
-FROM node:20.9.0-alpine3.17
+FROM node:20-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm i
 
 COPY ./tsconfig.json ./tsconfig.json
 
 COPY ./src ./src
 
-CMD npm start
+CMD ["npm", "start"]

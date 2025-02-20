@@ -37,7 +37,7 @@ export default function Technologies() {
                     )) || <p>Aucune technologie disponible.</p>}
                 </div>
                 <h2>Ajouter une technologie</h2>
-                <div className='techno-form-frame'>
+                <div className='form-frame'>
                     <form onSubmit={handleSubmit} className='form'>
                         <div className='labels'>
                             <div className='label'>

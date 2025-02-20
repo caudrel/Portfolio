@@ -1,0 +1,6 @@
+mutation RegisterVisitor($data: EmailInput!) {
+    registerVisitor(data: $data) {
+        message
+        success
+    }
+}

@@ -1,0 +1,6 @@
+mutation ConfirmRegister($data: InputRegisterValidation!) {
+    confirmRegister(data: $data) {
+        message
+        success
+    }
+}
