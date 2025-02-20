@@ -1,0 +1,6 @@
+mutation GoogleAuth($token: String!) {
+    googleAuth(token: $token) {
+        message
+        success
+    }
+}
