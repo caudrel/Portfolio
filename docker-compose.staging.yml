@@ -19,7 +19,12 @@ services:
       DB_PASS: ${DB_PASS:-postgres}
       DB_USER: ${DB_USER:-postgres}
       SECRET_KEY: ${SECRET_KEY:-changeme}
-      NODE_ENV: production
+      NODE_ENV: ${NODE_ENV:-production}
+      SMTP_HOST: ${SMTP_HOST:-production}
+      SMTP_PORT: ${SMTP_PORT:-production}
+      SMTP_USER: ${SMTP_USER:-production}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-production}
+      EMAIL_FROM: caudrelportfolio@gmail.com
       SITE_URL: ${SITE_URL:-https://www.staging.caudrel.com}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-changeme}
       NEXT_PUBLIC_APOLLO_URI: ${NEXT_PUBLIC_APOLLO_URI:-https://www.staging.caudrel.com/graphql}
