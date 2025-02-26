@@ -60,7 +60,7 @@ schema.then(async schema => {
                 let user: User | null = null
 
                 const cookies = new Cookies(req, res)
-                const token = cookies.get('token')
+                const token = cookies.get('accessToken')
 
                 if (token) {
                     try {
