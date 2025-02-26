@@ -27,15 +27,11 @@ export interface Payload {
 }
 
 const app = express()
-const httpServer = http.createServer(app)
 
-// // 🔍 Ajout du suivi de la mémoire
-// setInterval(() => {
-//     const used = process.memoryUsage()
-//     console.log(
-//         `🔍 Mémoire utilisée : RSS=${(used.rss / 1024 / 1024).toFixed(2)} MB, Heap Used=${(used.heapUsed / 1024 / 1024).toFixed(2)} MB`
-//     )
-// }, 5000)
+// ✅ Active la gestion des proxys (Caddy/Nginx)
+app.set('trust proxy', 1)
+
+const httpServer = http.createServer(app)
 
 schema.then(async schema => {
     await db.initialize()
