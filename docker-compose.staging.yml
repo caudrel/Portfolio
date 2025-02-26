@@ -27,6 +27,8 @@ services:
       REDIS_PASSWORD: ${REDIS_PASSWORD:-changeme}
       REDIS_PORT: 6379
     stop_grace_period: 0s
+    ports:
+      - 4000:4000
     depends_on:
       db:
         condition: service_healthy
