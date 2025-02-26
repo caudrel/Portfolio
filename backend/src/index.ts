@@ -33,6 +33,11 @@ app.set('trust proxy', 1)
 
 const httpServer = http.createServer(app)
 
+// 🆕 Endpoint de healthcheck
+app.get('/health', (req, res) => {
+    res.status(200).send('OK')
+})
+
 schema.then(async schema => {
     await db.initialize()
 
