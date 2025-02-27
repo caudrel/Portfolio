@@ -83,73 +83,69 @@ function Login() {
     }
 
     return (
-        <>
-            <Layout title='Login - Portfolio CAudrel'>
-                <section className='login'>
-                    <h1 className=''>Connexion</h1>
-                    <div>
-                        {errorMessage && <p className=''>{errorMessage}</p>}
-                    </div>
-                    <div className='form-frame'>
-                        <form className='form' onSubmit={handleSubmit}>
-                            <div className='labels'>
-                                <div className='label'>
-                                    <label htmlFor='email'>
-                                        <span className=''>Email</span>
-                                    </label>
-                                    <input
-                                        data-testid='login-email'
-                                        id='email'
-                                        type='email'
-                                        name='email'
-                                        required
-                                    />
-                                </div>
-                                <div className='label'>
-                                    <label
-                                        htmlFor='password'
-                                        className='text-sm font-medium text-muted-foreground'
-                                    >
-                                        <span>Mot de passe</span>
-                                    </label>
-                                    <input
-                                        data-testid='login-password'
-                                        id='password'
-                                        type='password'
-                                        name='password'
-                                        required
-                                    />
-                                </div>
+        <Layout title='Login - Portfolio CAudrel'>
+            <section className='login'>
+                <h1 className=''>Connexion</h1>
+                <div>{errorMessage && <p className=''>{errorMessage}</p>}</div>
+                <div className='form-frame'>
+                    <form className='form' onSubmit={handleSubmit}>
+                        <div className='labels'>
+                            <div className='label'>
+                                <label htmlFor='email'>
+                                    <span className=''>Email</span>
+                                </label>
+                                <input
+                                    data-testid='login-email'
+                                    id='email'
+                                    type='email'
+                                    name='email'
+                                    required
+                                />
                             </div>
-                            <div className='form-validation'>
-                                <button
-                                    data-testid='login-button'
-                                    type='submit'
-                                    className='btn-secondary'
+                            <div className='label'>
+                                <label
+                                    htmlFor='password'
+                                    className='text-sm font-medium text-muted-foreground'
                                 >
-                                    {'Se connecter'}
-                                </button>
+                                    <span>Mot de passe</span>
+                                </label>
+                                <input
+                                    data-testid='login-password'
+                                    id='password'
+                                    type='password'
+                                    name='password'
+                                    required
+                                />
                             </div>
+                        </div>
+                        <div className='form-validation'>
+                            <button
+                                data-testid='login-button'
+                                type='submit'
+                                className='btn-secondary'
+                            >
+                                {'Se connecter'}
+                            </button>
+                        </div>
 
-                            <Link href={'/auth/register'} className=''>
-                                Pas encore de compte ?
-                            </Link>
+                        <Link href={'/auth/register'} className=''>
+                            Pas encore de compte ?
+                        </Link>
 
-                            <Link href={'/auth/forgot-password'} className=''>
-                                J'ai oublié mon mot de passe 🤭
-                            </Link>
+                        <Link href={'/auth/forgot-password'} className=''>
+                            J'ai oublié mon mot de passe 🤭
+                        </Link>
 
-                            <GoogleLogin
-                                onSuccess={handleGoogleLogin}
-                                onError={() =>
-                                    toast.error('Échec de la connexion Google')
-                                }
-                            />
-                        </form>
-                    </div>
-                </section>
-            </Layout>
-        </>
+                        <GoogleLogin
+                            onSuccess={handleGoogleLogin}
+                            onError={() =>
+                                toast.error('Échec de la connexion Google')
+                            }
+                        />
+                    </form>
+                </div>
+            </section>
+        </Layout>
     )
 }
 

@@ -47,7 +47,8 @@ export class User extends BaseEntity {
         if (this.authProvider === 'google' || !this.password) {
             return // Ne pas hasher si c'est un compte Google
         }
-        if (!this.password.startsWith('$argon2')) {
+        const isHashed = this.password.startsWith('$argon2')
+        if (!isHashed) {
             this.password = await argon2.hash(this.password)
         }
     }
