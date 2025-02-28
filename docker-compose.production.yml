@@ -51,6 +51,8 @@ services:
     image: caudrel/portfolio-server
 
   frontend:
+    networks:
+      - prod_net
     environment:
       SECRET_KEY: ${SECRET_KEY:-changeme}
     stop_grace_period: 0s
@@ -58,6 +60,8 @@ services:
 
   redis:
     image: redis:alpine
+    networks:
+      - prod_net
     ports:
       - 6380:6379
     environment:
