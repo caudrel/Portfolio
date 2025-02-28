@@ -1,6 +1,11 @@
+networks:
+  prod_net:
+
 services:
   db:
     image: postgres:15
+    networks:
+      - prod_net
     stop_grace_period: 0s
     environment:
       POSTGRES_PASSWORD: ${DB_PASS:-postgres}
@@ -14,6 +19,8 @@ services:
       - prodDB:/var/lib/postgresql/data
 
   backend:
+    networks:
+      - prod_net
     environment:
       DB_HOST: db
       DB_PASS: ${DB_PASS:-postgres}
@@ -72,7 +79,7 @@ services:
       backend:
         condition: service_healthy
     ports:
-      - ${GATEWAY_PORT-80}:80
+      - "${GATEWAY_PORT}:80"
 
 volumes:
   prodDB:
