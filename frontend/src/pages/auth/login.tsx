@@ -17,7 +17,7 @@ function Login() {
     //login classique
     const [login, { data, error }] = useLoginLazyQuery({
         onCompleted: () => {
-            router.push('/')
+            window.location.href = '/'
         },
     })
 
@@ -57,7 +57,7 @@ function Login() {
                 },
             },
         }).then(() => {
-            router.push('/')
+            window.location.href = '/'
         })
     }
     const [googleAuth] = useGoogleAuthMutation()
