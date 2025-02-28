@@ -1,0 +1,39 @@
+@use '../abstracts/color' as color;
+@use '../abstracts/mixin' as mixin;
+@use '../abstracts/media-query' as media;
+
+.footer {
+    background-color: color.$color-blue;
+    background-image: radial-gradient(
+        100% 100% at 100% 0,
+        color.$color-sunshine 0,
+        color.$color-blue 100%
+    );
+    // background-image: linear-gradient(
+    //     180deg,
+    //     color.$color-turquoise,
+    //     color.$color-blue
+    // );
+    // background-image: linear-gradient(
+    //     180deg,
+    //     color.$color-sunshine,
+    //     color.$color-blue
+    // );
+
+    .links {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 1rem auto;
+        width: 100%;
+        height: 4rem;
+
+        a {
+            span {
+                color: color.$color-beige;
+            }
+        }
+    }
+
+    @include mixin.frame;
+}
