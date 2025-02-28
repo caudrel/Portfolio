@@ -1,11 +1,51 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { checkUserConnected } from '@/utils/checkConnection'
+import { useLogoutMutation } from '@/graphql/generated/schema'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
+import { checkRole } from '@/middleware'
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false)
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
+    const isConnected = checkUserConnected()
+
+    console.log('isConnected', isConnected)
+
+    const [role, setRole] = useState<string | null>(null)
+
+    useEffect(() => {
+        const fetchRole = async () => {
+            const userRole = await checkRole()
+            setRole(userRole)
+        }
+
+        fetchRole()
+    }, [])
+
+    console.log('role', role)
+
+    const router = useRouter()
+    const [logout] = useLogoutMutation({
+        onCompleted: () => {
+            toast.success('Déconnexion réussie!')
+            router.push('/').then(() => {
+                setTimeout(() => window.location.reload(), 3000)
+            })
+        },
+        onError: error => {
+            toast.error(`Erreur lors de la déconnexion: ${error.message}`)
+        },
+        fetchPolicy: 'no-cache',
+    })
+
+    const handleLogout = () => {
+        setMenuOpen(false)
+        logout()
+    }
 
     useEffect(() => {
         // Détecter si la largeur de l'écran est inférieure ou égale à un seuil (e.g., 768px pour les mobiles)
@@ -58,40 +98,49 @@ export default function Header() {
                             Projets
                         </Link>
 
-                        <div
-                            className='admin-dropdown'
-                            onMouseEnter={() => setDropdownOpen(true)} // Affiche le menu au survol (laptop)
-                            onMouseLeave={() => setDropdownOpen(false)} // Cache le menu lorsqu'on sort (laptop)
-                        >
-                            <button
-                                className={`dropdown-button ${isScrolled ? 'scrolled' : ''}`}
-                                onClick={() => setDropdownOpen(!dropdownOpen)}
-                            >
-                                Admin
-                                <svg
-                                    xmlns='http://www.w3.org/2000/svg'
-                                    width='13'
-                                    height='13'
-                                    fill='currentColor'
-                                    className='bi bi-caret-down-fill'
-                                    viewBox='0 0 16 16'
+                        {isConnected && (
+                            <>
+                                <div
+                                    className='admin-dropdown'
+                                    onMouseEnter={() => setDropdownOpen(true)} // Affiche le menu au survol (laptop)
+                                    onMouseLeave={() => setDropdownOpen(false)} // Cache le menu lorsqu'on sort (laptop)
                                 >
-                                    <path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z' />
-                                </svg>
-                            </button>
+                                    <button
+                                        className={`dropdown-button ${isScrolled ? 'scrolled' : ''}`}
+                                        onClick={() =>
+                                            setDropdownOpen(!dropdownOpen)
+                                        }
+                                    >
+                                        Admin
+                                        <svg
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            width='13'
+                                            height='13'
+                                            fill='currentColor'
+                                            className='bi bi-caret-down-fill'
+                                            viewBox='0 0 16 16'
+                                        >
+                                            <path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z' />
+                                        </svg>
+                                    </button>
 
-                            <div
-                                className={`dropdown-menu ${dropdownOpen ? 'visible' : ''} ${isScrolled ? 'scrolled' : ''}`}
-                            >
-                                <Link href='/admin/technologies'>
-                                    Technologies
-                                </Link>
-                                <Link href='/admin/members'>
-                                    {"Membres d'équipe"}
-                                </Link>
-                                <Link href='/admin/projects'>Projets</Link>
-                            </div>
-                        </div>
+                                    <div
+                                        className={`dropdown-menu ${dropdownOpen ? 'visible' : ''} ${isScrolled ? 'scrolled' : ''}`}
+                                    >
+                                        <Link href='/admin/technologies'>
+                                            Technologies
+                                        </Link>
+                                        <Link href='/admin/members'>
+                                            {"Membres d'équipe"}
+                                        </Link>
+                                        <Link href='/admin/projects'>
+                                            Projets
+                                        </Link>
+                                    </div>
+                                </div>
+                            </>
+                        )}
+
                         <Link
                             href='mailto:lozachaurelie@gmail.com'
                             className={`nav-icon ${isScrolled ? 'scrolled' : ''}`}
@@ -144,6 +193,21 @@ export default function Header() {
                             </svg>
                         </Link>
                     </div>
+
+                    {!isConnected && (
+                        <Link href='/auth/login' className='btn-primary'>
+                            Login
+                        </Link>
+                    )}
+
+                    {isConnected && (
+                        <button
+                            className='btn-secondary'
+                            onClick={() => handleLogout()}
+                        >
+                            Logout
+                        </button>
+                    )}
                 </div>
             ) : (
                 // Burger menu for mobile view
@@ -218,57 +282,82 @@ export default function Header() {
                                     >
                                         Projets
                                     </Link>
-                                    <div
-                                        className='admin-dropdown menu-link'
-                                        onClick={() =>
-                                            setDropdownOpen(!dropdownOpen)
-                                        }
-                                    >
-                                        <button className='dropdown-button'>
-                                            Admin
-                                            <svg
-                                                xmlns='http://www.w3.org/2000/svg'
-                                                width='13'
-                                                height='13'
-                                                fill='currentColor'
-                                                className='bi bi-caret-down-fill'
-                                                viewBox='0 0 16 16'
+
+                                    {isConnected && (
+                                        <>
+                                            <div
+                                                className='admin-dropdown menu-link'
+                                                onClick={() =>
+                                                    setDropdownOpen(
+                                                        !dropdownOpen
+                                                    )
+                                                }
                                             >
-                                                <path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z' />
-                                            </svg>
-                                        </button>
-                                        <div
-                                            className={`dropdown-section ${dropdownOpen ? 'visible' : ''}`}
+                                                <button className='dropdown-button'>
+                                                    Admin
+                                                    <svg
+                                                        xmlns='http://www.w3.org/2000/svg'
+                                                        width='13'
+                                                        height='13'
+                                                        fill='currentColor'
+                                                        className='bi bi-caret-down-fill'
+                                                        viewBox='0 0 16 16'
+                                                    >
+                                                        <path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z' />
+                                                    </svg>
+                                                </button>
+                                                <div
+                                                    className={`dropdown-section ${dropdownOpen ? 'visible' : ''}`}
+                                                >
+                                                    <Link
+                                                        href='/admin/technologies'
+                                                        className='dropdown-link'
+                                                        onClick={() =>
+                                                            setMenuOpen(false)
+                                                        }
+                                                    >
+                                                        Technologies
+                                                    </Link>
+                                                    <Link
+                                                        href='/admin/members'
+                                                        className='dropdown-link'
+                                                        onClick={() =>
+                                                            setMenuOpen(false)
+                                                        }
+                                                    >
+                                                        {"Membres d'équipe"}
+                                                    </Link>
+                                                    <Link
+                                                        href='/admin/projects'
+                                                        className='dropdown-link'
+                                                        onClick={() =>
+                                                            setMenuOpen(false)
+                                                        }
+                                                    >
+                                                        Projets
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                    {!isConnected && (
+                                        <Link
+                                            className='dropdown-link'
+                                            href='/auth/login'
+                                            onClick={() => setMenuOpen(false)}
                                         >
-                                            <Link
-                                                href='/admin/technologies'
-                                                className='dropdown-link'
-                                                onClick={() =>
-                                                    setMenuOpen(false)
-                                                }
-                                            >
-                                                Technologies
-                                            </Link>
-                                            <Link
-                                                href='/admin/members'
-                                                className='dropdown-link'
-                                                onClick={() =>
-                                                    setMenuOpen(false)
-                                                }
-                                            >
-                                                {"Membres d'équipe"}
-                                            </Link>
-                                            <Link
-                                                href='/admin/projects'
-                                                className='dropdown-link'
-                                                onClick={() =>
-                                                    setMenuOpen(false)
-                                                }
-                                            >
-                                                Projets
-                                            </Link>
-                                        </div>
-                                    </div>
+                                            Login
+                                        </Link>
+                                    )}
+                                    {isConnected && (
+                                        <Link
+                                            className='dropdown-link'
+                                            href='/auth/login'
+                                            onClick={handleLogout}
+                                        >
+                                            Logout
+                                        </Link>
+                                    )}
                                 </div>
                                 <div className='socialIcons-burger-container'>
                                     <Link

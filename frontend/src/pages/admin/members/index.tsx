@@ -49,7 +49,7 @@ export default function Technologies() {
                     )) || <p>{"Aucun membre d'équipe disponible."}</p>}
                 </div>
                 <h2>{"Ajouter un membre d'équipe"}</h2>
-                <div className='member-form-frame'>
+                <div className='form-frame'>
                     <form onSubmit={handleSubmit} className='form'>
                         <div className='labels'>
                             <div>

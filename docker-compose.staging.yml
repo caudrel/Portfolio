@@ -3,8 +3,8 @@ services:
     image: postgres:15
     stop_grace_period: 0s
     environment:
-      POSTGRES_PASSWORD: ${DB_PASS-postgres}
-      PGUSER: ${DB_USER-postgres}
+      POSTGRES_PASSWORD: ${DB_PASS:-postgres}
+      PGUSER: ${DB_USER:-postgres}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready"]
       interval: 2s
@@ -16,14 +16,28 @@ services:
   backend:
     environment:
       DB_HOST: db
-      DB_PASS: ${DB_PASS-postgres}
-      DB_USER: ${DB_USER-postgres}
+      DB_PASS: ${DB_PASS:-postgres}
+      DB_USER: ${DB_USER:-postgres}
       SECRET_KEY: ${SECRET_KEY:-changeme}
-      NODE_ENV: production
-      SITE_URL: ${SITE_URL:-staging}
+      NODE_ENV: ${NODE_ENV:-production}
+      SMTP_HOST: ${SMTP_HOST:-production}
+      SMTP_PORT: ${SMTP_PORT:-production}
+      SMTP_USER: ${SMTP_USER:-production}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-production}
+      EMAIL_FROM: caudrelportfolio@gmail.com
+      SITE_URL: ${SITE_URL:-https://www.staging.caudrel.com}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-changeme}
-      NEXT_PUBLIC_APOLLO_URI: ${NEXT_PUBLIC_APOLLO_URI:-changeme}
+      NEXT_PUBLIC_APOLLO_URI: ${NEXT_PUBLIC_APOLLO_URI:-https://www.staging.caudrel.com/graphql}
+      REDIS_HOST: redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-changeme}
+      REDIS_PORT: 6379
     stop_grace_period: 0s
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
     depends_on:
       db:
         condition: service_healthy
@@ -35,12 +49,28 @@ services:
     stop_grace_period: 0s
     image: caudrel/portfolio-client
 
+  redis:
+    image: redis:alpine
+    ports:
+      - 6380:6379
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-changeme}
+    command: sh -c "redis-server --requirepass \"$${REDIS_PASSWORD}\""
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+
   gateway:
     stop_grace_period: 0s
     restart: always
     build:
       context: gateway
       dockerfile: Dockerfile.production
+    depends_on:
+      backend:
+        condition: service_healthy
     ports:
       - ${GATEWAY_PORT-80}:80
 
