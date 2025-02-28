@@ -75,7 +75,7 @@ export default function Header() {
     return (
         <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
             {!isMobile ? (
-                <div className='navbar'>
+                <nav className='navbar'>
                     <button className='btn-primary'>Contact</button>
 
                     <div className='nav-links'>
@@ -208,10 +208,10 @@ export default function Header() {
                             Logout
                         </button>
                     )}
-                </div>
+                </nav>
             ) : (
                 // Burger menu for mobile view
-                <div className='burger-menu mobile'>
+                <nav className='burger-menu mobile'>
                     <button className='btn-primary'>Contact</button>
                     <div className='socialIcons-burger'>
                         <button
@@ -415,7 +415,7 @@ export default function Header() {
                             </div>
                         )}
                     </div>
-                </div>
+                </nav>
             )}
         </header>
     )
