@@ -1,5 +1,0 @@
-query GetRole {
-    getRole {
-        role
-    }
-}

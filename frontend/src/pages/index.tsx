@@ -3,11 +3,11 @@ import Layout from '../components/Layout'
 import { useEffect, useState, useMemo } from 'react'
 import Link from 'next/link'
 import Projects from '@/components/Projects'
-import { connectedUserEmail } from '@/utils/checkConnection'
+//import { connectedUserEmail } from '@/middleware'
 
 export default function Home() {
-    const email = connectedUserEmail()
-    console.log('email', email)
+    //const email = connectedUserEmail()
+    //console.log('email', email)
     const languages = useMemo(
         () => ['Laravel', 'Symfony', 'Next.js', 'Node.js', 'SQL'],
         []
@@ -42,7 +42,9 @@ export default function Home() {
                     <h2>Full Stack Developpeuse - Chef de projet</h2>
 
                     <ul>
-                        <li key={currentLanguage}>{currentLanguage}</li>
+                        <li className='tech-caroussel' key={currentLanguage}>
+                            {currentLanguage}
+                        </li>
                     </ul>
                 </section>
                 <section className='about' id='about'>
@@ -80,7 +82,7 @@ export default function Home() {
                                 </p>
                             </div>
                             <div className='list'>
-                                <ul className='list1'>
+                                <ul className='perso-info'>
                                     <li aria-label='date de naissance'>
                                         <strong>Anniversaire : </strong>
                                         11/11/1977
@@ -92,7 +94,7 @@ export default function Home() {
                                         <strong>Tel : </strong>06 84 65 04 90
                                     </li>
                                 </ul>
-                                <ul className='list2'>
+                                <ul className='degres-info'>
                                     <li>
                                         <strong>Diplômes : </strong>
                                         <ul>

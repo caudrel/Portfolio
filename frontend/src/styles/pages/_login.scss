@@ -14,7 +14,82 @@
     gap: 2rem;
     @include mixin.section;
 
-    span {
-        color: color.$color-indigo;
+    .google-login-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .google-disabled-btn {
+        background: #f5f5f5;
+        color: #999;
+        border: 1px solid #ddd;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 5px;
+        font-weight: 500;
+    }
+
+    .google-disabled-btn img {
+        width: 20px;
+        height: 20px;
+        opacity: 0.5;
+    }
+
+    .checkbox {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-family: 'Gotham Book', sans-serif;
+        }
+
+        input {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0; // Rendre invisible tout en étant cliquable
+            cursor: pointer;
+        }
+
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 1px solid color.$color-grey;
+            border-radius: 4px;
+            background-color: color.$color-beige;
+            position: relative;
+            transition: all 0.3s ease;
+
+            &::after {
+                content: '😃';
+                font-size: 14px;
+                color: color.$color-grey;
+                position: absolute;
+                top: 10%;
+                left: 13%;
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+                transition: all 0.2s ease-in-out;
+            }
+        }
+
+        input:checked + .custom-checkbox {
+            background-color: green;
+            border-color: color.$color-dark;
+
+            &::after {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
     }
 }

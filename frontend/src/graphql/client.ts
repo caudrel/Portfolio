@@ -1,14 +1,20 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client'
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 
-const devApiUrl = process.env.NEXT_PUBLIC_APOLLO_URI
+const devApiUrl =
+    process.env.NEXT_PUBLIC_APOLLO_URI || 'http://localhost:4000/graphql'
+
+const link = createHttpLink({
+    uri: devApiUrl,
+    credentials: 'include', // Permet d'envoyer les cookies (indispensable pour l'auth)
+})
 
 const client = new ApolloClient({
-    uri: devApiUrl ? devApiUrl : '/graphql',
-    cache: new InMemoryCache(),
+    link,
     credentials: 'include',
+    cache: new InMemoryCache(),
     defaultOptions: {
         watchQuery: {
-            nextFetchPolicy: 'cache-and-network',
+            fetchPolicy: 'cache-and-network',
         },
     },
 })
