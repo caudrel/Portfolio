@@ -29,6 +29,7 @@ export type InputRegisterValidation = {
   last_name: Scalars['String'];
   password: Scalars['String'];
   token: Scalars['String'];
+  validated_consent_cgu: Scalars['String'];
 };
 
 export type MemberInput = {
@@ -46,7 +47,6 @@ export type Mutation = {
   forgotPassword: ResponseMessage;
   googleAuth: ResponseMessage;
   logout: Scalars['Boolean'];
-  refreshToken: Scalars['String'];
   registerVisitor: ResponseMessage;
   resetPassword: ResponseMessage;
 };
@@ -73,7 +73,7 @@ export type MutationCreateTechnologyArgs = {
 
 
 export type MutationForgotPasswordArgs = {
-  email: Scalars['String'];
+  data: EmailInput;
 };
 
 
@@ -89,7 +89,7 @@ export type MutationRegisterVisitorArgs = {
 
 export type MutationResetPasswordArgs = {
   newPassword: Scalars['String'];
-  token: Scalars['String'];
+  resetToken: Scalars['String'];
 };
 
 export type Project = {
@@ -144,12 +144,13 @@ export type ProjectInput = {
 
 export type Query = {
   __typename?: 'Query';
-  getRole: Array<UserWoPassword>;
+  getUserFromCtx?: Maybe<UserWoPassword>;
   login: ResponseMessage;
   projectBySlug?: Maybe<Project>;
   projects?: Maybe<Array<ProjectCard>>;
   teamMembers?: Maybe<Array<TeamMember>>;
   technologies?: Maybe<Array<Technology>>;
+  userById?: Maybe<UserWoPassword>;
   users: Array<UserWoPassword>;
 };
 
@@ -166,6 +167,11 @@ export type QueryProjectBySlugArgs = {
 
 export type QueryProjectsArgs = {
   technologyIds?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+
+export type QueryUserByIdArgs = {
+  id: Scalars['Float'];
 };
 
 export type ResponseMessage = {
@@ -212,13 +218,11 @@ export type TechnologyWoProjectRelation = {
 };
 
 export type UserWoPassword = {
-  __typename?: 'UserWOPassword';
-  created_at: Scalars['String'];
+  __typename?: 'UserWoPassword';
   email: Scalars['String'];
   first_name: Scalars['String'];
   id: Scalars['Int'];
   last_name: Scalars['String'];
-  modified_at: Scalars['String'];
   role: Scalars['String'];
 };
 
@@ -251,16 +255,16 @@ export type CreateTechnologyMutationVariables = Exact<{
 export type CreateTechnologyMutation = { __typename?: 'Mutation', createTechnology: { __typename?: 'Technology', id: number, name: string, src_icon: string } };
 
 export type ForgotPasswordMutationVariables = Exact<{
-  email: Scalars['String'];
+  data: EmailInput;
 }>;
 
 
 export type ForgotPasswordMutation = { __typename?: 'Mutation', forgotPassword: { __typename?: 'ResponseMessage', message: string, success: boolean } };
 
-export type GetRoleQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetUserFromCtxQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRoleQuery = { __typename?: 'Query', getRole: Array<{ __typename?: 'UserWOPassword', role: string }> };
+export type GetUserFromCtxQuery = { __typename?: 'Query', getUserFromCtx?: { __typename?: 'UserWoPassword', id: number, first_name: string, last_name: string, email: string, role: string } | null };
 
 export type GoogleAuthMutationVariables = Exact<{
   token: Scalars['String'];
@@ -304,7 +308,7 @@ export type RegisterVisitorMutation = { __typename?: 'Mutation', registerVisitor
 
 export type ResetPasswordMutationVariables = Exact<{
   newPassword: Scalars['String'];
-  token: Scalars['String'];
+  resetToken: Scalars['String'];
 }>;
 
 
@@ -319,6 +323,13 @@ export type TechnologiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type TechnologiesQuery = { __typename?: 'Query', technologies?: Array<{ __typename?: 'Technology', id: number, name: string, src_icon: string }> | null };
+
+export type UserByIdQueryVariables = Exact<{
+  userByIdId: Scalars['Float'];
+}>;
+
+
+export type UserByIdQuery = { __typename?: 'Query', userById?: { __typename?: 'UserWoPassword', id: number, first_name: string, last_name: string, email: string, role: string } | null };
 
 
 export const ConfirmRegisterDocument = gql`
@@ -483,8 +494,8 @@ export type CreateTechnologyMutationHookResult = ReturnType<typeof useCreateTech
 export type CreateTechnologyMutationResult = Apollo.MutationResult<CreateTechnologyMutation>;
 export type CreateTechnologyMutationOptions = Apollo.BaseMutationOptions<CreateTechnologyMutation, CreateTechnologyMutationVariables>;
 export const ForgotPasswordDocument = gql`
-    mutation ForgotPassword($email: String!) {
-  forgotPassword(email: $email) {
+    mutation ForgotPassword($data: EmailInput!) {
+  forgotPassword(data: $data) {
     message
     success
   }
@@ -505,7 +516,7 @@ export type ForgotPasswordMutationFn = Apollo.MutationFunction<ForgotPasswordMut
  * @example
  * const [forgotPasswordMutation, { data, loading, error }] = useForgotPasswordMutation({
  *   variables: {
- *      email: // value for 'email'
+ *      data: // value for 'data'
  *   },
  * });
  */
@@ -516,40 +527,44 @@ export function useForgotPasswordMutation(baseOptions?: Apollo.MutationHookOptio
 export type ForgotPasswordMutationHookResult = ReturnType<typeof useForgotPasswordMutation>;
 export type ForgotPasswordMutationResult = Apollo.MutationResult<ForgotPasswordMutation>;
 export type ForgotPasswordMutationOptions = Apollo.BaseMutationOptions<ForgotPasswordMutation, ForgotPasswordMutationVariables>;
-export const GetRoleDocument = gql`
-    query GetRole {
-  getRole {
+export const GetUserFromCtxDocument = gql`
+    query GetUserFromCtx {
+  getUserFromCtx {
+    id
+    first_name
+    last_name
+    email
     role
   }
 }
     `;
 
 /**
- * __useGetRoleQuery__
+ * __useGetUserFromCtxQuery__
  *
- * To run a query within a React component, call `useGetRoleQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetRoleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUserFromCtxQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserFromCtxQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetRoleQuery({
+ * const { data, loading, error } = useGetUserFromCtxQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetRoleQuery(baseOptions?: Apollo.QueryHookOptions<GetRoleQuery, GetRoleQueryVariables>) {
+export function useGetUserFromCtxQuery(baseOptions?: Apollo.QueryHookOptions<GetUserFromCtxQuery, GetUserFromCtxQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRoleQuery, GetRoleQueryVariables>(GetRoleDocument, options);
+        return Apollo.useQuery<GetUserFromCtxQuery, GetUserFromCtxQueryVariables>(GetUserFromCtxDocument, options);
       }
-export function useGetRoleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRoleQuery, GetRoleQueryVariables>) {
+export function useGetUserFromCtxLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserFromCtxQuery, GetUserFromCtxQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRoleQuery, GetRoleQueryVariables>(GetRoleDocument, options);
+          return Apollo.useLazyQuery<GetUserFromCtxQuery, GetUserFromCtxQueryVariables>(GetUserFromCtxDocument, options);
         }
-export type GetRoleQueryHookResult = ReturnType<typeof useGetRoleQuery>;
-export type GetRoleLazyQueryHookResult = ReturnType<typeof useGetRoleLazyQuery>;
-export type GetRoleQueryResult = Apollo.QueryResult<GetRoleQuery, GetRoleQueryVariables>;
+export type GetUserFromCtxQueryHookResult = ReturnType<typeof useGetUserFromCtxQuery>;
+export type GetUserFromCtxLazyQueryHookResult = ReturnType<typeof useGetUserFromCtxLazyQuery>;
+export type GetUserFromCtxQueryResult = Apollo.QueryResult<GetUserFromCtxQuery, GetUserFromCtxQueryVariables>;
 export const GoogleAuthDocument = gql`
     mutation GoogleAuth($token: String!) {
   googleAuth(token: $token) {
@@ -794,8 +809,8 @@ export type RegisterVisitorMutationHookResult = ReturnType<typeof useRegisterVis
 export type RegisterVisitorMutationResult = Apollo.MutationResult<RegisterVisitorMutation>;
 export type RegisterVisitorMutationOptions = Apollo.BaseMutationOptions<RegisterVisitorMutation, RegisterVisitorMutationVariables>;
 export const ResetPasswordDocument = gql`
-    mutation ResetPassword($newPassword: String!, $token: String!) {
-  resetPassword(newPassword: $newPassword, token: $token) {
+    mutation ResetPassword($newPassword: String!, $resetToken: String!) {
+  resetPassword(newPassword: $newPassword, resetToken: $resetToken) {
     message
     success
   }
@@ -817,7 +832,7 @@ export type ResetPasswordMutationFn = Apollo.MutationFunction<ResetPasswordMutat
  * const [resetPasswordMutation, { data, loading, error }] = useResetPasswordMutation({
  *   variables: {
  *      newPassword: // value for 'newPassword'
- *      token: // value for 'token'
+ *      resetToken: // value for 'resetToken'
  *   },
  * });
  */
@@ -901,3 +916,42 @@ export function useTechnologiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type TechnologiesQueryHookResult = ReturnType<typeof useTechnologiesQuery>;
 export type TechnologiesLazyQueryHookResult = ReturnType<typeof useTechnologiesLazyQuery>;
 export type TechnologiesQueryResult = Apollo.QueryResult<TechnologiesQuery, TechnologiesQueryVariables>;
+export const UserByIdDocument = gql`
+    query UserById($userByIdId: Float!) {
+  userById(id: $userByIdId) {
+    id
+    first_name
+    last_name
+    email
+    role
+  }
+}
+    `;
+
+/**
+ * __useUserByIdQuery__
+ *
+ * To run a query within a React component, call `useUserByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserByIdQuery({
+ *   variables: {
+ *      userByIdId: // value for 'userByIdId'
+ *   },
+ * });
+ */
+export function useUserByIdQuery(baseOptions: Apollo.QueryHookOptions<UserByIdQuery, UserByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserByIdQuery, UserByIdQueryVariables>(UserByIdDocument, options);
+      }
+export function useUserByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserByIdQuery, UserByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserByIdQuery, UserByIdQueryVariables>(UserByIdDocument, options);
+        }
+export type UserByIdQueryHookResult = ReturnType<typeof useUserByIdQuery>;
+export type UserByIdLazyQueryHookResult = ReturnType<typeof useUserByIdLazyQuery>;
+export type UserByIdQueryResult = Apollo.QueryResult<UserByIdQuery, UserByIdQueryVariables>;

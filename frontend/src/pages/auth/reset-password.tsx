@@ -22,7 +22,10 @@ function ResetPassword() {
         }
         try {
             const result = await resetPassword({
-                variables: { token: token as string, newPassword: password },
+                variables: {
+                    resetToken: token as string,
+                    newPassword: password,
+                },
             })
             if (result.data?.resetPassword.success) {
                 toast.success('Mot de passe réinitialisé avec succès!')

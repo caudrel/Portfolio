@@ -12,7 +12,7 @@ function ForgotPassword() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
-            await forgotPassword({ variables: { email } })
+            await forgotPassword({ variables: { data: { email } } })
             toast.success('Email envoyé avec succès !')
         } catch (err) {
             setErrorMessage("Erreur lors de l'envoi de l'email")

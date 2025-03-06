@@ -11,7 +11,7 @@
     @include mixin.frame;
 
     &.scrolled {
-        background-color: rgba(255, 251, 251, 0.5);
+        background-color: rgba(255, 251, 251, 0.75);
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
         @supports (backdrop-filter: blur(15px)) or
@@ -28,10 +28,19 @@
         padding: 1rem;
 
         .nav-links {
+            font-family: 'Gotham Light', sans-serif;
+            font-size: 1rem;
             display: flex;
+            flex-direction: row;
             align-items: center;
-            gap: 1rem;
+            justify-content: space-between;
+            gap: 4rem;
             color: color.$color-beige;
+
+            .social-icon-menu {
+                display: flex;
+                gap: 1rem;
+            }
 
             .menu-link {
                 border-radius: 4px;
@@ -50,6 +59,7 @@
 
                 &.scrolled {
                     color: color.$color-blue;
+                    font-family: 'Gotham Book', sans-serif;
 
                     &:hover {
                         background-image: radial-gradient(
@@ -66,8 +76,11 @@
                 z-index: inherit;
                 display: inline-block;
                 position: relative;
+                padding: 0.5rem;
 
                 .dropdown-button {
+                    font-family: 'Gotham Light', sans-serif;
+                    font-size: 1rem;
                     background: none;
                     border: none;
                     display: flex;
@@ -77,6 +90,7 @@
 
                     &.scrolled {
                         color: color.$color-blue;
+                        font-family: 'Gotham Book', sans-serif;
                     }
                 }
 
@@ -100,6 +114,7 @@
                         &.scrolled {
                             background-color: rgba(255, 251, 251, 0.9);
                             color: color.$color-blue;
+                            font-family: 'Gotham Book', sans-serif;
                         }
                     }
 
@@ -179,6 +194,10 @@
         color: color.$color-beige;
         border: none;
 
+        &.scrolled {
+            color: color.$color-blue;
+        }
+
         svg {
             height: 30px;
             width: auto;
@@ -198,6 +217,8 @@
         align-items: center;
 
         .dropdown-button {
+            font-family: 'Gotham Light', sans-serif;
+            font-size: 1rem;
             background: none;
             border: none;
             display: flex;
@@ -205,6 +226,10 @@
             gap: 0.2rem;
             margin-bottom: 0.8rem;
             color: color.$color-navy;
+
+            &.mobile {
+                margin-bottom: 0.3rem;
+            }
         }
     }
 
@@ -235,13 +260,23 @@
         .burger-link-container {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            justify-content: space-between;
+            height: 100%;
+
+            .dropdown {
+                display: flex;
+                flex-direction: column;
+                gap: 1.4rem;
+            }
+
             a,
             button {
                 text-align: center;
             }
 
             .dropdown-link {
+                font-family: 'Gotham Light', sans-serif;
+                font-size: 1rem;
                 display: block;
                 text-decoration: none;
                 color: color.$color-blue;
@@ -266,10 +301,13 @@
             &.visible {
                 opacity: 1;
                 transform: scaleY(1);
-
                 a {
                     color: color.$color-navy;
                 }
+            }
+
+            &.mobile {
+                gap: 0.2rem;
             }
         }
 

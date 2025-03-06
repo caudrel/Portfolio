@@ -21,6 +21,17 @@
         flex-direction: column;
         gap: 2rem;
 
+        span {
+            color: color.$color-indigo;
+        }
+
+        a {
+            font-family: 'Gotham Light', sans-serif;
+            &:hover {
+                color: color.$color-indigo;
+            }
+        }
+
         .labels {
             display: flex;
             flex-direction: column;
@@ -29,7 +40,7 @@
             .label {
                 display: flex;
                 flex-direction: column;
-                font-family: 'Roboto', sans-serif;
+                font-family: 'Gotham book', sans-serif;
                 color: color.$color-dark;
             }
 
@@ -49,4 +60,10 @@
 .form-validation {
     display: flex;
     justify-content: center;
+
+    .btn-disabled {
+        background: #ddd;
+        color: #999;
+        // cursor: not-allowed;
+    }
 }

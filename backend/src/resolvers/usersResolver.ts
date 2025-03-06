@@ -2,11 +2,12 @@ import { Resolver, Arg, Query, Mutation, Ctx } from 'type-graphql'
 import { Not, IsNull } from 'typeorm'
 import {
     User,
-    UserWOPassword,
+    UserWoPassword,
     ResponseMessage,
     InputLogin,
     InputRegisterValidation,
     EmailInput,
+    InputRegister,
 } from '../entities/user'
 import * as argon2 from 'argon2'
 import { MyContext } from '..'
@@ -27,6 +28,12 @@ const url = process.env.SITE_URL || 'http://localhost:3000'
 export async function findUserByEmail(email: string) {
     return await User.findOne({
         where: { email },
+    })
+}
+
+export async function findUserById(id: number) {
+    return await User.findOne({
+        where: { id },
     })
 }
 
@@ -56,20 +63,35 @@ export async function createUser({
 
 @Resolver(User)
 class UsersResolver {
-    @Query(() => [UserWOPassword])
-    async users(): Promise<UserWOPassword[]> {
+    @Query(() => [UserWoPassword])
+    async users(): Promise<UserWoPassword[]> {
         const users = await User.find()
-        return plainToInstance(UserWOPassword, users)
+        return plainToInstance(UserWoPassword, users)
     }
 
-    @Query(() => [UserWOPassword])
-    async getRole(@Ctx() ctx: MyContext): Promise<boolean> {
-        const role = ctx.user?.role
-        return role === 'admin'
+    @Query(() => UserWoPassword, { nullable: true })
+    async userById(@Arg('id') id: number): Promise<UserWoPassword | null> {
+        return await User.findOne({ where: { id } })
+    }
+
+    @Query(() => UserWoPassword, { nullable: true })
+    async getUserFromCtx(
+        @Ctx() ctx: MyContext
+    ): Promise<UserWoPassword | null> {
+        const ctxUser = ctx.user
+        if (!ctxUser) {
+            return null
+        }
+
+        // Retourner l'utilisateur sous le type UserWoPassword
+        return plainToInstance(UserWoPassword, ctxUser)
     }
 
     @Query(() => ResponseMessage)
-    async login(@Arg('infos') infos: InputLogin, @Ctx() ctx: MyContext) {
+    async login(
+        @Arg('infos', { validate: true }) infos: InputLogin,
+        @Ctx() ctx: MyContext
+    ) {
         const user = await findUserByEmail(infos.email)
 
         if (!user) {
@@ -83,31 +105,24 @@ class UsersResolver {
 
         const responseMessage = new ResponseMessage()
         if (isPasswordValid) {
-            const accessToken = await new SignJWT({ email: user.email })
+            const accessToken = await new SignJWT({ id: user.id })
                 .setProtectedHeader({ alg: 'HS256', typ: 'jwt' })
                 .setExpirationTime('2h')
                 .sign(new TextEncoder().encode(`${process.env.SECRET_KEY}`))
 
-            const refreshToken = await new SignJWT({ email: user.email })
-                .setProtectedHeader({ alg: 'HS256', typ: 'jwt' })
-                .setExpirationTime('7d')
-                .sign(new TextEncoder().encode(`${process.env.SECRET_KEY}`))
-
-            user.refreshToken = await argon2.hash(refreshToken)
-            await user.save()
-
             const cookies = new Cookies(ctx.req, ctx.res)
+            // cookies.set('accessToken', accessToken, { httpOnly: true })
+
             cookies.set('accessToken', accessToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'lax',
-                // sameSite: 'none', // Pour les cookies cross-origin en dev
-            })
-            cookies.set('refreshToken', refreshToken, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'lax',
-                // sameSite: 'none', // Pour les cookies cross-origin en dev
+                secure: process.env.NODE_ENV === 'production', // Assurez-vous que votre app utilise HTTPS en prod
+                sameSite:
+                    process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' pour cross-origin, 'lax' pour local
+                domain:
+                    process.env.NODE_ENV === 'production'
+                        ? '.caudrel.com'
+                        : undefined, // Domaine en prod
+                path: '/', // Le cookie sera accessible pour toutes les routes
             })
 
             responseMessage.message = 'Bienvenue!'
@@ -118,47 +133,6 @@ class UsersResolver {
         }
 
         return responseMessage
-    }
-
-    @Mutation(() => String)
-    async refreshToken(@Ctx() ctx: MyContext): Promise<string> {
-        const cookies = new Cookies(ctx.req, ctx.res)
-        const refreshToken = cookies.get('refreshToken')
-
-        if (!refreshToken) {
-            throw new GraphQLError('Aucun refresh token trouvé.')
-        }
-
-        const user = await User.findOne({
-            where: { refreshToken: Not(IsNull()) },
-        })
-
-        if (!user || !user.refreshToken) {
-            throw new GraphQLError(
-                'Utilisateur non trouvé ou refresh token manquant.'
-            )
-        }
-
-        // Vérification du token
-        const valid = await argon2.verify(user.refreshToken, refreshToken)
-        if (!valid) {
-            throw new GraphQLError('Refresh token invalide.')
-        }
-
-        // Génération du nouveau accessToken
-        const newAccessToken = await new SignJWT({ email: user.email })
-            .setProtectedHeader({ alg: 'HS256', typ: 'jwt' })
-            .setExpirationTime('2h')
-            .sign(new TextEncoder().encode(`${process.env.SECRET_KEY}`))
-
-        cookies.set('accessToken', newAccessToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            // sameSite: 'none', // Pour les cookies cross-origin en dev
-        })
-
-        return newAccessToken
     }
 
     @Mutation(() => ResponseMessage)
@@ -199,7 +173,7 @@ class UsersResolver {
             }
 
             // Génération du token JWT
-            const jwtToken = await new SignJWT({ email: user.email })
+            const jwtToken = await new SignJWT({ id: user.id })
                 .setProtectedHeader({ alg: 'HS256', typ: 'jwt' })
                 .setExpirationTime('2h')
                 .sign(new TextEncoder().encode(`${process.env.SECRET_KEY}`))
@@ -208,9 +182,13 @@ class UsersResolver {
             const cookies = new Cookies(ctx.req, ctx.res)
             cookies.set('accessToken', jwtToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production' ? true : false, // 🔄 Modifié ici
+                secure: process.env.NODE_ENV === 'production' ? true : false,
                 sameSite:
-                    process.env.NODE_ENV === 'production' ? 'strict' : 'lax', // 🔄 Modifié ici
+                    process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+                domain:
+                    process.env.NODE_ENV === 'production'
+                        ? '.caudrel.com'
+                        : 'localhost',
             })
 
             return {
@@ -232,34 +210,15 @@ class UsersResolver {
             // Réinitialiser les cookies token ici (ou supprime-les si nécessaire)
             cookies.set('accessToken', '', {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production', // 🔒 Seulement en production
-                sameSite: 'lax',
-                // sameSite: 'none', // Pour les cookies cross-origin en dev
+                secure: process.env.NODE_ENV === 'production',
+                sameSite:
+                    process.env.NODE_ENV === 'production' ? 'none' : 'lax', // `none` pour cross-origin, `lax` pour local
                 expires: new Date(0), // Expirer immédiatement
+                domain:
+                    process.env.NODE_ENV === 'production'
+                        ? '.caudrel.com'
+                        : 'localhost',
             })
-
-            cookies.set('refreshToken', '', {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production', // 🔒 Seulement en production
-                sameSite: 'lax',
-                // sameSite: 'none', // Pour les cookies cross-origin en dev
-                expires: new Date(0), // Expirer immédiatement
-            })
-
-            console.log(
-                'Cookies après suppression:',
-                cookies.get('accessToken'),
-                cookies.get('refreshToken')
-            )
-        }
-
-        // Autres logiques (par exemple, supprimer le token de la base de données)
-        const user = await User.findOne({
-            where: { refreshToken: Not(IsNull()) },
-        })
-        if (user) {
-            user.refreshToken = null
-            await user.save()
         }
 
         return true
@@ -267,10 +226,9 @@ class UsersResolver {
 
     @Mutation(() => ResponseMessage)
     async registerVisitor(
-        @Arg('data') data: EmailInput
+        @Arg('data', { validate: true }) data: EmailInput
     ): Promise<ResponseMessage> {
         const { email } = data
-        // Vérifier si l'utilisateur existe déjà
         const existingUser = await User.findOne({ where: { email } })
 
         if (existingUser) {
@@ -320,13 +278,15 @@ class UsersResolver {
             <p>Veuillez compléter votre inscription en cliquant sur le lien ci-dessous :</p>
             <a href="${confirmationLink}" style="color: #fff; background-color: #28a745; padding: 10px 15px; text-decoration: none; border-radius: 5px;">Finaliser mon inscription</a>
             <p>Ou copiez et collez ce lien dans votre navigateur : <br> ${confirmationLink}</p>
-            <p>Ce lien est valable pour une durée limitée.</p>
+            <p>Ce lien est valable 1h.</p>
+            <p>Passé ce délais, veuillez renouveler l'opération.</p>
         `
 
         const messageText = `
             Finalisez votre inscription en cliquant sur le lien suivant : ${confirmationLink}
             Ou copiez et collez ce lien dans votre navigateur : ${confirmationLink}
-            Ce lien est valable pour une durée limitée.
+            Ce lien est valable 1h.
+            Passé ce délais, veuillez renouveler l'opération.
         `
 
         await sendMail({
@@ -349,9 +309,15 @@ class UsersResolver {
 
     @Mutation(() => ResponseMessage)
     async confirmRegister(
-        @Arg('data') data: InputRegisterValidation
+        @Arg('data', { validate: true }) data: InputRegisterValidation
     ): Promise<ResponseMessage> {
-        const { token, first_name, last_name, password } = data
+        const {
+            token,
+            first_name,
+            last_name,
+            password,
+            validated_consent_cgu,
+        } = data
 
         const email = await redis.get(`register:${token}`)
 
@@ -359,7 +325,13 @@ class UsersResolver {
             throw new Error("Lien d'inscription invalide ou expiré.")
         }
 
-        // Création du nouvel utilisateur avec le hash géré automatiquement
+        // Vérifier si la date est bien valide
+        const consentDate = new Date(validated_consent_cgu)
+        if (isNaN(consentDate.getTime())) {
+            throw new Error('La date de validation des CGU est invalide.')
+        }
+
+        // Création du nouvel utilisateur
         const newUser = User.create({
             email,
             first_name,
@@ -367,6 +339,7 @@ class UsersResolver {
             password,
             role: 'visitor',
             validated_email: new Date(),
+            validated_consent_cgu: consentDate, // ✅ Conversion sécurisée
             authProvider: 'local',
         })
 
@@ -381,16 +354,17 @@ class UsersResolver {
 
     @Mutation(() => ResponseMessage)
     async forgotPassword(
-        @Arg('email') email: string
+        @Arg('data', { validate: true }) data: EmailInput
     ): Promise<ResponseMessage> {
         const responseMessage = new ResponseMessage()
+        const { email } = data
         responseMessage.success = true
         responseMessage.message =
             'Si cet email existe, un lien de réinitialisation a été envoyé'
 
         const user = await User.findOne({ where: { email } })
         if (!user) {
-            return responseMessage // Ne révèle pas si l'utilisateur existe
+            return responseMessage
         }
 
         const resetToken = crypto.randomBytes(32).toString('hex')
@@ -423,8 +397,8 @@ class UsersResolver {
                     },
                 ],
             })
-        } catch (err) {
-            console.error("Erreur lors de l'envoi de l'email:", err)
+        } catch (error) {
+            console.error("Erreur d'envoi d'email :", error)
         }
 
         return responseMessage
@@ -432,25 +406,22 @@ class UsersResolver {
 
     @Mutation(() => ResponseMessage)
     async resetPassword(
-        @Arg('token') token: string,
+        @Arg('resetToken') resetToken: string,
         @Arg('newPassword') newPassword: string
     ): Promise<ResponseMessage> {
-        const user = await User.findOne({ where: { resetToken: token } })
-
-        const responseMessage = new ResponseMessage()
+        const user = await User.findOne({ where: { resetToken } })
         if (!user) {
-            responseMessage.success = false
-            responseMessage.message = 'Token invalide'
-            return responseMessage
+            throw new Error('Le token est invalide ou a expiré')
         }
 
         user.password = newPassword
         user.resetToken = null
         await user.save()
 
-        responseMessage.success = true
-        responseMessage.message = 'Mot de passe réinitialisé avec succès'
-        return responseMessage
+        return {
+            success: true,
+            message: 'Mot de passe réinitialisé avec succès',
+        }
     }
 }
 

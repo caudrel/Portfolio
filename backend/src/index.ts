@@ -10,7 +10,7 @@ import http from 'http'
 import { User } from './entities/user'
 import { jwtVerify } from 'jose'
 import Cookies from 'cookies'
-import { findUserByEmail } from './resolvers/usersResolver'
+import { findUserById } from './resolvers/usersResolver'
 
 require('events').EventEmitter.defaultMaxListeners = 20
 
@@ -23,7 +23,7 @@ export interface MyContext {
 }
 
 export interface Payload {
-    email: string
+    id: number
 }
 
 const app = express()
@@ -38,51 +38,57 @@ app.get('/health', (req, res) => {
     res.status(200).send('OK')
 })
 
-schema.then(async schema => {
-    await db.initialize()
+schema
+    .then(async schema => {
+        await db.initialize()
 
-    const server = new ApolloServer<MyContext>({
-        schema,
-        plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    })
-
-    await server.start()
-
-    app.use(
-        '/',
-        cors<cors.CorsRequest>({
-            origin: [
-                'http://localhost:3000',
-                'https://studio.apollographql.com',
-                'https://staging.caudrel.com',
-                'https://caudrel.com',
-            ],
-            credentials: true,
-        }),
-        express.json(),
-        expressMiddleware(server, {
-            context: async ({ req, res }) => {
-                let user: User | null = null
-
-                const cookies = new Cookies(req, res)
-                const token = cookies.get('accessToken')
-
-                if (token) {
-                    try {
-                        const verify = await jwtVerify<Payload>(
-                            token,
-                            new TextEncoder().encode(process.env.SECRET_KEY)
-                        )
-                        user = await findUserByEmail(verify.payload.email)
-                    } catch (error) {
-                        console.error('Error during JWT verification, ', error)
-                    }
-                }
-                return { req, res, user }
-            },
+        const server = new ApolloServer<MyContext>({
+            schema,
+            plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
         })
-    )
 
-    await new Promise<void>(resolve => httpServer.listen({ port }, resolve))
-    console.log(`graphql server listening on http://localhost:${port}/`)
-})
+        await server.start()
+
+        app.use(
+            '/',
+            cors<cors.CorsRequest>({
+                origin: [
+                    'http://localhost:3000',
+                    'https://studio.apollographql.com',
+                    'https://staging.caudrel.com',
+                    'https://caudrel.com',
+                ],
+                credentials: true,
+            }),
+            express.json(),
+            expressMiddleware(server, {
+                context: async ({ req, res }) => {
+                    let user: User | null = null
+
+                    const cookies = new Cookies(req, res)
+                    const token = cookies.get('accessToken')
+
+                    if (token) {
+                        try {
+                            const verify = await jwtVerify<Payload>(
+                                token,
+                                new TextEncoder().encode(process.env.SECRET_KEY)
+                            )
+
+                            user = await findUserById(verify.payload.id)
+                        } catch (error) {
+                            console.error(
+                                'Error during JWT verification, ',
+                                error
+                            )
+                        }
+                    }
+                    return { req, res, user }
+                },
+            })
+        )
+
+        await new Promise<void>(resolve => httpServer.listen({ port }, resolve))
+        console.log(`graphql server listening on http://localhost:${port}/`)
+    })
+    .catch(err => console.error('🔥 Erreur au démarrage du serveur:', err))

@@ -10,7 +10,13 @@ import {
     UpdateDateColumn,
 } from 'typeorm'
 import * as argon2 from 'argon2'
-import { IsEmail, IsNotEmpty, IsStrongPassword, Length } from 'class-validator'
+import {
+    IsEmail,
+    IsNotEmpty,
+    IsStrongPassword,
+    Length,
+    IsDateString,
+} from 'class-validator'
 import { Exclude } from 'class-transformer'
 
 export type Role = 'visitor' | 'admin'
@@ -57,11 +63,15 @@ export class User extends BaseEntity {
     resetToken: string | null
 
     @Column('text', { nullable: true, unique: true })
-    refreshToken?: string | null
+    accessToken?: string | null
 
     @Column({ default: null, type: 'date', nullable: true })
     @Field(() => Date, { nullable: true })
     validated_email: Date | null
+
+    @Column({ type: 'timestamp', nullable: true }) // Utiliser 'timestamp' au lieu de 'date'
+    @Field(() => Date, { nullable: true })
+    validated_consent_cgu: Date | null
 
     @Field()
     @Column({ enum: ['visitor', 'admin'], default: 'visitor' })
@@ -77,7 +87,7 @@ export class User extends BaseEntity {
 }
 
 @ObjectType()
-export class UserWOPassword {
+export class UserWoPassword {
     @Field(() => Int)
     id: number
 
@@ -92,12 +102,6 @@ export class UserWOPassword {
 
     @Field()
     role: Role
-
-    @Field()
-    created_at: string
-
-    @Field()
-    modified_at: string
 
     @Exclude()
     password: string
@@ -114,6 +118,21 @@ export class ResponseMessage {
 
 @InputType()
 export class EmailInput {
+    @Field()
+    @IsEmail(
+        {},
+        {
+            message: 'Une adresse mail valide est requise',
+        }
+    )
+    @IsNotEmpty({
+        message: 'Veuillez renseigner votre email',
+    })
+    email: string
+}
+
+@InputType()
+export class InputRegister {
     @Field()
     @IsEmail(
         {},
@@ -171,6 +190,17 @@ export class InputRegisterValidation {
         }
     )
     password: string
+
+    @Field()
+    @IsNotEmpty({
+        message:
+            "Veuillez accepter nos conditions générales d'utilisation pour créer votre compte'",
+    })
+    @IsDateString(
+        {},
+        { message: 'La date de validation doit être une date valide.' }
+    )
+    validated_consent_cgu: string
 }
 
 @InputType()

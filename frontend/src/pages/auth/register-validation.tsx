@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import {
     useConfirmRegisterMutation,
     InputRegisterValidation,
@@ -6,11 +7,15 @@ import { useRouter } from 'next/router'
 import Layout from '@/components/Layout'
 import { toast } from 'react-toastify'
 import { getConstraints } from '@/lib/utils'
+import Link from 'next/link'
 
 export default function RegisterValidation() {
     const router = useRouter()
     const token = router.query.token as string
     const email = router.query.email as string
+    const [cguAccepted, setCguAccepted] = useState(true)
+
+    const [isCguChecked, setIsCguChecked] = useState(true) // ✅ Gérer l'état de la case à cocher
 
     const [confirmRegister, { error, loading }] = useConfirmRegisterMutation({
         onCompleted: data => {
@@ -42,15 +47,14 @@ export default function RegisterValidation() {
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
 
-        // Nettoyage des données
         const data: InputRegisterValidation = {
             first_name: (formData.get('first_name') as string).trim(),
             last_name: (formData.get('last_name') as string).trim(),
             password: (formData.get('password') as string).trim(),
             token: token,
+            validated_consent_cgu: new Date().toISOString(), // ✅ Ajouter la date actuelle
         }
 
-        // Vérification des champs
         if (
             !data.first_name ||
             !data.last_name ||
@@ -79,12 +83,18 @@ export default function RegisterValidation() {
         }
     }
 
+    // Utiliser useEffect pour écouter l'état de la case CGU
+    useEffect(() => {
+        if (!cguAccepted) {
+            toast.error('Veuillez accepter les CGU avant de continuer.')
+        }
+    }, [cguAccepted])
+
     return (
         <Layout title='Finalisation de création de compte - Portfolio CAudrel'>
             <section className='login'>
                 <h1>Finalisez votre création de compte</h1>
 
-                {/* Affichage des erreurs de validation GraphQL */}
                 {errorMessages && errorMessages.length > 0 && (
                     <div className='error-messages'>
                         {errorMessages.map((item, index) =>
@@ -141,16 +151,45 @@ export default function RegisterValidation() {
                                     required
                                 />
                             </div>
+
+                            <div className='checkbox'>
+                                <label htmlFor='cgu'>
+                                    <input
+                                        type='checkbox'
+                                        id='cgu'
+                                        name='cgu'
+                                        checked={isCguChecked} // ✅ Bindé à isCguChecked
+                                        onChange={e =>
+                                            setIsCguChecked(e.target.checked)
+                                        } // ✅ Mettre à jour l'état
+                                    />
+                                    <span className='custom-checkbox'></span>
+                                    J&apos;accepte les CGU
+                                    <Link href={'/cgu'}>(disponibles ici)</Link>
+                                </label>
+                            </div>
                         </div>
-                        <button
-                            type='submit'
-                            className='btn-secondary'
-                            disabled={loading}
-                        >
-                            {loading
-                                ? 'Création en cours...'
-                                : 'Créer un compte'}
-                        </button>
+                        {!cguAccepted ? (
+                            <div className='form-validation'>
+                                <button
+                                    type='button'
+                                    className='btn-secondary btn-disabled'
+                                    onClick={() => {
+                                        toast.error(
+                                            'Veuillez accepter les CGU avant de continuer.'
+                                        )
+                                    }}
+                                >
+                                    Créer un compte
+                                </button>
+                            </div>
+                        ) : (
+                            <div className='form-validation'>
+                                <button type='submit' className='btn-secondary'>
+                                    Créer un compte
+                                </button>
+                            </div>
+                        )}
                     </form>
                 </div>
             </section>

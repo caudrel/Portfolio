@@ -1,18 +1,18 @@
 import Cookies from 'js-cookie'
 export const checkUserConnected = () => {
     const cookies = Cookies
-    const emailCookie = cookies.get('email')
-    if (emailCookie) {
+    const idCookie = cookies.get('id')
+    if (idCookie) {
         return true
     }
     return false
 }
 
-export const connectedUserEmail = () => {
+export const connectedUserId = () => {
     const cookies = Cookies
-    const emailCookie = cookies.get('email')
-    if (emailCookie) {
-        return emailCookie
+    const idCookie = cookies.get('id')
+    if (idCookie) {
+        return idCookie
     }
     return false
 }

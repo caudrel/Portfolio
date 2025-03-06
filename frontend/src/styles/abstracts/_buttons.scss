@@ -2,6 +2,8 @@
 @use './color' as color;
 
 .btn-primary {
+    font-family: 'Gotham Light', sans-serif;
+    font-size: 0.8rem;
     align-items: center;
     appearance: none;
     background-image: radial-gradient(
@@ -31,10 +33,9 @@
     will-change: box-shadow, transform;
     padding: 0 16px;
     height: 30px;
-    font-size: 0.8rem;
 
     @media (min-width: media.$from-micro) {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 
     @media (min-width: media.$from-micro) {
@@ -54,6 +55,8 @@
 }
 
 .btn-secondary {
+    font-family: 'Gotham Light', sans-serif;
+    font-size: 1rem;
     align-items: center;
     appearance: none;
     background-image: radial-gradient(
@@ -85,8 +88,18 @@
     white-space: nowrap;
     will-change: box-shadow, transform;
     padding: 0 16px;
-
     height: 30px;
+
+    &:hover,
+    &:focus {
+        background-image: radial-gradient(
+            100% 100% at 100% 0,
+            color.$color-sunshine 0,
+            color.$color-indigo 100%
+        );
+        transform: scale(1.03);
+        box-shadow: 0 2px 10px rgba(71, 30, 179, 0.1);
+    }
 
     @media (min-width: media.$from-micro) {
         height: 40px;

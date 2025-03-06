@@ -13,33 +13,34 @@ import { GoogleLogin } from '@react-oauth/google'
 function Login() {
     const router = useRouter()
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
-    //login classique
-    const [login, { data, error }] = useLoginLazyQuery({
-        onCompleted: () => {
-            window.location.href = '/'
-        },
-    })
-
-    useEffect(() => {
-        if (data) {
+    // login classique
+    const [login, { data, error, loading }] = useLoginLazyQuery({
+        onCompleted: data => {
             if (data.login.success) {
                 toast.success('Connexion réussie!')
+                router.push('/')
             } else {
                 toast.error(
                     'Erreur lors de la connexion: Vérifiez vos informations'
                 )
             }
-        }
-
-        if (error) {
-            console.error('error', error)
+        },
+        onError: error => {
             toast.error(`Erreur lors de la connexion: ${error.message}`)
+        },
+    })
+
+    useEffect(() => {
+        if (error) {
+            setErrorMessage(error.message)
         }
-    }, [data, error])
+    }, [error])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
         const formData = new FormData(e.currentTarget)
         const loginData = Object.fromEntries(formData) as InputLogin
         loginData.email = loginData.email.trim()
@@ -49,21 +50,23 @@ function Login() {
             setErrorMessage('Veuillez renseigner tous les champs')
             return
         }
+
+        setIsSubmitting(true)
         await login({
-            variables: {
-                infos: {
-                    email: loginData.email,
-                    password: loginData.password,
-                },
-            },
-        }).then(() => {
-            window.location.href = '/'
+            variables: { infos: loginData },
         })
+        setIsSubmitting(false)
     }
+
+    // Connexion Google
     const [googleAuth] = useGoogleAuthMutation()
-    // Mutation pour la connexion avec Google
+
     const handleGoogleLogin = async (response: any) => {
-        const googleToken = response.credential
+        const googleToken = response?.credential
+        if (!googleToken) {
+            toast.error('Erreur: Aucun token Google trouvé')
+            return
+        }
 
         try {
             const { data } = await googleAuth({
@@ -85,14 +88,15 @@ function Login() {
     return (
         <Layout title='Login - Portfolio CAudrel'>
             <section className='login'>
-                <h1 className=''>Connexion</h1>
-                <div>{errorMessage && <p className=''>{errorMessage}</p>}</div>
+                <h1>Connexion</h1>
+                {errorMessage && <p className='error-text'>{errorMessage}</p>}
+
                 <div className='form-frame'>
                     <form className='form' onSubmit={handleSubmit}>
                         <div className='labels'>
                             <div className='label'>
                                 <label htmlFor='email'>
-                                    <span className=''>Email</span>
+                                    <span>Email</span>
                                 </label>
                                 <input
                                     data-testid='login-email'
@@ -100,13 +104,11 @@ function Login() {
                                     type='email'
                                     name='email'
                                     required
+                                    disabled={isSubmitting}
                                 />
                             </div>
                             <div className='label'>
-                                <label
-                                    htmlFor='password'
-                                    className='text-sm font-medium text-muted-foreground'
-                                >
+                                <label htmlFor='password'>
                                     <span>Mot de passe</span>
                                 </label>
                                 <input
@@ -115,25 +117,27 @@ function Login() {
                                     type='password'
                                     name='password'
                                     required
+                                    disabled={isSubmitting}
                                 />
                             </div>
                         </div>
                         <div className='form-validation'>
                             <button
-                                data-testid='login-button'
                                 type='submit'
                                 className='btn-secondary'
+                                disabled={isSubmitting || loading}
                             >
-                                {'Se connecter'}
+                                {isSubmitting || loading
+                                    ? 'Connexion...'
+                                    : 'Se connecter'}
                             </button>
                         </div>
 
-                        <Link href={'/auth/register'} className=''>
+                        <Link href={'/auth/register'}>
                             Pas encore de compte ?
                         </Link>
-
-                        <Link href={'/auth/forgot-password'} className=''>
-                            J'ai oublié mon mot de passe 🤭
+                        <Link href={'/auth/forgot-password'}>
+                            J&apos;ai oublié mon mot de passe 🤭
                         </Link>
 
                         <GoogleLogin
