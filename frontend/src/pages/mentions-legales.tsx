@@ -5,10 +5,8 @@ export default function PrivacyPolicy() {
     return (
         <Layout title='Politique de confidentialité - Portfolio CAudrel'>
             <section>
-                <div className='p-4'>
-                    <h1 className='text-2xl font-bold mb-4'>
-                        Politique de confidentialité
-                    </h1>
+                <div className='login'>
+                    <h1>Politique de confidentialité</h1>
                     <p>
                         Cette politique de confidentialité explique comment nous
                         collectons, utilisons et protégeons vos informations

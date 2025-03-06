@@ -37,17 +37,17 @@ export async function verify(token: string): Promise<Payload | null> {
     }
 }
 
-export async function ctxUser(): Promise<UserWoPassword | null> {
-    const { data, loading, error } = useGetUserFromCtxQuery()
-    if (loading) {
-        return null
-    }
-    if (error) {
-        console.error(error)
-        return null
-    }
-    return data?.getUserFromCtx ?? null // Remplace par la réponse correcte si nécessaire
-}
+// export async function ctxUser(): Promise<UserWoPassword | null> {
+//     const { data, loading, error } = useGetUserFromCtxQuery()
+//     if (loading) {
+//         return null
+//     }
+//     if (error) {
+//         console.error(error)
+//         return null
+//     }
+//     return data?.getUserFromCtx ?? null // Remplace par la réponse correcte si nécessaire
+// }
 
 async function checkToken(
     accessToken: string | undefined,

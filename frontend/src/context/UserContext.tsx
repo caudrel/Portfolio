@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { ApolloError } from '@apollo/client'
 import {
     useGetUserFromCtxQuery,
@@ -14,34 +14,24 @@ type UserContextType = {
 // Création du contexte utilisateur
 const userContext = createContext<UserContextType | undefined>(undefined)
 
-export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
-    children,
-}) => {
+export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const { data, loading, error } = useGetUserFromCtxQuery()
+    const [user, setUser] = useState<UserWoPassword | null>(null)
 
-    let errorMessage = null
-    if (error) {
-        // Logique de gestion de l'erreur
-        errorMessage = error.message // Ici, tu peux récupérer le message d'erreur ou d'autres infos
-        console.error('Apollo Error:', errorMessage)
-    }
-
-    const user = data?.getUserFromCtx ?? null
+    useEffect(() => {
+        if (data?.getUserFromCtx) {
+            setUser(data.getUserFromCtx)
+        }
+    }, [data])
 
     return (
-        <userContext.Provider value={{ user, loading, error: errorMessage }}>
-            {loading ? (
-                <p>Chargement...</p>
-            ) : user ? (
-                children
-            ) : (
-                <p>Aucun utilisateur trouvé</p>
-            )}
+        <userContext.Provider value={{ user, loading, error: error ?? null }}>
+            {children}
         </userContext.Provider>
     )
 }
 
-// Hook pour accéder au contexte utilisateur
+//Hook pour accéder au contexte utilisateur
 export const useUser = (): UserContextType => {
     const context = useContext(userContext)
     if (!context) {

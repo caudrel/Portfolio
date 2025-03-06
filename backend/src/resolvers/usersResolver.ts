@@ -1,5 +1,4 @@
 import { Resolver, Arg, Query, Mutation, Ctx } from 'type-graphql'
-import { Not, IsNull } from 'typeorm'
 import {
     User,
     UserWoPassword,
@@ -7,7 +6,6 @@ import {
     InputLogin,
     InputRegisterValidation,
     EmailInput,
-    InputRegister,
 } from '../entities/user'
 import * as argon2 from 'argon2'
 import { MyContext } from '..'
