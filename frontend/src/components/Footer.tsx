@@ -21,7 +21,11 @@ export default function Footer() {
         <footer className='footer'>
             <div className='links'>
                 <Link className='footer-link' href='/mentions-legales'>
-                    <span>Mentions Légales</span>
+                    {isMobile ? (
+                        <span>Confidentialité</span>
+                    ) : (
+                        <span>Politique de confidentialité</span>
+                    )}
                 </Link>
                 <Link className='footer-link' href='/cgu'>
                     {isMobile ? (
