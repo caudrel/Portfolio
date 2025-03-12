@@ -6,6 +6,8 @@ import {
     InputLogin,
     InputRegisterValidation,
     EmailInput,
+    InputUpdateUser,
+    UpdatePasswordInput,
 } from '../entities/user'
 import * as argon2 from 'argon2'
 import { MyContext } from '..'
@@ -83,6 +85,50 @@ class UsersResolver {
 
         // Retourner l'utilisateur sous le type UserWoPassword
         return plainToInstance(UserWoPassword, ctxUser)
+    }
+
+    @Mutation(() => UserWoPassword)
+    async updateUser(
+        @Arg('data', { validate: true }) data: InputUpdateUser,
+        @Ctx() ctx: MyContext
+    ) {
+        if (!ctx.user) {
+            throw new GraphQLError("L'utilisateur n'est pas authentifié")
+        }
+
+        const user = await User.findOne({ where: { id: ctx.user.id } })
+        if (!user) {
+            throw new GraphQLError('Utilisateur non trouvé')
+        }
+
+        let isUpdated = false
+
+        if (data.email && data.email !== user.email) {
+            const existingUser = await User.findOne({
+                where: { email: data.email },
+            })
+            if (existingUser && existingUser.id !== user.id) {
+                throw new GraphQLError('Cet email est déjà utilisé')
+            }
+            user.email = data.email
+            isUpdated = true
+        }
+
+        if (data.first_name && data.first_name !== user.first_name) {
+            user.first_name = data.first_name
+            isUpdated = true
+        }
+
+        if (data.last_name && data.last_name !== user.last_name) {
+            user.last_name = data.last_name
+            isUpdated = true
+        }
+
+        if (isUpdated) {
+            await user.save()
+        }
+
+        return plainToInstance(UserWoPassword, user) // 🔥 Retourne directement l'objet User
     }
 
     @Query(() => ResponseMessage)
@@ -419,6 +465,63 @@ class UsersResolver {
         return {
             success: true,
             message: 'Mot de passe réinitialisé avec succès',
+        }
+    }
+
+    @Mutation(() => ResponseMessage)
+    async deleteUser(@Ctx() ctx: MyContext) {
+        if (!ctx.user) {
+            throw new GraphQLError("L'utilisateur n'est pas authentifié")
+        }
+
+        const user = await User.findOne({ where: { id: ctx.user.id } })
+
+        if (!user) {
+            throw new GraphQLError('Utilisateur non trouvé')
+        }
+
+        await User.remove(user) // Suppression de l'utilisateur
+
+        return {
+            success: true,
+            message: 'Votre compte a été supprimé avec succès',
+        }
+    }
+
+    @Mutation(() => ResponseMessage)
+    async updatePassword(
+        @Arg('data', { validate: true }) data: UpdatePasswordInput,
+        @Ctx() ctx: MyContext
+    ): Promise<ResponseMessage> {
+        if (!ctx.user) {
+            throw new GraphQLError("L'utilisateur n'est pas authentifié")
+        }
+
+        const user = await User.findOne({ where: { id: ctx.user.id } })
+        if (!user) {
+            throw new GraphQLError('Utilisateur non trouvé')
+        }
+
+        // Vérification de l'ancien mot de passe
+        if (!(await argon2.verify(user.password, data.oldPassword))) {
+            throw new GraphQLError("L'ancien mot de passe est incorrect")
+        }
+
+        // Vérification des nouveaux mots de passe
+        if (data.newPassword !== data.confirmNewPassword) {
+            throw new GraphQLError(
+                'Les nouveaux mots de passe ne correspondent pas'
+            )
+        }
+
+        // Mise à jour du mot de passe (il sera hashé automatiquement par @BeforeUpdate)
+        user.password = await argon2.hash(data.newPassword)
+        await user.save()
+        await User.update(user.id, { password: data.newPassword })
+
+        return {
+            success: true,
+            message: 'Votre mot de passe a été mis à jour avec succès',
         }
     }
 }

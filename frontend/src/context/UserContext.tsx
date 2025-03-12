@@ -19,10 +19,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<UserWoPassword | null>(null)
 
     useEffect(() => {
-        if (data?.getUserFromCtx) {
+        //console.log('useEffect triggered: data', data) // Ajout pour debug
+        if (!loading && data?.getUserFromCtx) {
             setUser(data.getUserFromCtx)
         }
-    }, [data])
+    }, [data, loading])
 
     return (
         <userContext.Provider value={{ user, loading, error: error ?? null }}>

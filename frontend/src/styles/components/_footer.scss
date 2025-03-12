@@ -10,6 +10,29 @@
         color.$color-blue 100%
     );
 
+    .social-icon-menu {
+        display: flex;
+        gap: 1rem;
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: color.$color-beige;
+
+            &:hover {
+                background-image: radial-gradient(
+                    100% 100% at 100% 0,
+                    color.$color-turquoise 0,
+                    color.$color-blue 100%
+                );
+                transform: scale(1.03);
+            }
+        }
+    }
+
     .links {
         display: flex;
         justify-content: space-around;

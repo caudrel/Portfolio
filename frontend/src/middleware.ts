@@ -37,18 +37,6 @@ export async function verify(token: string): Promise<Payload | null> {
     }
 }
 
-// export async function ctxUser(): Promise<UserWoPassword | null> {
-//     const { data, loading, error } = useGetUserFromCtxQuery()
-//     if (loading) {
-//         return null
-//     }
-//     if (error) {
-//         console.error(error)
-//         return null
-//     }
-//     return data?.getUserFromCtx ?? null // Remplace par la réponse correcte si nécessaire
-// }
-
 async function checkToken(
     accessToken: string | undefined,
     request: NextRequest
@@ -57,7 +45,14 @@ async function checkToken(
 
     // Si aucun des tokens n'est présent
     if (!accessToken) {
-        if (request.nextUrl.pathname.startsWith('/admin')) {
+        const restrictedPaths = ['/admin', '/mon-compte']
+
+        // Si le chemin fait partie des chemins restreints
+        if (
+            restrictedPaths.some(path =>
+                request.nextUrl.pathname.startsWith(path)
+            )
+        ) {
             response = NextResponse.redirect(
                 new URL('/auth/login', request.url)
             )
