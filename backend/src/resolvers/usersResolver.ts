@@ -78,13 +78,12 @@ class UsersResolver {
     async getUserFromCtx(
         @Ctx() ctx: MyContext
     ): Promise<UserWoPassword | null> {
-        const ctxUser = ctx.user
-        if (!ctxUser) {
+        if (!ctx.user) {
             return null
         }
 
         // Retourner l'utilisateur sous le type UserWoPassword
-        return plainToInstance(UserWoPassword, ctxUser)
+        return plainToInstance(UserWoPassword, ctx.user)
     }
 
     @Mutation(() => UserWoPassword)
@@ -481,6 +480,18 @@ class UsersResolver {
         }
 
         await User.remove(user) // Suppression de l'utilisateur
+
+        const cookies = new Cookies(ctx.req, ctx.res)
+        cookies.set('accessToken', '', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            expires: new Date(0),
+            domain:
+                process.env.NODE_ENV === 'production'
+                    ? '.caudrel.com'
+                    : 'localhost',
+        })
 
         return {
             success: true,

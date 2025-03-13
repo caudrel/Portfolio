@@ -7,7 +7,7 @@
         color.$color-blue,
         color.$color-sunshine
     );
-    min-height: 100vh;
+    @include mixin.main-height;
 
     .project-frame {
         background-image: linear-gradient(

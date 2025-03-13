@@ -5,25 +5,14 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    gap: 2rem;
     background-image: linear-gradient(
         180deg,
         color.$color-blue,
         color.$color-sunshine
     );
-    min-height: 100vh;
-    gap: 2rem;
+    @include mixin.main-height;
     @include mixin.section;
-
-    &.modal-open {
-        background-color: rgba(255, 255, 255, 0.6) !important;
-        overflow: hidden !important;
-
-        @supports (backdrop-filter: blur(15px)) or
-            (-webkit-backdrop-filter: blur(15px)) {
-            backdrop-filter: blur(10px) !important;
-            -webkit-backdrop-filter: blur(10px) !important;
-        }
-    }
 
     .profil-frame {
         padding: 2rem;

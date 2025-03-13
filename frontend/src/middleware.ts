@@ -44,15 +44,14 @@ async function checkToken(
     let response: NextResponse<unknown>
 
     if (!accessToken) {
+        console.warn('⚠️ Aucun token trouvé, redirection vers home.')
         const restrictedPaths = ['/admin', '/mon-compte']
         if (
             restrictedPaths.some(path =>
                 request.nextUrl.pathname.startsWith(path)
             )
         ) {
-            response = NextResponse.redirect(
-                new URL('/auth/login', request.url)
-            )
+            response = NextResponse.redirect(new URL('/', request.url))
         } else {
             response = NextResponse.next()
         }
@@ -65,6 +64,7 @@ async function checkToken(
     const payload = await verify(accessToken)
 
     if (!payload || !payload.id) {
+        console.warn('⚠️ Token invalide, suppression du cookie...')
         response = NextResponse.redirect(new URL('/', request.url)) // ⬅️ 🔥 Redirige vers la home
         response.cookies.delete('accessToken')
         response.cookies.delete('id')

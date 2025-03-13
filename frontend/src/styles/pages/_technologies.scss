@@ -10,9 +10,9 @@
         color.$color-blue,
         color.$color-sunshine
     );
-    min-height: 100vh;
     gap: 2rem;
     @include mixin.section;
+    @include mixin.main-height;
 
     span {
         color: color.$color-indigo;

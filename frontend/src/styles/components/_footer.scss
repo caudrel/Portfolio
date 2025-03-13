@@ -9,6 +9,8 @@
         rgb(255, 210, 171, 0.6) 0,
         color.$color-blue 100%
     );
+    display: flex;
+    @include mixin.footer-height;
 
     .social-icon-menu {
         display: flex;
@@ -39,7 +41,6 @@
         align-items: center;
         padding: 1rem auto;
         width: 100%;
-        height: 4rem;
 
         .footer-link {
             font-family: 'Gotham Light', sans-serif;

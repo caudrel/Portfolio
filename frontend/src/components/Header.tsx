@@ -13,6 +13,8 @@ export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false)
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
+    const [userRole, setUserRole] = useState<string | null>(null)
+    const [loadingUser, setLoadingUser] = useState(true)
     const isConnected = checkUserConnected()
     const [getUser, { data, loading, error }] = useGetUserFromCtxLazyQuery()
     const router = useRouter()
@@ -22,10 +24,17 @@ export default function Header() {
     }, [getUser])
 
     useEffect(() => {
-        if (!loading && !data) {
+        if (!loading && data) {
+            setUserRole(data.getUserFromCtx?.role || null)
+            setLoadingUser(false) // Fin du chargement des données utilisateur
+        }
+    }, [data, loading])
+
+    useEffect(() => {
+        if (!loading && !data && isConnected) {
             router.push('/auth/login')
         }
-    }, [loading, data, router])
+    }, [loading, data, router, isConnected])
 
     const [logout] = useLogoutMutation({
         onCompleted: () => {
@@ -70,12 +79,10 @@ export default function Header() {
         }
     }, [])
 
-    if (loading) return <p>Loading...</p>
+    if ((isConnected && loading) || loadingUser)
+        return <p>Attente du rôle utilisateur...</p>
+
     if (error) return <p>Error...</p>
-
-    const user = data?.getUserFromCtx
-
-    const role = user?.role
 
     return (
         <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
@@ -113,58 +120,56 @@ export default function Header() {
                                 </Link>
                             )}
 
-                            {isConnected && (
-                                <>
-                                    {role === 'admin' && (
-                                        <>
-                                            <div
-                                                className='admin-dropdown'
-                                                onMouseEnter={() =>
-                                                    setDropdownOpen(true)
-                                                } // Affiche le menu au survol (laptop)
-                                                onMouseLeave={() =>
-                                                    setDropdownOpen(false)
-                                                } // Cache le menu lorsqu'on sort (laptop)
+                            {isConnected &&
+                                userRole &&
+                                userRole === 'admin' && (
+                                    <>
+                                        <div
+                                            className='admin-dropdown'
+                                            onMouseEnter={() =>
+                                                setDropdownOpen(true)
+                                            } // Affiche le menu au survol (laptop)
+                                            onMouseLeave={() =>
+                                                setDropdownOpen(false)
+                                            } // Cache le menu lorsqu'on sort (laptop)
+                                        >
+                                            <button
+                                                className={`dropdown-button ${isScrolled ? 'scrolled' : ''}`}
+                                                onClick={() =>
+                                                    setDropdownOpen(
+                                                        !dropdownOpen
+                                                    )
+                                                }
                                             >
-                                                <button
-                                                    className={`dropdown-button ${isScrolled ? 'scrolled' : ''}`}
-                                                    onClick={() =>
-                                                        setDropdownOpen(
-                                                            !dropdownOpen
-                                                        )
-                                                    }
+                                                Admin
+                                                <svg
+                                                    xmlns='http://www.w3.org/2000/svg'
+                                                    width='13'
+                                                    height='13'
+                                                    fill='currentColor'
+                                                    className='bi bi-caret-down-fill'
+                                                    viewBox='0 0 16 16'
                                                 >
-                                                    Admin
-                                                    <svg
-                                                        xmlns='http://www.w3.org/2000/svg'
-                                                        width='13'
-                                                        height='13'
-                                                        fill='currentColor'
-                                                        className='bi bi-caret-down-fill'
-                                                        viewBox='0 0 16 16'
-                                                    >
-                                                        <path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z' />
-                                                    </svg>
-                                                </button>
+                                                    <path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z' />
+                                                </svg>
+                                            </button>
 
-                                                <div
-                                                    className={`dropdown-menu ${dropdownOpen ? 'visible' : ''} ${isScrolled ? 'scrolled' : ''}`}
-                                                >
-                                                    <Link href='/admin/technologies'>
-                                                        Technologies
-                                                    </Link>
-                                                    <Link href='/admin/members'>
-                                                        {"Membres d'équipe"}
-                                                    </Link>
-                                                    <Link href='/admin/projects'>
-                                                        Projets
-                                                    </Link>
-                                                </div>
+                                            <div
+                                                className={`dropdown-menu ${dropdownOpen ? 'visible' : ''} ${isScrolled ? 'scrolled' : ''}`}
+                                            >
+                                                <Link href='/admin/technologies'>
+                                                    Technologies
+                                                </Link>
+                                                <Link href='/admin/members'>
+                                                    {"Membres d'équipe"}
+                                                </Link>
+                                                <Link href='/admin/projects'>
+                                                    Projets
+                                                </Link>
                                             </div>
-                                        </>
-                                    )}
-                                </>
-                            )}
+                                        </div>
+                                    </>
+                                )}
                         </div>
                     </div>
 
@@ -265,9 +270,10 @@ export default function Header() {
                                                 Mon compte
                                             </Link>
                                         )}
-                                        {isConnected && (
-                                            <>
-                                                {role === 'admin' && (
+                                        {isConnected &&
+                                            userRole &&
+                                            userRole === 'admin' && (
+                                                <>
                                                     <div
                                                         className='admin-dropdown menu-link mobile'
                                                         onClick={() =>
@@ -331,9 +337,8 @@ export default function Header() {
                                                             </Link>
                                                         </div>
                                                     </div>
-                                                )}
-                                            </>
-                                        )}
+                                                </>
+                                            )}
                                         ``
                                     </div>
 

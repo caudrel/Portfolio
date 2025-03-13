@@ -62,72 +62,83 @@ export default function ModalModifyDetails({
 
     return (
         <Layout title='Modifier mes informations - Portfolio CAudrel'>
-            <section
-                className={`modal-container ${modalScroll ? 'scroll' : ''}`}
-                ref={modalContentRef}
-            >
-                <div className='modal-header'>
-                    <button className='close-modal' onClick={handleClose}>
-                        <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            width='20'
-                            height='20'
-                            fill='currentColor'
-                            className='bi bi-x-lg hover:cursor-pointer'
-                            viewBox='0 0 16 16'
-                            aria-label='Fermer la fenêtre de modification'
+            <section className='modal-page' ref={modalContentRef}>
+                <div
+                    className={`modal-container ${modalScroll ? 'scroll' : ''}`}
+                >
+                    {' '}
+                    <div className='modal-header'>
+                        <button
+                            className='close-modal'
+                            onClick={handleClose}
+                            aria-label='Fermer la fenetre de modification des informations personnelles'
                         >
-                            <path d='M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z' />
-                        </svg>
-                    </button>
-
-                    <h2>Modifier mes informations</h2>
-                </div>
-
-                <div className='form-frame'>
-                    <form className='form' onSubmit={onConfirm}>
-                        <div className='labels'>
-                            <div className='label'>
-                                <label htmlFor='last_name'>Nom</label>
-                                <input
-                                    id='last_name'
-                                    type='text'
-                                    value={last_name}
-                                    onChange={e => setLastName(e.target.value)}
-                                />
-                            </div>
-
-                            <div className='label'>
-                                <label htmlFor='first_name'>Prénom</label>
-                                <input
-                                    id='first_name'
-                                    type='text'
-                                    value={first_name}
-                                    onChange={e => setFirstName(e.target.value)}
-                                />
-                            </div>
-
-                            <div className='label'>
-                                <label htmlFor='email'>Email</label>
-                                <input
-                                    id='email'
-                                    type='email'
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                />
-                            </div>
-                        </div>
-
-                        <div className='form-validation'>
-                            <button
-                                type='submit'
-                                className='btn-secondary'
-                                disabled={updating}
+                            <span className='visually-hidden'>
+                                Fermer la fenêtre contextuelle
+                            </span>
+                            <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='25'
+                                height='25'
+                                fill='currentColor'
+                                className='bi bi-x-lg hover:cursor-pointer'
+                                viewBox='0 0 16 16'
                             >
-                                {updating ? 'Mise à jour...' : 'Modifier'}
-                            </button>
-                        </div>
-                    </form>
+                                <path d='M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z' />
+                            </svg>
+                        </button>
+
+                        <h2>Modifier mes informations</h2>
+                    </div>
+                    <div className='form-frame'>
+                        <form className='form' onSubmit={onConfirm}>
+                            <div className='labels'>
+                                <div className='label'>
+                                    <label htmlFor='last_name'>Nom</label>
+                                    <input
+                                        id='last_name'
+                                        type='text'
+                                        value={last_name}
+                                        onChange={e =>
+                                            setLastName(e.target.value)
+                                        }
+                                    />
+                                </div>
+
+                                <div className='label'>
+                                    <label htmlFor='first_name'>Prénom</label>
+                                    <input
+                                        id='first_name'
+                                        type='text'
+                                        value={first_name}
+                                        onChange={e =>
+                                            setFirstName(e.target.value)
+                                        }
+                                    />
+                                </div>
+
+                                <div className='label'>
+                                    <label htmlFor='email'>Email</label>
+                                    <input
+                                        id='email'
+                                        type='email'
+                                        value={email}
+                                        onChange={e => setEmail(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='form-validation'>
+                                <button
+                                    type='submit'
+                                    className='btn-secondary'
+                                    disabled={updating}
+                                >
+                                    {updating ? 'Mise à jour...' : 'Modifier'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </section>
         </Layout>

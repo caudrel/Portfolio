@@ -2,18 +2,17 @@ import { useState, useEffect } from 'react'
 import Layout from '@/components/Layout'
 import { useGetUserFromCtxLazyQuery } from '@/graphql/generated/schema'
 import ModalModifyDetails from '@/components/profil/modalModifyDetails'
+import ModalModifyPassword from '@/components/profil/modalModifyPassword'
+import ModalDeleteAccount from '@/components/profil/modalDeleteAccount'
 
 export default function Profile() {
-    const [isModalOpen, setIsModalOpen] = useState(false) // 🔥 Gestion de la modale
-    const [getUser, { data, loading, error }] = useGetUserFromCtxLazyQuery()
+    const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false)
+    const [isModalModifyPasswordOpen, setIsModalModifyPasswordOpen] =
+        useState(false) // 🔥 Gestion de la modale
+    const [isModalDeleteAccountOpen, setIsModalDeleteAccountOpen] =
+        useState(false) // 🔥 Gestion de la modale
 
-    useEffect(() => {
-        if (isModalOpen) {
-            setTimeout(() => document.body.classList.add('modal-open'), 0)
-        } else {
-            setTimeout(() => document.body.classList.remove('modal-open'), 0)
-        }
-    }, [isModalOpen])
+    const [getUser, { data, loading, error }] = useGetUserFromCtxLazyQuery()
 
     // Lance la requête manuellement lors du montage du composant
     useEffect(() => {
@@ -36,7 +35,7 @@ export default function Profile() {
 
     return (
         <Layout title='Mon compte - Portfolio CAudrel'>
-            <section className={`profil ${isModalOpen ? 'modal-open' : ''}`}>
+            <section className='profil'>
                 <h1>Mon compte</h1>
 
                 <div className='profil-frame'>
@@ -68,7 +67,7 @@ export default function Profile() {
                         {/* ✅ Bouton qui ouvre la modale */}
                         <button
                             className='btn-primary modify-profil-btn'
-                            onClick={() => setIsModalOpen(true)}
+                            onClick={() => setIsModalDetailsOpen(true)}
                         >
                             Modifier mes informations
                         </button>
@@ -81,23 +80,41 @@ export default function Profile() {
                             <h2>Mon mot de passe</h2>
                             <p>Modifier mon mot de passe</p>
                         </div>
-                        <button className='btn-primary modify-password'>
+                        <button
+                            className='btn-primary modify-profil-btn'
+                            onClick={() => setIsModalModifyPasswordOpen(true)}
+                        >
                             Modifier mon mot de passe
                         </button>
                     </div>
                 </div>
 
                 <div>
-                    <button className='btn-primary'>
+                    <button
+                        className='btn-primary modify-profil-btn'
+                        onClick={() => setIsModalDeleteAccountOpen(true)}
+                    >
                         Supprimer mon compte
                     </button>
                 </div>
             </section>
-            {/* Modale affichée uniquement si `isModalOpen` est `true` */}
-            {isModalOpen && (
+            {/* Modale affichée uniquement si `isModalDetailsOpen` est `true` */}
+            {isModalDetailsOpen && (
                 <ModalModifyDetails
-                    isOpen={isModalOpen}
-                    handleClose={() => setIsModalOpen(false)}
+                    isOpen={isModalDetailsOpen}
+                    handleClose={() => setIsModalDetailsOpen(false)}
+                />
+            )}
+            {isModalModifyPasswordOpen && (
+                <ModalModifyPassword
+                    isOpen={isModalModifyPasswordOpen}
+                    handleClose={() => setIsModalModifyPasswordOpen(false)}
+                />
+            )}
+            {isModalDeleteAccountOpen && (
+                <ModalDeleteAccount
+                    isOpen={isModalDeleteAccountOpen}
+                    handleClose={() => setIsModalDeleteAccountOpen(false)}
                 />
             )}
         </Layout>

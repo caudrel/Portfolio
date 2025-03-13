@@ -15,6 +15,7 @@
 
     @include mixin.frame;
     @include mixin.section;
+    @include mixin.main-height;
 
     .projects-list {
         display: flex;
