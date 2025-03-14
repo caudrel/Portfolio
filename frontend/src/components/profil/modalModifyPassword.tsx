@@ -128,7 +128,7 @@ export default function ModalModifyPassword({
                                     {updating ? 'Mise à jour...' : 'Modifier'}
                                 </button>
                             </div>
-                            <Link href='/auth/reset-password'>
+                            <Link href='/auth/forgot-password'>
                                 Je ne me souviens plus de mon mot de passe 🤭.
                                 Réinitialiser
                             </Link>
