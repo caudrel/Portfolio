@@ -1,0 +1,108 @@
+@use '../abstracts/color' as color;
+@use '../abstracts/mixin' as mixin;
+
+.modal-page {
+    position: fixed;
+    z-index: 1001;
+    height: 100vh;
+    width: 100vw;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    overflow-y: auto;
+    background-color: rgba(255, 251, 251, 0.75);
+    @supports (backdrop-filter: blur(15px)) or
+        (-webkit-backdrop-filter: blur(15px)) {
+        backdrop-filter: saturate(180%) blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+    }
+
+    &.scroll {
+        top: 16px;
+    }
+
+    &:not(.scroll) {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.modal-container {
+    background-image: linear-gradient(
+        180deg,
+        color.$color-blue,
+        color.$color-sunshine
+    );
+    padding: 2rem 4rem 4rem 4rem;
+    border-radius: 10px;
+    box-shadow:
+        0 4px 8px 0 rgba(31, 90, 255, 0.2),
+        0 6px 20px 0 rgba(31, 90, 255, 0.19);
+    position: absolute; // Utilisation de absolute pour le centrer
+    top: 50%; // Positionner verticalement au centre
+    left: 50%; // Positionner horizontalement au centre
+    transform: translate(-50%, -50%); // Ajuster pour centrer
+    width: fit-content; // Largeur dynamique de la modale (peut être ajustée)
+    max-width: 600px;
+
+    .modal-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .close-modal {
+            align-self: flex-end;
+            margin-bottom: 2rem;
+            margin-right: -2rem;
+            border: 0;
+
+            svg {
+                color: color.$color-beige;
+            }
+        }
+
+        h2 {
+            font-size: 1.6rem;
+        }
+    }
+
+    .profil-section {
+        display: flex;
+    }
+
+    .delete-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        p {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            color: color.$color-grey;
+        }
+
+        p:last-of-type {
+            margin-bottom: 2rem;
+        }
+
+        .validation-btns {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+    }
+}
+
+.visually-hidden {
+    position: absolute; /* Sortir le texte du flux normal */
+    width: 1px; /* Réduire la largeur au minimum */
+    height: 1px; /* Réduire la hauteur au minimum */
+    margin: -1px; /* Enlever les marges */
+    padding: 0; /* Enlever le padding */
+    border: 0; /* Enlever la bordure */
+    clip: rect(0, 0, 0, 0); /* Couper la zone visible */
+    overflow: hidden; /* Cacher le texte */
+    white-space: nowrap; /* Empêcher le texte de se déformer */
+}

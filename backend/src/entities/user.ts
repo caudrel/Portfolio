@@ -223,3 +223,65 @@ export class InputLogin {
     })
     password: string
 }
+
+@InputType()
+export class InputUpdateUser {
+    @Field({ nullable: true })
+    @Length(2, 50, {
+        message: 'Le prénom doit contenir entre 2 et 50 caractères',
+    })
+    first_name?: string
+
+    @Field({ nullable: true })
+    @Length(2, 50, {
+        message: 'Le nom doit contenir entre 2 et 50 caractères',
+    })
+    last_name?: string
+
+    @Field({ nullable: true })
+    @IsEmail(
+        {},
+        {
+            message: 'Une adresse mail valide est requise',
+        }
+    )
+    email?: string
+}
+
+@InputType()
+export class UpdatePasswordInput {
+    @Field()
+    oldPassword: string
+
+    @Field()
+    @IsStrongPassword(
+        {
+            minLength: 8,
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1,
+            minSymbols: 1,
+        },
+        {
+            message:
+                'Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, un chiffre et un symbole.',
+        }
+    )
+    newPassword: string
+
+    @Field()
+    @IsStrongPassword(
+        {
+            minLength: 8,
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1,
+            minSymbols: 1,
+        },
+        {
+            message:
+                'Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, un chiffre et un symbole.',
+        }
+    )
+    confirmNewPassword: string
+}

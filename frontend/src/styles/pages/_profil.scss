@@ -1,0 +1,85 @@
+@use '../abstracts/color' as color;
+@use '../abstracts/mixin' as mixin;
+
+.profil {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    background-image: linear-gradient(
+        180deg,
+        color.$color-blue,
+        color.$color-sunshine
+    );
+    @include mixin.main-height;
+    @include mixin.section;
+
+    .profil-frame {
+        padding: 2rem;
+        width: 50%;
+        background-image: linear-gradient(
+            180deg,
+            color.$color-sunshine,
+            color.$color-beige
+        );
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        box-shadow:
+            0 4px 8px 0 rgba(31, 90, 255, 0.2),
+            0 6px 20px 0 rgba(31, 90, 255, 0.19);
+
+        h2 {
+            font-family: 'Gotham Light', sans-serif;
+            color: color.$color-blue;
+        }
+        span,
+        th {
+            font-family: 'Gotham Book', sans-serif;
+            color: color.$color-blue;
+        }
+
+        p,
+        td {
+            font-family: 'Gotham Light', sans-serif;
+            color: color.$color-grey;
+        }
+
+        a {
+            &:hover {
+                color: color.$color-indigo;
+            }
+        }
+
+        .modify-password {
+            margin-top: 1rem;
+        }
+
+        .container-frame {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            .modify-profil-btn {
+                width: fit-content;
+                margin-top: 1rem;
+            }
+
+            .frame {
+                display: flex;
+                justify-content: space-between;
+                gap: auto;
+                width: 100%;
+
+                .profil-section {
+                    width: 50%;
+
+                    th,
+                    td {
+                        padding: 0.5rem;
+                    }
+                }
+            }
+        }
+    }
+}

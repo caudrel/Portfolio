@@ -2,7 +2,11 @@
 @use '../abstracts/mixin' as mixin;
 
 .legal {
-    background-color: color.$color-blue;
+    background-image: linear-gradient(
+        180deg,
+        color.$color-indigo,
+        color.$color-blue
+    );
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -21,6 +25,19 @@
         display: flex;
         flex-direction: column;
         gap: 0.8rem;
+    }
+
+    h2 {
+        background-color: rgb(15, 15, 77, 0.4);
+        padding: 0.2rem 0 0.2rem 0.4rem;
+    }
+
+    p,
+    li {
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 300;
+        color: color.$color-beige;
     }
 
     ul {

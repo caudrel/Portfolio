@@ -37,71 +37,41 @@ export async function verify(token: string): Promise<Payload | null> {
     }
 }
 
-// export async function ctxUser(): Promise<UserWoPassword | null> {
-//     const { data, loading, error } = useGetUserFromCtxQuery()
-//     if (loading) {
-//         return null
-//     }
-//     if (error) {
-//         console.error(error)
-//         return null
-//     }
-//     return data?.getUserFromCtx ?? null // Remplace par la réponse correcte si nécessaire
-// }
-
 async function checkToken(
     accessToken: string | undefined,
     request: NextRequest
 ) {
     let response: NextResponse<unknown>
 
-    // Si aucun des tokens n'est présent
     if (!accessToken) {
-        if (request.nextUrl.pathname.startsWith('/admin')) {
-            response = NextResponse.redirect(
-                new URL('/auth/login', request.url)
+        console.warn('⚠️ Aucun token trouvé, redirection vers home.')
+        const restrictedPaths = ['/admin', '/mon-compte']
+        if (
+            restrictedPaths.some(path =>
+                request.nextUrl.pathname.startsWith(path)
             )
+        ) {
+            response = NextResponse.redirect(new URL('/', request.url))
         } else {
             response = NextResponse.next()
         }
-        response.cookies.delete('accessToken') // Supprimer le cookie accessToken
-        response.cookies.delete('id') // Supprimer le cookie id s'il est utilisé
+        response.cookies.delete('accessToken')
+        response.cookies.delete('id')
         return response
     }
 
-    // Si le accessToken est présent
-    if (accessToken) {
-        try {
-            const payload = await verify(accessToken)
+    // Vérification du token
+    const payload = await verify(accessToken)
 
-            if (!payload || !payload.id) {
-                response = NextResponse.redirect(
-                    new URL('/auth/login', request.url)
-                )
-                response.cookies.delete('accessToken') // ✅ Supprime le token expiré
-                response.cookies.delete('id') // Supprime l'id si nécessaire
-                return response
-            }
-
-            response = NextResponse.next()
-            response.cookies.set('id', payload.id.toString()) // Mettre à jour l'id si nécessaire
-            return response
-        } catch (err) {
-            console.error(
-                '🚨 Erreur lors de la vérification du accessToken:',
-                err
-            )
-
-            response = NextResponse.redirect(
-                new URL('/auth/login', request.url)
-            )
-            response.cookies.delete('accessToken') // ✅ Supprime le token expiré
-            response.cookies.delete('id') // Supprime l'id si nécessaire
-            return response
-        }
+    if (!payload || !payload.id) {
+        console.warn('⚠️ Token invalide, suppression du cookie...')
+        response = NextResponse.redirect(new URL('/', request.url)) // ⬅️ 🔥 Redirige vers la home
+        response.cookies.delete('accessToken')
+        response.cookies.delete('id')
+        return response
     }
 
-    // Si aucun des cas précédents n'est validé, on continue normalement
     response = NextResponse.next()
+    response.cookies.set('id', payload.id.toString()) // Met à jour l'id si nécessaire
     return response
 }

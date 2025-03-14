@@ -78,7 +78,7 @@ schema
                             user = await findUserById(verify.payload.id)
                         } catch (error) {
                             console.error(
-                                'Error during JWT verification, ',
+                                '🚨 Erreur lors de la vérification JWT:',
                                 error
                             )
                         }

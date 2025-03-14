@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react'
 import Layout from '@/components/Layout'
 import { ApolloProvider } from '@apollo/client'
 import client from '@/graphql/client'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import { toast, ToastContainer, Bounce } from 'react-toastify'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { UserProvider } from '@/context/UserContext'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''
 

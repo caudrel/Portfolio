@@ -1,0 +1,6 @@
+mutation DeleteUser {
+    deleteUser {
+        message
+        success
+    }
+}

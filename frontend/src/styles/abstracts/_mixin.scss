@@ -7,10 +7,39 @@
     }
 }
 
+@mixin footer-height {
+    & {
+        height: 2rem; // Valeur par défaut pour petits écrans
+    }
+    @media (min-width: media.$from-small) {
+        height: 3rem; // Hauteur pour les écrans moyens
+    }
+
+    @media (min-width: media.$from-large) {
+        height: 4rem; // Hauteur pour les grands écrans
+    }
+}
+
+@mixin main-height {
+    & {
+        min-height: calc(100vh - 2rem);
+    }
+
+    @media (min-width: media.$from-small) {
+        min-height: calc(100vh - 3rem);
+    }
+
+    @media (min-width: media.$from-large) {
+        min-height: calc(100vh - 4rem);
+    }
+}
+
 @mixin frame {
-    margin: 0 auto;
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
+    & {
+        margin: 0 auto;
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+    }
 
     @media (min-width: media.$from-micro) {
         padding-right: 1rem;

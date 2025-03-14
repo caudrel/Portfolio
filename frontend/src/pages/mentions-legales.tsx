@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
                         <li>
                             Les données personnelles collectées, le cas échéant
                         </li>
-                        <li>L'utilisation de ces données</li>
+                        <li>L&apos;utilisation de ces données</li>
                         <li>Les personnes ayant accès à ces informations</li>
                         <li>
                             Les droits des utilisateurs concernant leurs données
@@ -31,7 +31,7 @@ export default function PrivacyPolicy() {
 
                     <p>
                         Cette politique complète nos conditions générales
-                        d'utilisation.
+                        d&apos;utilisation.
                     </p>
                 </div>
 
@@ -52,7 +52,7 @@ export default function PrivacyPolicy() {
                         <li>Pertinentes et limitées au strict nécessaire</li>
                         <li>Exactes et mises à jour si besoin</li>
                         <li>
-                            Conservées pour une durée n'excédant pas celle
+                            Conservées pour une durée n&apos;excédant pas celle
                             nécessaire
                         </li>
                         <li>
@@ -62,13 +62,14 @@ export default function PrivacyPolicy() {
                     </ul>
                     <p>
                         Le traitement des données est effectué uniquement
-                        lorsque l'une des conditions suivantes est remplie :
+                        lorsque l&apos;une des conditions suivantes est remplie
+                        :
                     </p>
                     <ul>
-                        <li>L'utilisateur a donné son consentement</li>
+                        <li>L&apos;utilisateur a donné son consentement</li>
                         <li>
-                            Il est nécessaire à l'exécution d'un contrat ou
-                            d'une obligation légale
+                            Il est nécessaire à l&apos;exécution d&apos;un
+                            contrat ou d&apos;une obligation légale
                         </li>
                         <li>Il répond à un intérêt légitime</li>
                     </ul>
@@ -85,8 +86,8 @@ export default function PrivacyPolicy() {
                             Les termes de cette politique de confidentialité
                         </li>
                         <li>
-                            La collecte, l'utilisation et la conservation des
-                            données mentionnées
+                            La collecte, l&apos;utilisation et la conservation
+                            des données mentionnées
                         </li>
                     </ul>
                 </div>
@@ -104,10 +105,10 @@ export default function PrivacyPolicy() {
                 <div>
                     <h2>Politique sur les cookies</h2>
                     <p>
-                        Un cookie est un petit fichier stocké sur l'appareil de
-                        l'utilisateur permettant de suivre ses interactions avec
-                        le site. Nous utilisons uniquement des cookies
-                        fonctionnels pour :{' '}
+                        Un cookie est un petit fichier stocké sur
+                        l&apos;appareil de l&apos;utilisateur permettant de
+                        suivre ses interactions avec le site. Nous utilisons
+                        uniquement des cookies fonctionnels pour :{' '}
                     </p>
                     <ul>
                         <li>
@@ -127,7 +128,7 @@ export default function PrivacyPolicy() {
                     <p>
                         Si un utilisateur crée un compte, nous collectons son
                         nom, prénom et adresse e-mail uniquement à des fins
-                        d'authentification et de démonstration de nos
+                        d&apos;authentification et de démonstration de nos
                         compétences. Ces informations ne sont ni partagées ni
                         revendues.
                     </p>
@@ -160,7 +161,7 @@ export default function PrivacyPolicy() {
                             <b>Adresse</b> : 18 rue des Maraîchers
                         </li>
                         <li>
-                            <b>Date d'entrée en vigueur : 1er mars 2025</b>
+                            <b>Date d&apos;entrée en vigueur : 1er mars 2025</b>
                         </li>
                     </ul>
                 </div>
