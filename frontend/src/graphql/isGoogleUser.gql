@@ -1,0 +1,6 @@
+query IsGoogleUser {
+    isGoogleUser {
+        authProvider
+        email
+    }
+}

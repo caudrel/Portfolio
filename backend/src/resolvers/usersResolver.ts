@@ -8,6 +8,8 @@ import {
     EmailInput,
     InputUpdateUser,
     UpdatePasswordInput,
+    isGoogleUser,
+    InputPasswordGoogleUser,
 } from '../entities/user'
 import * as argon2 from 'argon2'
 import { MyContext } from '..'
@@ -20,6 +22,7 @@ import sendMail from '../mailer'
 import crypto from 'crypto'
 import redis from '../lib/redis'
 import { v4 as uuidv4 } from 'uuid'
+import bcrypt from 'bcrypt'
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
@@ -399,51 +402,40 @@ class UsersResolver {
     async forgotPassword(
         @Arg('data', { validate: true }) data: EmailInput
     ): Promise<ResponseMessage> {
-        const responseMessage = new ResponseMessage()
         const { email } = data
+        const responseMessage = new ResponseMessage()
         responseMessage.success = true
         responseMessage.message =
-            'Si cet email existe, un lien de réinitialisation a été envoyé'
+            'Si cet email existe, un lien de réinitialisation a été envoyé.'
 
         const user = await User.findOne({ where: { email } })
-        if (!user) {
-            return responseMessage
-        }
+        if (!user) return responseMessage // Ne pas révéler si l'email existe
 
         const resetToken = crypto.randomBytes(32).toString('hex')
-        user.resetToken = resetToken
+        const hashedToken = await bcrypt.hash(resetToken, 10)
+
+        user.resetToken = hashedToken
+        user.resetTokenExpires = new Date(Date.now() + 3600000) // Expire dans 1h
         await user.save()
 
         const resetUrl = `${url}/auth/reset-password?token=${resetToken}`
-        const messageHtml = `
-        <h1>Vous avez demandé une réinitialisation du mot de passe</h1>
-        <p>Veuillez cliquer sur le lien suivant pour réinitialiser votre mot de passe:</p>
-        <a href="${resetUrl}">${resetUrl}</a>
-    `
-        const messageText = `
-        Vous avez demandé une réinitialisation du mot de passe. Veuillez cliquer sur
-        le lien suivant pour réinitialiser votre mot de passe: ${resetUrl}
-    `
 
-        try {
-            await sendMail({
-                Messages: [
-                    {
-                        From: {
-                            Name: `${process.env.APP_NAME}`,
-                            Email: `${process.env.EMAIL_FROM}`,
-                        },
-                        To: [{ Name: '', Email: email }],
-                        Subject: 'Réinitialisation du mot de passe',
-                        TextPart: messageText,
-                        HTMLPart: messageHtml,
+        await sendMail({
+            Messages: [
+                {
+                    From: {
+                        Name: 'EasyGift',
+                        Email:
+                            process.env.EMAIL_FROM ||
+                            'caudrelportfolio@gmail.com',
                     },
-                ],
-            })
-        } catch (error) {
-            console.error("Erreur d'envoi d'email :", error)
-        }
-
+                    To: [{ Name: '', Email: email }],
+                    Subject: 'Réinitialisation du mot de passe',
+                    TextPart: `Cliquez ici pour réinitialiser votre mot de passe: ${resetUrl}`,
+                    HTMLPart: `<a href="${resetUrl}">Réinitialiser mon mot de passe</a>`,
+                },
+            ],
+        })
         return responseMessage
     }
 
@@ -534,6 +526,58 @@ class UsersResolver {
             success: true,
             message: 'Votre mot de passe a été mis à jour avec succès',
         }
+    }
+
+    @Query(() => Boolean)
+    async userHasPassword(@Ctx() ctx: MyContext): Promise<boolean> {
+        if (!ctx.user) {
+            throw new GraphQLError("L'utilisateur n'est pas authentifié")
+        }
+
+        const user = await User.findOne({
+            where: { id: ctx.user.id },
+            select: ['password'], // Ne récupérer que le champ `password`
+        })
+
+        if (!user) {
+            throw new GraphQLError('Utilisateur non trouvé')
+        }
+
+        return !!user.password // Retourne directement un booléen
+    }
+
+    @Query(() => isGoogleUser)
+    async isGoogleUser(@Ctx() ctx: MyContext): Promise<isGoogleUser> {
+        if (!ctx.user) {
+            throw new GraphQLError("L'utilisateur n'est pas authentifié")
+        }
+
+        const user = await User.findOne({
+            where: { id: ctx.user.id }, // Ne récupérer que le champ `password`
+        })
+
+        if (!user) {
+            throw new GraphQLError('Utilisateur non trouvé')
+        }
+
+        return plainToInstance(isGoogleUser, user)
+    }
+
+    @Mutation(() => Boolean)
+    async setPasswordForGoogleUser(
+        @Arg('data', { validate: true }) data: InputPasswordGoogleUser
+    ): Promise<boolean> {
+        const { email, newPassword } = data
+        const user = await User.findOne({ where: { email } })
+        if (!user) {
+            throw new GraphQLError('Utilisateur non trouvé')
+        }
+
+        user.password = await bcrypt.hash(newPassword, 10) // Hachage du mot de passe
+        user.authProvider = 'local' // Assure-toi de modifier le fournisseur d'authentification si nécessaire
+        await user.save()
+
+        return true
     }
 }
 

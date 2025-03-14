@@ -30,12 +30,6 @@ export default function Header() {
         }
     }, [data, loading])
 
-    useEffect(() => {
-        if (!loading && !data && isConnected) {
-            router.push('/auth/login')
-        }
-    }, [loading, data, router, isConnected])
-
     const [logout] = useLogoutMutation({
         onCompleted: () => {
             toast.success('Déconnexion réussie!')
@@ -78,6 +72,19 @@ export default function Header() {
             window.removeEventListener('scroll', handleScroll)
         }
     }, [])
+
+    useEffect(() => {
+        if (!loading && !data && isConnected) {
+            // Vérifier si la requête a bien été effectuée avant de rediriger
+            if (!error && !loadingUser) {
+                const timeout = setTimeout(() => {
+                    router.push('/auth/login')
+                }, 500)
+
+                return () => clearTimeout(timeout)
+            }
+        }
+    }, [loading, data, router, isConnected, error, loadingUser])
 
     if ((isConnected && loading) || loadingUser)
         return <p>Attente du rôle utilisateur...</p>
@@ -358,7 +365,7 @@ export default function Header() {
                                         {isConnected && (
                                             <Link
                                                 className='dropdown-link'
-                                                href='/auth/login'
+                                                href='/'
                                                 onClick={handleLogout}
                                             >
                                                 Logout

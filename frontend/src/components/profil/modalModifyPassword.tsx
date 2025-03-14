@@ -2,6 +2,7 @@ import { useUpdatePasswordMutation } from '@/graphql/generated/schema'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import Layout from '../Layout'
+import Link from 'next/link'
 
 interface ModalModifyPasswordProps {
     isOpen: boolean
@@ -127,6 +128,10 @@ export default function ModalModifyPassword({
                                     {updating ? 'Mise à jour...' : 'Modifier'}
                                 </button>
                             </div>
+                            <Link href='/auth/reset-password'>
+                                Je ne me souviens plus de mon mot de passe 🤭.
+                                Réinitialiser
+                            </Link>
                         </form>
                     </div>
                 </div>

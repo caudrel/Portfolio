@@ -63,7 +63,9 @@ export default function ModalDeleteAccount({
                                 Êtes-vous sûr de vouloir supprimer
                                 définitivement votre compte ?
                             </p>
-                            <p>Cette action est irréversible.</p>
+                            <p>
+                                <b>Cette action est irréversible.</b>
+                            </p>
                             <div className='validation-btns'>
                                 <button
                                     type='button'
