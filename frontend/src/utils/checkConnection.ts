@@ -1,14 +1,18 @@
+import { useEffect, useState } from 'react'
 import {
     useGetUserFromCtxQuery,
     UserWoPassword,
 } from '@/graphql/generated/schema'
-import Cookies from 'js-cookie'
 
-export const checkUserConnected = () => {
-    const cookies = Cookies
-    const idCookie = cookies.get('id')
-    if (idCookie) {
-        return true
-    }
-    return false
+export function checkUserConnected() {
+    const [user, setUser] = useState<UserWoPassword | null>(null)
+    const { data, loading, error } = useGetUserFromCtxQuery()
+
+    useEffect(() => {
+        if (data?.getUserFromCtx) {
+            setUser(data.getUserFromCtx)
+        }
+    }, [data])
+
+    return { user, loading, error }
 }

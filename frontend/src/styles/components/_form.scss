@@ -16,6 +16,10 @@
         0 4px 8px 0 rgba(31, 90, 255, 0.2),
         0 6px 20px 0 rgba(31, 90, 255, 0.19);
 
+    p {
+        font-family: 'Gotham Book', sans-serif;
+        color: color.$color-darkGrey;
+    }
     .form {
         display: flex;
         flex-direction: column;

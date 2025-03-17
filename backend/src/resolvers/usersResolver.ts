@@ -22,7 +22,8 @@ import sendMail from '../mailer'
 import crypto from 'crypto'
 import redis from '../lib/redis'
 import { v4 as uuidv4 } from 'uuid'
-import bcrypt from 'bcrypt'
+import verifyAccessToken from '../lib/verifyAccessToken'
+import verifyRecaptcha from '../lib/verifyRecaptcha'
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
@@ -81,12 +82,66 @@ class UsersResolver {
     async getUserFromCtx(
         @Ctx() ctx: MyContext
     ): Promise<UserWoPassword | null> {
+        const cookies = new Cookies(ctx.req, ctx.res)
+        const token = cookies.get('accessToken')
+
+        if (!token) {
+            return null // Pas de token, donc pas d'utilisateur
+        }
+
+        const payload = await verifyAccessToken(token)
+        if (!payload) {
+            throw new GraphQLError('Session expirée, reconnectez-vous.')
+        }
+
+        // Assurer que `ctx.user` est défini
+        if (!ctx.user && payload.sub) {
+            ctx.user = await User.findOne({
+                where: { id: parseInt(payload.sub, 10) },
+            })
+        }
+
         if (!ctx.user) {
             return null
         }
 
         // Retourner l'utilisateur sous le type UserWoPassword
         return plainToInstance(UserWoPassword, ctx.user)
+    }
+
+    @Mutation(() => ResponseMessage)
+    async sendContactMessage(
+        @Arg('email') email: string,
+        @Arg('subject') subject: string,
+        @Arg('message') message: string,
+        @Arg('recaptchaToken') recaptchaToken: string
+    ): Promise<ResponseMessage> {
+        // Vérifier le reCAPTCHA
+        const isValid = await verifyRecaptcha(recaptchaToken)
+        if (!isValid) {
+            throw new Error('Échec de la vérification reCAPTCHA')
+        }
+
+        // Envoi de l'email
+        await sendMail({
+            Messages: [
+                {
+                    From: {
+                        Name: `${process.env.APP_NAME}`,
+                        Email: email,
+                    },
+                    To: [{ Name: '', Email: email }],
+                    Subject: subject,
+                    TextPart: message,
+                    HTMLPart: message,
+                },
+            ],
+        })
+
+        return {
+            success: true,
+            message: 'Email envoyé avec les instructions de connexion.',
+        }
     }
 
     @Mutation(() => UserWoPassword)
@@ -412,7 +467,7 @@ class UsersResolver {
         if (!user) return responseMessage // Ne pas révéler si l'email existe
 
         const resetToken = crypto.randomBytes(32).toString('hex')
-        const hashedToken = await bcrypt.hash(resetToken, 10)
+        const hashedToken = await argon2.hash(resetToken)
 
         user.resetToken = hashedToken
         user.resetTokenExpires = new Date(Date.now() + 3600000) // Expire dans 1h
@@ -424,7 +479,7 @@ class UsersResolver {
             Messages: [
                 {
                     From: {
-                        Name: 'EasyGift',
+                        Name: 'CaudrelPortfolio',
                         Email:
                             process.env.EMAIL_FROM ||
                             'caudrelportfolio@gmail.com',
@@ -445,8 +500,13 @@ class UsersResolver {
         @Arg('newPassword') newPassword: string
     ): Promise<ResponseMessage> {
         const user = await User.findOne({ where: { resetToken } })
-        if (!user) {
-            throw new Error('Le token est invalide ou a expiré')
+        if (!user || !user.resetToken) {
+            throw new Error('Lien invalide ou expiré')
+        }
+
+        const isTokenValid = await argon2.verify(user.resetToken, resetToken)
+        if (!isTokenValid || user.resetTokenExpires < new Date()) {
+            throw new Error('Lien invalide ou expiré')
         }
 
         user.password = newPassword
@@ -524,7 +584,7 @@ class UsersResolver {
 
         return {
             success: true,
-            message: 'Votre mot de passe a été mis à jour avec succès',
+            message: 'Mot de passe mis à jour',
         }
     }
 
@@ -573,7 +633,7 @@ class UsersResolver {
             throw new GraphQLError('Utilisateur non trouvé')
         }
 
-        user.password = await bcrypt.hash(newPassword, 10) // Hachage du mot de passe
+        user.password = await argon2.hash(newPassword) // Hachage du mot de passe
         user.authProvider = 'local' // Assure-toi de modifier le fournisseur d'authentification si nécessaire
         await user.save()
 

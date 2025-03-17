@@ -61,6 +61,7 @@ export type Mutation = {
   logout: Scalars['Boolean'];
   registerVisitor: ResponseMessage;
   resetPassword: ResponseMessage;
+  sendContactMessage: ResponseMessage;
   setPasswordForGoogleUser: Scalars['Boolean'];
   updatePassword: ResponseMessage;
   updateUser: UserWoPassword;
@@ -105,6 +106,14 @@ export type MutationRegisterVisitorArgs = {
 export type MutationResetPasswordArgs = {
   newPassword: Scalars['String'];
   resetToken: Scalars['String'];
+};
+
+
+export type MutationSendContactMessageArgs = {
+  email: Scalars['String'];
+  message: Scalars['String'];
+  recaptchaToken: Scalars['String'];
+  subject: Scalars['String'];
 };
 
 
@@ -367,6 +376,16 @@ export type ResetPasswordMutationVariables = Exact<{
 
 
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'ResponseMessage', message: string, success: boolean } };
+
+export type SendContactMessageMutationVariables = Exact<{
+  recaptchaToken: Scalars['String'];
+  message: Scalars['String'];
+  subject: Scalars['String'];
+  email: Scalars['String'];
+}>;
+
+
+export type SendContactMessageMutation = { __typename?: 'Mutation', sendContactMessage: { __typename?: 'ResponseMessage', message: string, success: boolean } };
 
 export type SetPasswordForGoogleUserMutationVariables = Exact<{
   data: InputPasswordGoogleUser;
@@ -991,6 +1010,48 @@ export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOption
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SendContactMessageDocument = gql`
+    mutation SendContactMessage($recaptchaToken: String!, $message: String!, $subject: String!, $email: String!) {
+  sendContactMessage(
+    recaptchaToken: $recaptchaToken
+    message: $message
+    subject: $subject
+    email: $email
+  ) {
+    message
+    success
+  }
+}
+    `;
+export type SendContactMessageMutationFn = Apollo.MutationFunction<SendContactMessageMutation, SendContactMessageMutationVariables>;
+
+/**
+ * __useSendContactMessageMutation__
+ *
+ * To run a mutation, you first call `useSendContactMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendContactMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendContactMessageMutation, { data, loading, error }] = useSendContactMessageMutation({
+ *   variables: {
+ *      recaptchaToken: // value for 'recaptchaToken'
+ *      message: // value for 'message'
+ *      subject: // value for 'subject'
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useSendContactMessageMutation(baseOptions?: Apollo.MutationHookOptions<SendContactMessageMutation, SendContactMessageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendContactMessageMutation, SendContactMessageMutationVariables>(SendContactMessageDocument, options);
+      }
+export type SendContactMessageMutationHookResult = ReturnType<typeof useSendContactMessageMutation>;
+export type SendContactMessageMutationResult = Apollo.MutationResult<SendContactMessageMutation>;
+export type SendContactMessageMutationOptions = Apollo.BaseMutationOptions<SendContactMessageMutation, SendContactMessageMutationVariables>;
 export const SetPasswordForGoogleUserDocument = gql`
     mutation SetPasswordForGoogleUser($data: InputPasswordGoogleUser!) {
   setPasswordForGoogleUser(data: $data)

@@ -58,20 +58,22 @@ function ForgotPassword() {
                                 {'Envoyer'}
                             </button>
                         </div>
+                        {data && data.forgotPassword && (
+                            <>
+                                <p className='text-green-700'>
+                                    Email envoyé avec succès !
+                                </p>
+                                <p className='text-green-700'>
+                                    Rendez-vous sur votre messagerie pour
+                                    ré-initialiser votre mot de passe.
+                                </p>
+                            </>
+                        )}
+                        {error && (
+                            <p className='text-red-600'>{error.message}</p>
+                        )}
                     </form>
                 </div>
-                {data && data.forgotPassword && (
-                    <>
-                        <p className='text-green-700'>
-                            Email envoyé avec succès !
-                        </p>
-                        <p className='text-green-700'>
-                            Rendez-vous sur votre messagerie pour ré-initialiser
-                            votre mot de passe.
-                        </p>
-                    </>
-                )}
-                {error && <p className='text-red-600'>{error.message}</p>}
             </section>
         </Layout>
     )

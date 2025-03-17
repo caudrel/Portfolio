@@ -19,6 +19,7 @@
     "description": "",
     "dependencies": {
         "@apollo/server": "^4.9.5",
+        "@google-cloud/recaptcha-enterprise": "^5.13.0",
         "@graphql-tools/schema": "^10.0.4",
         "argon2": "^0.31.2",
         "bcrypt": "^5.1.1",

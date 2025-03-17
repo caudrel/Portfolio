@@ -15,9 +15,9 @@ export default function Header() {
     const [isMobile, setIsMobile] = useState(false)
     const [userRole, setUserRole] = useState<string | null>(null)
     const [loadingUser, setLoadingUser] = useState(true)
-    const isConnected = checkUserConnected()
     const [getUser, { data, loading, error }] = useGetUserFromCtxLazyQuery()
     const router = useRouter()
+    const isConnected = false //// Change
 
     useEffect(() => {
         getUser() // Lance la requête manuellement
@@ -73,8 +73,10 @@ export default function Header() {
         }
     }, [])
 
+    console.log('data', data)
+
     useEffect(() => {
-        if (!loading && !data && isConnected) {
+        if (!loading && !data) {
             // Vérifier si la requête a bien été effectuée avant de rediriger
             if (!error && !loadingUser) {
                 const timeout = setTimeout(() => {
@@ -84,18 +86,19 @@ export default function Header() {
                 return () => clearTimeout(timeout)
             }
         }
-    }, [loading, data, router, isConnected, error, loadingUser])
+    }, [loading, data, router, error, loadingUser])
 
-    if ((isConnected && loading) || loadingUser)
-        return <p>Attente du rôle utilisateur...</p>
+    //if (loading || loadingUser) return <p>Attente du rôle utilisateur...</p>
 
-    if (error) return <p>Error...</p>
+    // if (error) return <p>Error...</p>
 
     return (
         <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
             {!isMobile ? (
                 <nav className='navbar'>
-                    <button className='btn-primary'>Contact</button>
+                    <Link className='btn-primary' href='/contact'>
+                        Contact
+                    </Link>
 
                     <div className='nav-links'>
                         <div>
@@ -198,7 +201,9 @@ export default function Header() {
             ) : (
                 // Burger menu for mobile view
                 <nav className='burger-menu mobile'>
-                    <button className='btn-primary'>Contact</button>
+                    <Link className='btn-primary' href='/contact'>
+                        Contact
+                    </Link>
                     <div className='socialIcons-burger'>
                         <button
                             className={`burger-button ${isScrolled ? 'scrolled' : ''}`}
@@ -242,7 +247,7 @@ export default function Header() {
                                 <div className='burger-link-container'>
                                     <div className='dropdown'>
                                         <Link
-                                            href='mailto:lozachaurelie@gmail.com'
+                                            href='/contact'
                                             className='dropdown-link'
                                             onClick={() => setMenuOpen(false)}
                                         >

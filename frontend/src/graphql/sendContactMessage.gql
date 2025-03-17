@@ -1,0 +1,16 @@
+mutation SendContactMessage(
+    $recaptchaToken: String!
+    $message: String!
+    $subject: String!
+    $email: String!
+) {
+    sendContactMessage(
+        recaptchaToken: $recaptchaToken
+        message: $message
+        subject: $subject
+        email: $email
+    ) {
+        message
+        success
+    }
+}

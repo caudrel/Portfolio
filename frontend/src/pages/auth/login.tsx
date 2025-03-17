@@ -99,7 +99,6 @@ function Login() {
                                     <span>Email</span>
                                 </label>
                                 <input
-                                    data-testid='login-email'
                                     id='email'
                                     type='email'
                                     name='email'
@@ -112,7 +111,6 @@ function Login() {
                                     <span>Mot de passe</span>
                                 </label>
                                 <input
-                                    data-testid='login-password'
                                     id='password'
                                     type='password'
                                     name='password'

@@ -39,7 +39,11 @@
             color: color.$color-blue;
         }
 
-        p,
+        p {
+            font-family: 'Gotham Light', sans-serif;
+            color: color.$color-darkGrey;
+        }
+
         td {
             font-family: 'Gotham Light', sans-serif;
             color: color.$color-grey;
