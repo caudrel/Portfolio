@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { useState, useEffect } from 'react'
+import { useSendContactMessageMutation } from '@/graphql/generated/schema'
 
 export default function ContactForm() {
     const schema = z.object({
@@ -17,6 +18,9 @@ export default function ContactForm() {
             .string()
             .min(1, { message: 'Veuillez valider le reCAPTCHA' }),
     })
+
+    const [sendContactMessageMutation, { loading, error, data }] =
+        useSendContactMessageMutation()
 
     const {
         register,
