@@ -78,26 +78,27 @@ export default function Home() {
                             <div className='paragraph'>
                                 <p>
                                     {
-                                        "Après 10 années d'expérience en tant que Chef de Produit dans le textile, mon passage à la French Tech Bordeaux de 2020 à 2023 a éveillé mon envie de me réorienter vers le développement web."
+                                        "Après 10 années d'expérience en tant que Chef de Produit dans le textile, mon passage à La French Tech Bordeaux entre 2020 et 2023 a suscité ma reconversion vers le développement web."
                                     }
                                 </p>
 
                                 <p>
                                     {
-                                        "Je me suis formée aux technologies PHP et Symfony au cours d'un bootcamp, puis sur TypeScript, React.js, Next.js, Node.js, Laravel, Docker et GraphQL avec Apollo lors d'une alternance en agence."
+                                        'Formée aux technologies PHP et Symfony lors d’un bootcamp, j’ai ensuite approfondi mes compétences sur TypeScript, React.js, Next.js, Node.js, Laravel, Docker et GraphQL avec Apollo durant une alternance en agence.'
                                     }
                                 </p>
 
                                 <p>
                                     {
-                                        'Forte d’une double compétence technique et fonctionnelle, acquise aussi en Chef de Projet chez Levi’s, Chantelle et Renault, je souhaite aujourd’hui accompagner la réussite de projets web en facilitant la collaboration entre équipes métier et technique.'
+                                        'Forte d’une double compétence technique et fonctionnelle, consolidée par mon expérience en gestion de projet chez Levi’s, Chantelle et Renault, je suis aujourd’hui prête à accompagner le succès de vos projets web en assurant une collaboration fluide entre les équipes métier et technique.'
                                     }
                                 </p>
 
                                 <p>
-                                    Aurélie Engels (Lozach), votre futur{' '}
-                                    <b>Chef de Projet Technique</b>, qui sait
-                                    coder.
+                                    Aurélie Engels (Lozach), votre future{' '}
+                                    <b>Chef de Projet Technique</b>, alliant
+                                    expertise fonctionnelle et compétences en
+                                    développement.
                                 </p>
                             </div>
                             <div className='list'>

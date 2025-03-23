@@ -33,6 +33,7 @@
         display: flex;
         flex-direction: column;
         gap: 2.5rem;
+        margin-top: 1rem;
 
         @media (min-width: media.$from-medium) {
             margin: 4rem;

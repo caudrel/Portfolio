@@ -268,7 +268,7 @@ async function main() {
         description:
             "Caudrel Portfolio est un site web visant à me présenter, démontrer mes compétences techniques, et mettre en avant les projets auxquels j'ai contribué",
         area_of_improvement:
-            "Finir l'authentification en faisant fonctionner GoogleAuth en prod. Finir d'intégrer ReCaptcha pour le formulaire de contact. Classer les technologies par catégories. Ajouter une page quiz ludique sur moi disponible à l'authentification avec une gamification et un classement. SEO. UX et UI toujours...",
+            "Petit souci de navigation. Le refresh du filtre des technologies. Finir l'authentification en faisant fonctionner GoogleAuth en prod. Finir d'intégrer ReCaptcha pour le formulaire de contact. Classer les technologies par catégories. Ajouter une page quiz ludique sur moi disponible à l'authentification avec une gamification et un classement. SEO. UX et UI toujours...",
         src_picture: '/projects_pics/portfolio.png',
     })
 
