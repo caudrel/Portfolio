@@ -44,7 +44,6 @@ async function checkToken(
     let response: NextResponse<unknown>
 
     if (!accessToken) {
-        console.warn('⚠️ Aucun token trouvé, redirection vers home.')
         const restrictedPaths = ['/admin', '/mon-compte']
         if (
             restrictedPaths.some(path =>

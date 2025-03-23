@@ -14,7 +14,7 @@ export default function RegisterValidation() {
     const token = router.query.token as string
     const email = router.query.email as string
     const [cguAccepted, setCguAccepted] = useState(true)
-
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [isCguChecked, setIsCguChecked] = useState(true) // ✅ Gérer l'état de la case à cocher
 
     const [confirmRegister, { error, loading }] = useConfirmRegisterMutation({
@@ -65,8 +65,23 @@ export default function RegisterValidation() {
             return
         }
 
-        if (data.password.length < 6) {
-            toast.error('Le mot de passe doit contenir au moins 6 caractères.')
+        if (data.password.length < 8) {
+            setErrorMessage(
+                'Le mot de passe doit contenir au moins 8 caractères'
+            )
+            toast.error('Le mot de passe doit contenir au moins 8 caractères')
+            return
+        }
+
+        const passwordRegex =
+            /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/
+        if (!passwordRegex.test(data.password)) {
+            setErrorMessage(
+                'Le mot de passe doit contenir au moins une majuscule, un chiffre et un caractère spécial'
+            )
+            toast.error(
+                'Le mot de passe doit contenir au moins une majuscule, un chiffre et un caractère spécial'
+            )
             return
         }
 

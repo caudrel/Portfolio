@@ -29,7 +29,7 @@ export default function Footer() {
                 </Link>
                 <div className='social-icon-menu'>
                     <Link
-                        href='mailto:lozachaurelie@gmail.com'
+                        href='/contact'
                         className='nav-icon'
                         aria-label='Envoyer un email'
                     >
@@ -63,7 +63,7 @@ export default function Footer() {
                         </svg>
                     </Link>
                     <Link
-                        href='https://github.com/caudrel'
+                        href='https://github.com/caudrel?tab=repositories'
                         target='_blank'
                         className='nav-icon'
                         aria-label='GitHub'

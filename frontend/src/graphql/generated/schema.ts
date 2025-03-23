@@ -24,6 +24,11 @@ export type InputLogin = {
   password: Scalars['String'];
 };
 
+export type InputPasswordGoogleUser = {
+  email: Scalars['String'];
+  newPassword: Scalars['String'];
+};
+
 export type InputRegisterValidation = {
   first_name: Scalars['String'];
   last_name: Scalars['String'];
@@ -56,6 +61,8 @@ export type Mutation = {
   logout: Scalars['Boolean'];
   registerVisitor: ResponseMessage;
   resetPassword: ResponseMessage;
+  sendContactMessage: ResponseMessage;
+  setPasswordForGoogleUser: Scalars['Boolean'];
   updatePassword: ResponseMessage;
   updateUser: UserWoPassword;
 };
@@ -99,6 +106,19 @@ export type MutationRegisterVisitorArgs = {
 export type MutationResetPasswordArgs = {
   newPassword: Scalars['String'];
   resetToken: Scalars['String'];
+};
+
+
+export type MutationSendContactMessageArgs = {
+  email: Scalars['String'];
+  honeypot?: InputMaybe<Scalars['String']>;
+  message: Scalars['String'];
+  subject: Scalars['String'];
+};
+
+
+export type MutationSetPasswordForGoogleUserArgs = {
+  data: InputPasswordGoogleUser;
 };
 
 
@@ -164,12 +184,14 @@ export type ProjectInput = {
 export type Query = {
   __typename?: 'Query';
   getUserFromCtx?: Maybe<UserWoPassword>;
+  isGoogleUser: IsGoogleUser;
   login: ResponseMessage;
   projectBySlug?: Maybe<Project>;
   projects?: Maybe<Array<ProjectCard>>;
   teamMembers?: Maybe<Array<TeamMember>>;
   technologies?: Maybe<Array<Technology>>;
   userById?: Maybe<UserWoPassword>;
+  userHasPassword: Scalars['Boolean'];
   users: Array<UserWoPassword>;
 };
 
@@ -251,6 +273,12 @@ export type UserWoPassword = {
   role: Scalars['String'];
 };
 
+export type IsGoogleUser = {
+  __typename?: 'isGoogleUser';
+  authProvider: Scalars['String'];
+  email: Scalars['String'];
+};
+
 export type ConfirmRegisterMutationVariables = Exact<{
   data: InputRegisterValidation;
 }>;
@@ -303,6 +331,11 @@ export type GoogleAuthMutationVariables = Exact<{
 
 export type GoogleAuthMutation = { __typename?: 'Mutation', googleAuth: { __typename?: 'ResponseMessage', message: string, success: boolean } };
 
+export type IsGoogleUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type IsGoogleUserQuery = { __typename?: 'Query', isGoogleUser: { __typename?: 'isGoogleUser', authProvider: string, email: string } };
+
 export type LoginQueryVariables = Exact<{
   infos: InputLogin;
 }>;
@@ -327,7 +360,7 @@ export type ProjectsQueryVariables = Exact<{
 }>;
 
 
-export type ProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'ProjectCard', id: number, title: string, slug: string, completion_date: string, duration: string, excerpt: string, prof_env: boolean, company_name?: string | null, src_picture?: string | null, team_members?: Array<{ __typename?: 'TeamMemberWOProjectRelation', id: number, name: string, linkedin?: string | null, src_icon: string }> | null, technologies: Array<{ __typename?: 'TechnologyWOProjectRelation', id: number, name: string, src_icon: string }> }> | null };
+export type ProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'ProjectCard', id: number, title: string, slug: string, duration: string, completion_date: string, excerpt: string, prof_env: boolean, company_name?: string | null, src_picture?: string | null, team_members?: Array<{ __typename?: 'TeamMemberWOProjectRelation', id: number, name: string, src_icon: string, linkedin?: string | null }> | null, technologies: Array<{ __typename?: 'TechnologyWOProjectRelation', id: number, name: string, src_icon: string }> }> | null };
 
 export type RegisterVisitorMutationVariables = Exact<{
   data: EmailInput;
@@ -343,6 +376,23 @@ export type ResetPasswordMutationVariables = Exact<{
 
 
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'ResponseMessage', message: string, success: boolean } };
+
+export type SendContactMessageMutationVariables = Exact<{
+  message: Scalars['String'];
+  subject: Scalars['String'];
+  email: Scalars['String'];
+  honeypot?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type SendContactMessageMutation = { __typename?: 'Mutation', sendContactMessage: { __typename?: 'ResponseMessage', message: string, success: boolean } };
+
+export type SetPasswordForGoogleUserMutationVariables = Exact<{
+  data: InputPasswordGoogleUser;
+}>;
+
+
+export type SetPasswordForGoogleUserMutation = { __typename?: 'Mutation', setPasswordForGoogleUser: boolean };
 
 export type TeamMembersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -374,6 +424,11 @@ export type UserByIdQueryVariables = Exact<{
 
 
 export type UserByIdQuery = { __typename?: 'Query', userById?: { __typename?: 'UserWoPassword', id: number, first_name: string, last_name: string, email: string, role: string } | null };
+
+export type UserHasPasswordQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserHasPasswordQuery = { __typename?: 'Query', userHasPassword: boolean };
 
 
 export const ConfirmRegisterDocument = gql`
@@ -676,6 +731,41 @@ export function useGoogleAuthMutation(baseOptions?: Apollo.MutationHookOptions<G
 export type GoogleAuthMutationHookResult = ReturnType<typeof useGoogleAuthMutation>;
 export type GoogleAuthMutationResult = Apollo.MutationResult<GoogleAuthMutation>;
 export type GoogleAuthMutationOptions = Apollo.BaseMutationOptions<GoogleAuthMutation, GoogleAuthMutationVariables>;
+export const IsGoogleUserDocument = gql`
+    query IsGoogleUser {
+  isGoogleUser {
+    authProvider
+    email
+  }
+}
+    `;
+
+/**
+ * __useIsGoogleUserQuery__
+ *
+ * To run a query within a React component, call `useIsGoogleUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIsGoogleUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useIsGoogleUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useIsGoogleUserQuery(baseOptions?: Apollo.QueryHookOptions<IsGoogleUserQuery, IsGoogleUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IsGoogleUserQuery, IsGoogleUserQueryVariables>(IsGoogleUserDocument, options);
+      }
+export function useIsGoogleUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IsGoogleUserQuery, IsGoogleUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IsGoogleUserQuery, IsGoogleUserQueryVariables>(IsGoogleUserDocument, options);
+        }
+export type IsGoogleUserQueryHookResult = ReturnType<typeof useIsGoogleUserQuery>;
+export type IsGoogleUserLazyQueryHookResult = ReturnType<typeof useIsGoogleUserLazyQuery>;
+export type IsGoogleUserQueryResult = Apollo.QueryResult<IsGoogleUserQuery, IsGoogleUserQueryVariables>;
 export const LoginDocument = gql`
     query Login($infos: InputLogin!) {
   login(infos: $infos) {
@@ -803,8 +893,8 @@ export const ProjectsDocument = gql`
     id
     title
     slug
-    completion_date
     duration
+    completion_date
     excerpt
     prof_env
     company_name
@@ -812,8 +902,8 @@ export const ProjectsDocument = gql`
     team_members {
       id
       name
-      linkedin
       src_icon
+      linkedin
     }
     technologies {
       id
@@ -920,6 +1010,79 @@ export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOption
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SendContactMessageDocument = gql`
+    mutation SendContactMessage($message: String!, $subject: String!, $email: String!, $honeypot: String) {
+  sendContactMessage(
+    message: $message
+    subject: $subject
+    email: $email
+    honeypot: $honeypot
+  ) {
+    message
+    success
+  }
+}
+    `;
+export type SendContactMessageMutationFn = Apollo.MutationFunction<SendContactMessageMutation, SendContactMessageMutationVariables>;
+
+/**
+ * __useSendContactMessageMutation__
+ *
+ * To run a mutation, you first call `useSendContactMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendContactMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendContactMessageMutation, { data, loading, error }] = useSendContactMessageMutation({
+ *   variables: {
+ *      message: // value for 'message'
+ *      subject: // value for 'subject'
+ *      email: // value for 'email'
+ *      honeypot: // value for 'honeypot'
+ *   },
+ * });
+ */
+export function useSendContactMessageMutation(baseOptions?: Apollo.MutationHookOptions<SendContactMessageMutation, SendContactMessageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendContactMessageMutation, SendContactMessageMutationVariables>(SendContactMessageDocument, options);
+      }
+export type SendContactMessageMutationHookResult = ReturnType<typeof useSendContactMessageMutation>;
+export type SendContactMessageMutationResult = Apollo.MutationResult<SendContactMessageMutation>;
+export type SendContactMessageMutationOptions = Apollo.BaseMutationOptions<SendContactMessageMutation, SendContactMessageMutationVariables>;
+export const SetPasswordForGoogleUserDocument = gql`
+    mutation SetPasswordForGoogleUser($data: InputPasswordGoogleUser!) {
+  setPasswordForGoogleUser(data: $data)
+}
+    `;
+export type SetPasswordForGoogleUserMutationFn = Apollo.MutationFunction<SetPasswordForGoogleUserMutation, SetPasswordForGoogleUserMutationVariables>;
+
+/**
+ * __useSetPasswordForGoogleUserMutation__
+ *
+ * To run a mutation, you first call `useSetPasswordForGoogleUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetPasswordForGoogleUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setPasswordForGoogleUserMutation, { data, loading, error }] = useSetPasswordForGoogleUserMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSetPasswordForGoogleUserMutation(baseOptions?: Apollo.MutationHookOptions<SetPasswordForGoogleUserMutation, SetPasswordForGoogleUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetPasswordForGoogleUserMutation, SetPasswordForGoogleUserMutationVariables>(SetPasswordForGoogleUserDocument, options);
+      }
+export type SetPasswordForGoogleUserMutationHookResult = ReturnType<typeof useSetPasswordForGoogleUserMutation>;
+export type SetPasswordForGoogleUserMutationResult = Apollo.MutationResult<SetPasswordForGoogleUserMutation>;
+export type SetPasswordForGoogleUserMutationOptions = Apollo.BaseMutationOptions<SetPasswordForGoogleUserMutation, SetPasswordForGoogleUserMutationVariables>;
 export const TeamMembersDocument = gql`
     query TeamMembers {
   teamMembers {
@@ -1103,3 +1266,35 @@ export function useUserByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<U
 export type UserByIdQueryHookResult = ReturnType<typeof useUserByIdQuery>;
 export type UserByIdLazyQueryHookResult = ReturnType<typeof useUserByIdLazyQuery>;
 export type UserByIdQueryResult = Apollo.QueryResult<UserByIdQuery, UserByIdQueryVariables>;
+export const UserHasPasswordDocument = gql`
+    query UserHasPassword {
+  userHasPassword
+}
+    `;
+
+/**
+ * __useUserHasPasswordQuery__
+ *
+ * To run a query within a React component, call `useUserHasPasswordQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserHasPasswordQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserHasPasswordQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserHasPasswordQuery(baseOptions?: Apollo.QueryHookOptions<UserHasPasswordQuery, UserHasPasswordQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserHasPasswordQuery, UserHasPasswordQueryVariables>(UserHasPasswordDocument, options);
+      }
+export function useUserHasPasswordLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserHasPasswordQuery, UserHasPasswordQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserHasPasswordQuery, UserHasPasswordQueryVariables>(UserHasPasswordDocument, options);
+        }
+export type UserHasPasswordQueryHookResult = ReturnType<typeof useUserHasPasswordQuery>;
+export type UserHasPasswordLazyQueryHookResult = ReturnType<typeof useUserHasPasswordLazyQuery>;
+export type UserHasPasswordQueryResult = Apollo.QueryResult<UserHasPasswordQuery, UserHasPasswordQueryVariables>;

@@ -39,6 +39,16 @@
         opacity: 0.5;
     }
 
+    .text-green-700 {
+        color: color.$color-green;
+        font-family: 'Gotham Book', sans-serif;
+    }
+
+    .text-red-600 {
+        color: color.$color-warm;
+        font-family: 'Gotham Book', sans-serif;
+    }
+
     .checkbox {
         display: flex;
         align-items: center;

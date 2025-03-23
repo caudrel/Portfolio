@@ -1,16 +1,26 @@
 import { useState, useEffect } from 'react'
 import Layout from '@/components/Layout'
-import { useGetUserFromCtxLazyQuery } from '@/graphql/generated/schema'
+import {
+    useGetUserFromCtxLazyQuery,
+    useUserHasPasswordQuery,
+} from '@/graphql/generated/schema'
 import ModalModifyDetails from '@/components/profil/modalModifyDetails'
 import ModalModifyPassword from '@/components/profil/modalModifyPassword'
 import ModalDeleteAccount from '@/components/profil/modalDeleteAccount'
+import Link from 'next/link'
 
 export default function Profile() {
     const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false)
     const [isModalModifyPasswordOpen, setIsModalModifyPasswordOpen] =
-        useState(false) // 🔥 Gestion de la modale
+        useState(false)
     const [isModalDeleteAccountOpen, setIsModalDeleteAccountOpen] =
-        useState(false) // 🔥 Gestion de la modale
+        useState(false)
+
+    const {
+        data: dataHasPassword,
+        loading: loadingHasPassword,
+        error: errorHasPassword,
+    } = useUserHasPasswordQuery()
 
     const [getUser, { data, loading, error }] = useGetUserFromCtxLazyQuery()
 
@@ -75,17 +85,44 @@ export default function Profile() {
                 </div>
 
                 <div className='profil-frame'>
-                    <div className='frame'>
-                        <div className='profil-section'>
-                            <h2>Mon mot de passe</h2>
-                            <p>Modifier mon mot de passe</p>
+                    <div className='container-frame'>
+                        <div className='frame'>
+                            <div className='profil-section'>
+                                <h2>Mon mot de passe</h2>
+                                {dataHasPassword ? (
+                                    <p>Modifier mon mot de passe</p>
+                                ) : (
+                                    <>
+                                        <p>
+                                            Vous êtes identifié avec votre
+                                            compte Google.
+                                        </p>
+                                        <p>
+                                            Vous pouvez néanmoins créer votre
+                                            mot de passe.
+                                        </p>
+                                    </>
+                                )}
+                            </div>
                         </div>
-                        <button
-                            className='btn-primary modify-profil-btn'
-                            onClick={() => setIsModalModifyPasswordOpen(true)}
-                        >
-                            Modifier mon mot de passe
-                        </button>
+                        {dataHasPassword?.userHasPassword ? (
+                            <button
+                                className='btn-primary modify-profil-btn'
+                                onClick={() =>
+                                    setIsModalModifyPasswordOpen(true)
+                                }
+                            >
+                                Modifier mon mot de passe
+                            </button>
+                        ) : (
+                            <Link
+                                href='/auth/reset-password'
+                                passHref
+                                className='btn-primary modify-profil-btn'
+                            >
+                                Créer un mot de passe
+                            </Link>
+                        )}
                     </div>
                 </div>
 
@@ -98,7 +135,7 @@ export default function Profile() {
                     </button>
                 </div>
             </section>
-            {/* Modale affichée uniquement si `isModalDetailsOpen` est `true` */}
+
             {isModalDetailsOpen && (
                 <ModalModifyDetails
                     isOpen={isModalDetailsOpen}

@@ -16,6 +16,7 @@ function Register() {
     const router = useRouter()
     const [cguAccepted, setCguAccepted] = useState(false) // ✅ Suivi de la case à cocher
     const [cguError, setCguError] = useState(false)
+
     // Remplacer le console.log par console.warn ou console.error
     console.warn('cguError', cguError)
 

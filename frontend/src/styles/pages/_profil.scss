@@ -16,7 +16,7 @@
 
     .profil-frame {
         padding: 2rem;
-        width: 50%;
+        width: 75%;
         background-image: linear-gradient(
             180deg,
             color.$color-sunshine,
@@ -39,7 +39,11 @@
             color: color.$color-blue;
         }
 
-        p,
+        p {
+            font-family: 'Gotham Light', sans-serif;
+            color: color.$color-darkGrey;
+        }
+
         td {
             font-family: 'Gotham Light', sans-serif;
             color: color.$color-grey;

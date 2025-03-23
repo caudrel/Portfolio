@@ -57,11 +57,17 @@
         }
 
         .illustration {
-            object-fit: cover;
+            width: 100%; // Assure que le conteneur prend toute la largeur disponible
+            height: 200px; // Ajuste cette valeur en fonction de ton design
+            overflow: hidden; // Coupe l'excédent en dehors du cadre
+            display: flex;
+            align-items: flex-start; // Aligne l'image en haut
 
             img {
-                width: 100%;
-                height: auto;
+                width: 100%; // Assure que l'image occupe toute la largeur
+                height: auto; // Garde le ratio d'aspect
+                min-height: 100%; // Force l'image à remplir la hauteur minimale
+                object-fit: cover; // Coupe le bas si l'image est trop haute
             }
         }
         .call-to-action-details {
@@ -86,37 +92,26 @@
             padding: 1rem 01rem;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.7rem;
 
-            .member-pics {
-                display: flex;
-                flex-wrap: wrap;
-                flex-direction: row;
-                gap: 0.5rem;
-                padding: 0.3rem 0.4rem 0.6rem 0.2rem;
-
-                .member-pic {
-                    border-radius: 50%;
-                    box-shadow:
-                        2px 5px 8px 0 rgba(108, 117, 125, 0.4),
-                        0 0px 13px 0 rgba(108, 117, 125, 0.2);
-                }
+            .pitch-div {
+                height: 3.5rem;
             }
 
-            .techno-icons {
+            .member-div {
+                height: auto;
+            }
+
+            .technology-div {
+                height: 6rem;
+            }
+
+            .icons {
                 display: flex;
                 flex-wrap: wrap;
                 flex-direction: row;
                 gap: 0.5rem;
                 padding: 0.3rem 0.4rem 0.6rem 0.2rem;
-
-                .techno-icon {
-                    border-radius: 50%;
-                    box-shadow:
-                        2px 5px 8px 0 rgba(108, 117, 125, 0.4),
-                        0 0px 13px 0 rgba(108, 117, 125, 0.2);
-                    // margin: 0.6rem 1rem 1rem 1rem;
-                }
             }
         }
     }

@@ -9,7 +9,20 @@ export default function Home() {
     //const email = connectedUserEmail()
     //console.log('email', email)
     const languages = useMemo(
-        () => ['Laravel', 'Symfony', 'Next.js', 'Node.js', 'SQL'],
+        () => [
+            'React.js',
+            'Next.js',
+            'Node.js',
+            'Docker',
+            'Laravel',
+            'Symfony',
+            'PHP',
+            'SQL',
+            'GraphQl',
+            'SASS',
+            'TypeScript',
+            'CI CD',
+        ],
         []
     )
     const [currentLanguage, setCurrentLanguage] = useState<string>('') // Stocke la langue actuelle
@@ -39,7 +52,7 @@ export default function Home() {
                         priority
                     />
                     <h1>AURELIE LOZACH</h1>
-                    <h2>Full Stack Developpeuse - Chef de projet</h2>
+                    <h2>Chef de Projet Technique</h2>
 
                     <ul>
                         <li className='tech-caroussel' key={currentLanguage}>
@@ -65,63 +78,125 @@ export default function Home() {
                             <div className='paragraph'>
                                 <p>
                                     {
-                                        "Après 10 années d'expérience en tant que Chef de Produit dans le textile, mon passage à la French Tech Bordeaux de 2020 à 2023 a éveillé mon envie de me réorienter vers le développement web."
+                                        "Après 10 années d'expérience en tant que Chef de Produit dans le textile, mon passage à La French Tech Bordeaux entre 2020 et 2023 a suscité ma reconversion vers le développement web."
                                     }
                                 </p>
 
                                 <p>
                                     {
-                                        "Je me suis formée aux technologies PHP et Symfony au cours d'un bootcamp, puis sur TypeScript, React.js, Next.js, Node.js, Laravel, Docker et GraphQL avec Apollo lors d'une alternance en agence."
+                                        'Formée aux technologies PHP et Symfony lors d’un bootcamp, j’ai ensuite approfondi mes compétences sur TypeScript, React.js, Next.js, Node.js, Laravel, Docker et GraphQL avec Apollo durant une alternance en agence.'
                                     }
                                 </p>
 
                                 <p>
                                     {
-                                        'Ma polyvalence, combinant expertise en gestion de projet, compétences techniques et une approche orientée client, me permet d’apporter une vision globale et concrète aux projets web.'
+                                        'Forte d’une double compétence technique et fonctionnelle, consolidée par mon expérience en gestion de projet chez Levi’s, Chantelle et Renault, je suis aujourd’hui prête à accompagner le succès de vos projets web en assurant une collaboration fluide entre les équipes métier et technique.'
                                     }
+                                </p>
+
+                                <p>
+                                    Aurélie Engels (Lozach), votre future{' '}
+                                    <b>Chef de Projet Technique</b>, alliant
+                                    expertise fonctionnelle et compétences en
+                                    développement.
                                 </p>
                             </div>
                             <div className='list'>
-                                <ul className='perso-info'>
-                                    <li aria-label='date de naissance'>
-                                        <strong>Anniversaire : </strong>
-                                        11/11/1977
-                                    </li>
+                                <ul className='degres-info'>
                                     <li>
-                                        <strong>Adresse : </strong>Bordeaux
-                                    </li>
-                                    <li>
-                                        <strong>Tel : </strong>06 84 65 04 90
+                                        <h3>A propos : </h3>
+
+                                        <ul>
+                                            <li aria-label='date de naissance'>
+                                                <strong>Anniversaire : </strong>
+                                                11/11/1977
+                                            </li>
+                                            <li>
+                                                <strong>Adresse : </strong>
+                                                Bordeaux
+                                            </li>
+                                            <li>
+                                                <strong>Tel : </strong>06 84 65
+                                                04 90
+                                            </li>
+                                            <li>
+                                                <strong>Langues : </strong>
+                                                Bilingue anglais
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                                 <ul className='degres-info'>
                                     <li>
-                                        <strong>Diplômes : </strong>
+                                        <h3>Diplômes : </h3>
                                         <ul>
-                                            <li>CDA 2024</li>
-                                            <li>DWWM 2023</li>
+                                            <li>
+                                                Certification CDA obtenue en
+                                                septembre 2024
+                                            </li>
+                                            <li>
+                                                Certification DWWM obtenue en
+                                                juillet 2023
+                                            </li>
                                             <li>
                                                 <Link
                                                     href='https://www.esce.fr/program/programme-grande-ecole-grade-de-master-2/'
                                                     aria-label='lien vers mon école de commerce'
+                                                    target='_blank'
                                                 >
-                                                    ESCE
+                                                    Ecole de Commerce - ESCE -
+                                                    promo 2000
                                                 </Link>
-                                                2000
                                             </li>
-                                            <li>Bac S spé math 1996</li>
+                                            <li>
+                                                Bac S spé math obtenu en 1996
+                                            </li>
                                         </ul>
                                     </li>
-
+                                </ul>
+                                <ul className='degres-info'>
                                     <li>
-                                        <strong>Technos : </strong>
+                                        <h3>Technos : </h3>
                                         <ul>
                                             <li>PHP (Laravel, Symfony)</li>
-                                            <li>JS (React, Next, Node)</li>
+                                            <li>
+                                                JS (React, Next, Node,
+                                                TypeScript)
+                                            </li>
                                             <li>
                                                 SQL, GraphQL, Apollo, Docker,
-                                                CI, CD
+                                                CI-CD, Github Actions
                                             </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul className='degres-info'>
+                                    <li>
+                                        <h3>Savoir-Être</h3>
+                                        <ul>
+                                            <li>Bonne humeur</li>
+                                            <li>Communication</li>
+                                            <li>Organisation</li>
+                                            <li>Rigueur</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul className='degres-info'>
+                                    <li>
+                                        <h3>Savoir-Faire</h3>
+                                        <ul>
+                                            <li>
+                                                Recueil et analyse des besoins
+                                            </li>
+                                            <li>
+                                                Organisation et priorisation des
+                                                livrables
+                                            </li>
+                                            <li>Coordination des équipes</li>
+                                            <li>
+                                                Suivi méthodique des projets
+                                            </li>
+                                            <li>Souci du détail et qualité</li>
                                         </ul>
                                     </li>
                                 </ul>

@@ -25,6 +25,7 @@ class ProjectsResolver {
                 { technologyIds }
             )
         }
+        query.orderBy('project.completion_date', 'DESC')
 
         const projects = await query.getMany()
 

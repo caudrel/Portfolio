@@ -62,6 +62,9 @@ export class User extends BaseEntity {
     @Column('text', { nullable: true, unique: true })
     resetToken: string | null
 
+    @Column({ type: 'timestamp', nullable: true })
+    resetTokenExpires: Date // ✅ Ajout de l'expiration du token
+
     @Column('text', { nullable: true, unique: true })
     accessToken?: string | null
 
@@ -114,6 +117,15 @@ export class ResponseMessage {
 
     @Field()
     success: boolean
+}
+
+@ObjectType()
+export class isGoogleUser {
+    @Field() // "local" ou "google"
+    authProvider: 'local' | 'google'
+
+    @Field()
+    email: string
 }
 
 @InputType()
@@ -284,4 +296,35 @@ export class UpdatePasswordInput {
         }
     )
     confirmNewPassword: string
+}
+
+@InputType()
+export class InputPasswordGoogleUser {
+    @Field()
+    @IsEmail(
+        {},
+        {
+            message: 'Une adresse mail valide est requise',
+        }
+    )
+    @IsNotEmpty({
+        message: 'Veuillez renseigner votre email',
+    })
+    email: string
+
+    @Field()
+    @IsStrongPassword(
+        {
+            minLength: 8,
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1,
+            minSymbols: 1,
+        },
+        {
+            message:
+                'Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, un chiffre et un symbole.',
+        }
+    )
+    newPassword: string
 }

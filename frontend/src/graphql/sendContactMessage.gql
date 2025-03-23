@@ -1,0 +1,16 @@
+mutation SendContactMessage(
+    $message: String!
+    $subject: String!
+    $email: String!
+    $honeypot: String
+) {
+    sendContactMessage(
+        message: $message
+        subject: $subject
+        email: $email
+        honeypot: $honeypot
+    ) {
+        message
+        success
+    }
+}
