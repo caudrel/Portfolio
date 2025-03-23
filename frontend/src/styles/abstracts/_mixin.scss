@@ -52,32 +52,32 @@
     }
 
     @media (min-width: media.$from-small) {
-        padding-right: 4rem;
-        padding-left: 4rem;
+        padding-right: 3rem;
+        padding-left: 3rem;
     }
 
     @media (min-width: media.$from-medium) {
-        padding-right: 5rem;
-        padding-left: 5rem;
+        padding-right: 3rem;
+        padding-left: 3rem;
     }
 
     @media (min-width: media.$from-large) {
-        padding-right: 8rem;
-        padding-left: 8rem;
+        padding-right: 6rem;
+        padding-left: 6rem;
     }
 
     @media (min-width: media.$from-big) {
+        padding-right: 10rem;
+        padding-left: 10rem;
+    }
+
+    @media (min-width: media.$from-huge) {
         padding-right: 15rem;
         padding-left: 15rem;
     }
 
-    @media (min-width: media.$from-huge) {
+    @media (min-width: media.$from-colossal) {
         padding-right: 25rem;
         padding-left: 25rem;
-    }
-
-    @media (min-width: media.$from-colossal) {
-        padding-right: 35rem;
-        padding-left: 35rem;
     }
 }

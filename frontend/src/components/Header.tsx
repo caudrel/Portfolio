@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { checkUserConnected } from '@/utils/checkConnection'
+
 import {
     useGetUserFromCtxLazyQuery,
     useLogoutMutation,
@@ -49,9 +49,54 @@ export default function Header() {
     }
 
     useEffect(() => {
+        if (router.asPath.includes('#')) {
+            const sectionId = router.asPath.split('#')[1]
+            const section = document.getElementById(sectionId)
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' })
+            }
+        }
+    }, [router.asPath])
+
+    const handleNavigation = (
+        e: React.MouseEvent<HTMLAnchorElement>,
+        sectionId: string
+    ) => {
+        e.preventDefault()
+        if (router.pathname !== '/') {
+            // Rediriger vers la home puis scroller après la navigation
+            router.push(`/#${sectionId}`)
+        } else {
+            // Si déjà sur la home, scroll directement
+            const section = document.querySelector(sectionId)
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' })
+            }
+        }
+    }
+
+    useEffect(() => {
+        const handleRouteChange = () => {
+            if (router.asPath.includes('#')) {
+                const sectionId = router.asPath.split('#')[1]
+                const section = document.getElementById(sectionId)
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' })
+                }
+            }
+        }
+
+        router.events.on('routeChangeComplete', handleRouteChange)
+
+        return () => {
+            router.events.off('routeChangeComplete', handleRouteChange)
+        }
+    }, [router.events])
+
+    useEffect(() => {
         // Détecter si la largeur de l'écran est inférieure ou égale à un seuil (e.g., 768px pour les mobiles)
         const handleResize = () => {
-            setIsMobile(window.innerWidth <= 500)
+            setIsMobile(window.innerWidth <= 520)
         }
 
         // Détecter le scroll pour le style de la navbar
@@ -72,8 +117,6 @@ export default function Header() {
             window.removeEventListener('scroll', handleScroll)
         }
     }, [])
-
-    console.log('data', data)
 
     useEffect(() => {
         if (!loading && !data) {
@@ -108,12 +151,14 @@ export default function Header() {
                             >
                                 Home
                             </Link>
+
                             <Link
                                 className={`menu-link ${isScrolled ? 'scrolled' : ''}`}
                                 href='/#about'
                             >
                                 A propos
                             </Link>
+
                             <Link
                                 className={`menu-link ${isScrolled ? 'scrolled' : ''}`}
                                 href='/#projets'
@@ -182,8 +227,9 @@ export default function Header() {
                                 )}
                         </div>
                     </div>
+                    <div className='login-placeholder'></div>
 
-                    {!isConnected && (
+                    {/* {!isConnected && (
                         <Link href='/auth/login' className='btn-primary'>
                             Login
                         </Link>
@@ -196,7 +242,7 @@ export default function Header() {
                         >
                             Logout
                         </button>
-                    )}
+                    )} */}
                 </nav>
             ) : (
                 // Burger menu for mobile view
@@ -351,10 +397,9 @@ export default function Header() {
                                                     </div>
                                                 </>
                                             )}
-                                        ``
                                     </div>
 
-                                    <div>
+                                    {/* <div>
                                         {' '}
                                         {!isConnected && (
                                             <Link
@@ -376,7 +421,7 @@ export default function Header() {
                                                 Logout
                                             </Link>
                                         )}
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className='socialIcons-burger-container'>
                                     <Link

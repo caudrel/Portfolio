@@ -25,7 +25,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem;
+        padding: 1rem 0 1rem 0;
 
         .nav-links {
             font-family: 'Gotham Light', sans-serif;
@@ -285,4 +285,8 @@
             }
         }
     }
+}
+
+.login-placeholder {
+    width: 7rem;
 }

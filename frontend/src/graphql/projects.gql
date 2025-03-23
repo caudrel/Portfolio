@@ -3,8 +3,8 @@ query Projects($technologyIds: [Int!]) {
         id
         title
         slug
-        completion_date
         duration
+        completion_date
         excerpt
         prof_env
         company_name
@@ -12,8 +12,8 @@ query Projects($technologyIds: [Int!]) {
         team_members {
             id
             name
-            linkedin
             src_icon
+            linkedin
         }
         technologies {
             id

@@ -1,14 +1,14 @@
 mutation SendContactMessage(
-    $recaptchaToken: String!
     $message: String!
     $subject: String!
     $email: String!
+    $honeypot: String
 ) {
     sendContactMessage(
-        recaptchaToken: $recaptchaToken
         message: $message
         subject: $subject
         email: $email
+        honeypot: $honeypot
     ) {
         message
         success

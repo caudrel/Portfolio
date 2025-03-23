@@ -25,12 +25,15 @@ export default function Projects() {
         error: technologiesError,
     } = useTechnologiesQuery({})
 
-    const handleTechnoClick = (technoId: number) => {
-        setTechnoIds(
-            prevTechnoIds =>
-                prevTechnoIds.includes(technoId)
-                    ? prevTechnoIds.filter(id => id !== technoId) // Supprime si déjà présent
-                    : [...prevTechnoIds, technoId] // Ajoute sinon
+    const handleTechnoClick = (
+        event: React.MouseEvent<HTMLButtonElement>,
+        technoId: number
+    ) => {
+        event.preventDefault() // ✅ Empêche le rechargement de la page
+        setTechnoIds(prevTechnoIds =>
+            prevTechnoIds.includes(technoId)
+                ? prevTechnoIds.filter(id => id !== technoId)
+                : [...prevTechnoIds, technoId]
         )
     }
 
@@ -44,14 +47,19 @@ export default function Projects() {
             <div className='display-techno-btn'>
                 {technologiesData?.technologies?.map(techno => (
                     <button
+                        type='button'
                         className={`button-techno ${technoIds.includes(techno.id) ? 'selected' : ''}`}
                         key={techno.id}
-                        onClick={() => handleTechnoClick(techno.id)}
+                        onClick={e => handleTechnoClick(e, techno.id)}
                     >
                         {techno?.name}
                     </button>
                 )) || <p>Aucune technologie disponible.</p>}
             </div>
+
+            <button className='btn-secondary' onClick={() => setTechnoIds([])}>
+                Réinitialiser
+            </button>
 
             <div className='projects-list'>
                 {projectsData?.projects && projectsData.projects.length > 0 ? (

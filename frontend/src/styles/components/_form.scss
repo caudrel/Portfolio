@@ -1,5 +1,6 @@
 @use '../abstracts/color' as color;
 @use '../abstracts/mixin' as mixin;
+@use '../abstracts/media-query' as media;
 
 .form-frame {
     padding: 2rem;
@@ -10,11 +11,16 @@
         color.$color-beige
     );
     border-radius: 10px;
+    width: 90%;
     display: flex;
     justify-content: center;
     box-shadow:
         0 4px 8px 0 rgba(31, 90, 255, 0.2),
         0 6px 20px 0 rgba(31, 90, 255, 0.19);
+
+    @media (min-width: media.$from-medium) {
+        width: auto;
+    }
 
     p {
         font-family: 'Gotham Book', sans-serif;
@@ -24,6 +30,11 @@
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        width: 100%;
+
+        @media (min-width: media.$from-medium) {
+            min-width: 30vw;
+        }
 
         span {
             color: color.$color-indigo;
@@ -46,9 +57,26 @@
                 flex-direction: column;
                 font-family: 'Gotham book', sans-serif;
                 color: color.$color-dark;
+
+                label {
+                    &.word-count {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                }
             }
 
             input {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid color.$color-grey;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            textarea {
                 width: 100%;
                 padding: 12px 20px;
                 margin: 8px 0;

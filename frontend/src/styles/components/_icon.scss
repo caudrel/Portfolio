@@ -1,0 +1,52 @@
+@use '../abstracts/color' as color;
+
+.icon-component {
+    display: flex;
+    flex-direction: column;
+    position: relative; // Ajouté pour que le tooltip soit positionné relativement à ce conteneur
+    align-items: center;
+}
+
+.icon {
+    border-radius: 50%;
+    box-shadow:
+        2px 5px 8px 0 rgba(108, 117, 125, 0.4),
+        0 0px 13px 0 rgba(108, 117, 125, 0.2);
+    overflow: visible; // Permet d'afficher le tooltip hors des limites de l'icône
+}
+
+.icon-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+// Correction pour le tooltip
+.tooltip {
+    position: absolute; // Permet de ne pas déformer l'icône
+    top: 120%; // Positionne le tooltip au-dessus de l’icône
+    left: 50%;
+    transform: translateX(-50%);
+    background: color.$color-sunshine;
+    color: color.$color-darkGrey;
+    text-align: center;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: 'Gotham Book', sans-serif;
+    max-width: 150px;
+    word-wrap: break-word;
+    z-index: 900;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.2s ease-in-out,
+        transform 0.2s ease-in-out;
+}
+
+// Affichage au survol
+.tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-3px);
+}

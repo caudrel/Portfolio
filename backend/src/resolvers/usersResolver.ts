@@ -23,7 +23,7 @@ import crypto from 'crypto'
 import redis from '../lib/redis'
 import { v4 as uuidv4 } from 'uuid'
 import verifyAccessToken from '../lib/verifyAccessToken'
-import verifyRecaptcha from '../lib/verifyRecaptcha'
+//import verifyRecaptcha from '../lib/verifyRecaptcha'
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
@@ -114,33 +114,54 @@ class UsersResolver {
         @Arg('email') email: string,
         @Arg('subject') subject: string,
         @Arg('message') message: string,
-        @Arg('recaptchaToken') recaptchaToken: string
+        @Arg('honeypot', { nullable: true }) honeypot: string
+        // @Arg('recaptchaToken') recaptchaToken: string
     ): Promise<ResponseMessage> {
         // Vérifier le reCAPTCHA
-        const isValid = await verifyRecaptcha(recaptchaToken)
-        if (!isValid) {
-            throw new Error('Échec de la vérification reCAPTCHA')
-        }
+        // const isValid = await verifyRecaptcha(recaptchaToken)
+        // if (!isValid) {
+        //     throw new Error('Échec de la vérification reCAPTCHA')
+        // }
 
         // Envoi de l'email
-        await sendMail({
-            Messages: [
-                {
-                    From: {
-                        Name: `${process.env.APP_NAME}`,
-                        Email: email,
-                    },
-                    To: [{ Name: '', Email: email }],
-                    Subject: subject,
-                    TextPart: message,
-                    HTMLPart: message,
-                },
-            ],
-        })
 
-        return {
-            success: true,
-            message: 'Email envoyé avec les instructions de connexion.',
+        if (honeypot || message.includes('http')) {
+            console.warn('Bot ou contenu suspect détecté !')
+            return {
+                success: false,
+                message: 'Message détecté comme spam',
+            }
+        }
+
+        if (message.length > 1000 || message.length < 10) {
+            throw new Error('La taille du message est invalide.')
+        }
+
+        try {
+            await sendMail({
+                Messages: [
+                    {
+                        From: {
+                            Name: `${process.env.APP_NAME}`,
+                            Email: `${process.env.EMAIL_FROM}`,
+                        },
+                        To: [{ Name: '', Email: email }],
+                        Subject: subject,
+                        TextPart: message,
+                        HTMLPart: message,
+                    },
+                ],
+            })
+            return {
+                success: true,
+                message: 'Message envoyé avec succès !',
+            }
+        } catch (error) {
+            console.error("Erreur lors de l'envoi:", error)
+            return {
+                success: false,
+                message: "Erreur lors de l'envoi du message",
+            }
         }
     }
 

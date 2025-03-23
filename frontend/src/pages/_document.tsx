@@ -11,11 +11,11 @@ export default function Document() {
                     rel='stylesheet'
                 ></link>
                 <link rel='icon' href='/favicon.ico' />
-                <script
+                {/* <script
                     src='https://www.google.com/recaptcha/enterprise.js?render=6Lf8CfcqAAAAAPrDuO7-pMM-FfWnAXvyVzzqkFwi'
                     async
                     defer
-                ></script>
+                ></script> */}
             </Head>
             <body>
                 <Main />

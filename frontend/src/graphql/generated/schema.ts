@@ -111,8 +111,8 @@ export type MutationResetPasswordArgs = {
 
 export type MutationSendContactMessageArgs = {
   email: Scalars['String'];
+  honeypot?: InputMaybe<Scalars['String']>;
   message: Scalars['String'];
-  recaptchaToken: Scalars['String'];
   subject: Scalars['String'];
 };
 
@@ -360,7 +360,7 @@ export type ProjectsQueryVariables = Exact<{
 }>;
 
 
-export type ProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'ProjectCard', id: number, title: string, slug: string, completion_date: string, duration: string, excerpt: string, prof_env: boolean, company_name?: string | null, src_picture?: string | null, team_members?: Array<{ __typename?: 'TeamMemberWOProjectRelation', id: number, name: string, linkedin?: string | null, src_icon: string }> | null, technologies: Array<{ __typename?: 'TechnologyWOProjectRelation', id: number, name: string, src_icon: string }> }> | null };
+export type ProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'ProjectCard', id: number, title: string, slug: string, duration: string, completion_date: string, excerpt: string, prof_env: boolean, company_name?: string | null, src_picture?: string | null, team_members?: Array<{ __typename?: 'TeamMemberWOProjectRelation', id: number, name: string, src_icon: string, linkedin?: string | null }> | null, technologies: Array<{ __typename?: 'TechnologyWOProjectRelation', id: number, name: string, src_icon: string }> }> | null };
 
 export type RegisterVisitorMutationVariables = Exact<{
   data: EmailInput;
@@ -378,10 +378,10 @@ export type ResetPasswordMutationVariables = Exact<{
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'ResponseMessage', message: string, success: boolean } };
 
 export type SendContactMessageMutationVariables = Exact<{
-  recaptchaToken: Scalars['String'];
   message: Scalars['String'];
   subject: Scalars['String'];
   email: Scalars['String'];
+  honeypot?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -893,8 +893,8 @@ export const ProjectsDocument = gql`
     id
     title
     slug
-    completion_date
     duration
+    completion_date
     excerpt
     prof_env
     company_name
@@ -902,8 +902,8 @@ export const ProjectsDocument = gql`
     team_members {
       id
       name
-      linkedin
       src_icon
+      linkedin
     }
     technologies {
       id
@@ -1011,12 +1011,12 @@ export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPassword
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const SendContactMessageDocument = gql`
-    mutation SendContactMessage($recaptchaToken: String!, $message: String!, $subject: String!, $email: String!) {
+    mutation SendContactMessage($message: String!, $subject: String!, $email: String!, $honeypot: String) {
   sendContactMessage(
-    recaptchaToken: $recaptchaToken
     message: $message
     subject: $subject
     email: $email
+    honeypot: $honeypot
   ) {
     message
     success
@@ -1038,10 +1038,10 @@ export type SendContactMessageMutationFn = Apollo.MutationFunction<SendContactMe
  * @example
  * const [sendContactMessageMutation, { data, loading, error }] = useSendContactMessageMutation({
  *   variables: {
- *      recaptchaToken: // value for 'recaptchaToken'
  *      message: // value for 'message'
  *      subject: // value for 'subject'
  *      email: // value for 'email'
+ *      honeypot: // value for 'honeypot'
  *   },
  * });
  */
