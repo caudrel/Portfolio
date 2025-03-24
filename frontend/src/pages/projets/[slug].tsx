@@ -40,7 +40,7 @@ export default function Project() {
 
     return (
         <div className='project-prez'>
-            <Link href={`/#projets`} className='return'>
+            <Link href={`/projets`} className='return'>
                 Retour
             </Link>
             <div className='project-frame'>

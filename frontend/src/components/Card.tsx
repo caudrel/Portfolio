@@ -69,7 +69,7 @@ export default function Card({
                     </div>
                     <div className='call-to-action-details'>
                         <Link
-                            href={`/projet/${slug}`}
+                            href={`/projets/${slug}`}
                             className='btn-secondary read-more'
                         >
                             Voir

@@ -56,8 +56,6 @@ export default function ContactForm() {
     }, [])
 
     const onSubmit = async (formData: ContactFormInput) => {
-        console.log('FormData:', formData) // Voir ce qui est envoyé
-
         const spamKeywords = [
             'http',
             'https',
