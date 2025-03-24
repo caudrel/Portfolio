@@ -58,41 +58,6 @@ export default function Header() {
         }
     }, [router.asPath])
 
-    const handleNavigation = (
-        e: React.MouseEvent<HTMLAnchorElement>,
-        sectionId: string
-    ) => {
-        e.preventDefault()
-        if (router.pathname !== '/') {
-            // Rediriger vers la home puis scroller après la navigation
-            router.push(`/#${sectionId}`)
-        } else {
-            // Si déjà sur la home, scroll directement
-            const section = document.querySelector(sectionId)
-            if (section) {
-                section.scrollIntoView({ behavior: 'smooth' })
-            }
-        }
-    }
-
-    useEffect(() => {
-        const handleRouteChange = () => {
-            if (router.asPath.includes('#')) {
-                const sectionId = router.asPath.split('#')[1]
-                const section = document.getElementById(sectionId)
-                if (section) {
-                    section.scrollIntoView({ behavior: 'smooth' })
-                }
-            }
-        }
-
-        router.events.on('routeChangeComplete', handleRouteChange)
-
-        return () => {
-            router.events.off('routeChangeComplete', handleRouteChange)
-        }
-    }, [router.events])
-
     useEffect(() => {
         // Détecter si la largeur de l'écran est inférieure ou égale à un seuil (e.g., 768px pour les mobiles)
         const handleResize = () => {
@@ -161,7 +126,7 @@ export default function Header() {
 
                             <Link
                                 className={`menu-link ${isScrolled ? 'scrolled' : ''}`}
-                                href='/#projets'
+                                href='/projets'
                             >
                                 Projets
                             </Link>
@@ -315,7 +280,7 @@ export default function Header() {
                                         </Link>
                                         <Link
                                             className='dropdown-link'
-                                            href='/#projets'
+                                            href='/projets'
                                             onClick={() => setMenuOpen(false)}
                                         >
                                             Projets

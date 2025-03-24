@@ -104,52 +104,63 @@
 
     .fiche {
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        grid-row-gap: 16px;
-        //gap: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
 
-        @media (min-width: media.$from-small) {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: 1fr;
-            grid-column-gap: 16px;
+        @media (min-width: media.$from-medium) {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
         }
 
         .photo {
-            display: flex;
-            width: 100%;
+            img {
+                height: 45vh;
+                width: auto;
 
-            @media (min-width: media.$from-small) {
-                display: block;
+                @media (min-width: media.$from-large) {
+                    width: 30vw;
+                    height: auto;
+                }
+
+                @media (min-width: media.$from-big) {
+                    width: 25vw;
+                }
+
+                @media (min-width: media.$from-colossal) {
+                    width: 20vw;
+                }
             }
         }
 
-        .picnow {
-            width: 100%;
-            height: auto;
+        // .picnow {
+        //     width: 100%;
+        //     height: auto;
 
-            @media (min-width: media.$from-tiny) {
-                width: 70%;
-                margin: 0 auto;
-            }
+        //     @media (min-width: media.$from-tiny) {
+        //         width: 70%;
+        //         margin: 0 auto;
+        //     }
 
-            @media (min-width: media.$from-small) {
-                width: 40vw;
-            }
+        //     @media (min-width: media.$from-small) {
+        //         width: 30vw;
+        //     }
 
-            @media (min-width: media.$from-large) {
-                width: 35vw;
-            }
+        //     @media (min-width: media.$from-large) {
+        //         width: 35vw;
+        //     }
 
-            @media (min-width: media.$from-big) {
-                width: 30vw;
-            }
+        //     @media (min-width: media.$from-big) {
+        //         width: 30vw;
+        //     }
 
-            @media (min-width: media.$from-huge) {
-                width: 25vw;
-            }
-        }
+        //     @media (min-width: media.$from-huge) {
+        //         width: 25vw;
+        //     }
+        // }
     }
 
     .experience {
