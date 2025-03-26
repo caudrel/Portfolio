@@ -176,6 +176,14 @@
             p {
                 font-weight: 300;
             }
+
+            .jobtitle {
+                color: color.$color-grey;
+                font-family: 'Gotham XLight', sans-serif;
+                font-size: 1.7rem;
+                font-weight: 900;
+                line-height: 1;
+            }
         }
 
         .list {
