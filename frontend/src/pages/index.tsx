@@ -52,7 +52,7 @@ export default function Home() {
                         priority
                     />
                     <h1>AURELIE LOZACH</h1>
-                    <h2>Chef de Projet Technique</h2>
+                    <h2>Product Owner</h2>
 
                     <ul>
                         <li className='tech-caroussel' key={currentLanguage}>
@@ -113,7 +113,7 @@ export default function Home() {
                 </svg>
 
                 <section className='about' id='about'>
-                    <p className='text-stroke bg-light'>RECONVERSION</p>
+                    <p className='text-stroke bg-light'>A PROPOS</p>
 
                     <div className='fiche'>
                         <div className='photo'>
@@ -128,29 +128,35 @@ export default function Home() {
 
                         <div className='experience'>
                             <div className='paragraph'>
+                                <p className='jobtitle'>Product Owner</p>
                                 <p>
                                     {
-                                        "Après 10 années d'expérience en tant que Chef de Produit dans le textile, mon passage à La French Tech Bordeaux entre 2020 et 2023 a suscité ma reconversion vers le développement web."
+                                        "Avec plus de 10 ans d'expérience en gestion de produits, j'ai développé une solide expertise en coordination d'équipes pluridisciplinaires."
                                     }
                                 </p>
 
                                 <p>
                                     {
-                                        'Formée aux technologies PHP et Symfony lors d’un bootcamp, j’ai ensuite approfondi mes compétences sur TypeScript, React.js, Next.js, Node.js, Laravel, Docker et GraphQL avec Apollo durant une alternance en agence.'
+                                        "Mon passage à La French Tech Bordeaux a renforcé ma gestion des plannings complexes, conciliant ressources, délais et priorités, tout en éveillant mon intérêt pour l'innovation et les projets digitaux."
                                     }
                                 </p>
 
                                 <p>
                                     {
-                                        'Forte d’une double compétence technique et fonctionnelle, consolidée par mon expérience en gestion de projet chez Levi’s, Chantelle et Renault, je suis aujourd’hui prête à accompagner le succès de vos projets web en assurant une collaboration fluide entre les équipes métier et technique.'
+                                        "Cette expérience m'a poussée à me former aux technologies PHP et Symfony lors d’un bootcamp, puis à approfondir mes compétences sur TypeScript, React.js, Next.js, Node.js, Laravel, Docker et GraphQL avec Apollo lors d’une alternance en agence."
                                     }
                                 </p>
 
                                 <p>
-                                    Aurélie Engels (Lozach), votre future{' '}
-                                    <b>Chef de Projet Technique</b>, alliant
-                                    expertise fonctionnelle et compétences en
-                                    développement.
+                                    {
+                                        'Sensible à la satisfaction client, je collabore avec les équipes métier et techniques pour prioriser les besoins, rédiger les user stories et garantir le succès des solutions digitales.'
+                                    }
+                                </p>
+
+                                <p>
+                                    {
+                                        'Forte d’une double compétence technique et fonctionnelle, consolidée par mon expérience en gestion de projet chez Levi’s, Chantelle et Renault, j’accompagne aujourd’hui vos projets en assurant une collaboration fluide entre les équipes.'
+                                    }
                                 </p>
                             </div>
                             <div className='list'>
