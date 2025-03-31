@@ -189,12 +189,16 @@ export default function Home() {
                                         <h3>Diplômes : </h3>
                                         <ul>
                                             <li>
-                                                Certification CDA obtenue en
-                                                septembre 2024
+                                                Certification Agile PSPO 1 -
+                                                scrum.org - (En cours 2025)
                                             </li>
                                             <li>
-                                                Certification DWWM obtenue en
-                                                juillet 2023
+                                                Certification CDA - Wild Code
+                                                School - septembre 2024
+                                            </li>
+                                            <li>
+                                                Certification DWWM - Wild Code
+                                                School - juillet 2023
                                             </li>
                                             <li>
                                                 <Link
