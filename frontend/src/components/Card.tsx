@@ -20,7 +20,6 @@ export default function Card({
                         width={500}
                         height={500}
                         alt={`Capture d'écran du projet ${title}`}
-                        priority
                     />
                 </figure>
                 <div className='project-card-body'>

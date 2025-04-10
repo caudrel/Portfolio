@@ -57,7 +57,7 @@
 }
 
 .about {
-    row-gap: 1rem;
+    row-gap: 2rem;
     padding-top: 2rem;
     // background-color: color.$color-beige;
     background-image: linear-gradient(
@@ -178,11 +178,12 @@
             }
 
             .jobtitle {
-                color: color.$color-grey;
+                color: color.$color-blue;
                 font-family: 'Gotham XLight', sans-serif;
                 font-size: 1.7rem;
                 font-weight: 900;
                 line-height: 1;
+                margin-bottom: 0.7rem;
             }
         }
 
