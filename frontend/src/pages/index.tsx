@@ -2,7 +2,6 @@ import Image from 'next/image'
 import Layout from '../components/Layout'
 import { useEffect, useState, useMemo } from 'react'
 import Link from 'next/link'
-import Projects from '@/components/Projects'
 //import { connectedUserEmail } from '@/middleware'
 
 export default function Home() {
@@ -128,16 +127,18 @@ export default function Home() {
 
                         <div className='experience'>
                             <div className='paragraph'>
-                                <p className='jobtitle'>Product Owner</p>
+                                <p className='jobtitle'>
+                                    Aurélie : BUSINESS ANALYST - MOA
+                                </p>
                                 <p>
                                     {
-                                        "Avec plus de 10 ans d'expérience en gestion de produits, j'ai développé une solide expertise en coordination d'équipes pluridisciplinaires."
+                                        'Avec plus de 10 ans d’expérience en gestion de produits, j’adopte une approche centrée utilisateur, axée sur la création de valeur.'
                                     }
                                 </p>
 
                                 <p>
                                     {
-                                        "Mon passage à La French Tech Bordeaux a renforcé ma gestion des plannings complexes, conciliant ressources, délais et priorités, tout en éveillant mon intérêt pour l'innovation et les projets digitaux."
+                                        "Mon passage à La French Tech Bordeaux a consolidé ma gestion des plannings complexes, conciliant ressources, délais et priorités, tout en renforçant mon intérêt pour l'innovation et les projets digitaux."
                                     }
                                 </p>
 
@@ -149,7 +150,7 @@ export default function Home() {
 
                                 <p>
                                     {
-                                        'Sensible à la satisfaction client, je collabore avec les équipes métier et techniques pour prioriser les besoins, rédiger les user stories et garantir le succès des solutions digitales.'
+                                        'Sensible à la satisfaction client et à l’écoute des utilisateurs, je collabore avec les équipes métier et techniques pour analyser les besoins, rédiger les spécifications, prioriser les fonctionnalités et garantir la cohérence fonctionnelle des solutions digitales.'
                                     }
                                 </p>
 
@@ -189,16 +190,16 @@ export default function Home() {
                                         <h3>Diplômes : </h3>
                                         <ul>
                                             <li>
-                                                Certification Agile PSPO 1 -
-                                                scrum.org - (En cours 2025)
+                                                2025 - Certification Agile PSPO
+                                                1 - scrum.org - en cours
                                             </li>
                                             <li>
-                                                Certification CDA - Wild Code
-                                                School - septembre 2024
+                                                2024 - Certification CDA - Wild
+                                                Code School - 1 an
                                             </li>
                                             <li>
-                                                Certification DWWM - Wild Code
-                                                School - juillet 2023
+                                                2023 - Certification DWWM - Wild
+                                                Code School - 5 mois
                                             </li>
                                             <li>
                                                 <Link
@@ -206,12 +207,13 @@ export default function Home() {
                                                     aria-label='lien vers mon école de commerce'
                                                     target='_blank'
                                                 >
-                                                    Ecole de Commerce - ESCE -
-                                                    promo 2000
+                                                    2000 - Ecole de Commerce -
+                                                    ESCE - Paris la Défense
                                                 </Link>
                                             </li>
                                             <li>
-                                                Bac S spé math obtenu en 1996
+                                                1996 - Bac Scientifique -
+                                                spécialité mathématiques
                                             </li>
                                         </ul>
                                     </li>
@@ -248,17 +250,23 @@ export default function Home() {
                                         <h3>Savoir-Faire</h3>
                                         <ul>
                                             <li>
-                                                Recueil et analyse des besoins
+                                                Identification des besoins user
+                                            </li>
+                                            <li>Priorisation par la valeur</li>
+                                            <li>Rédaction de User Stories</li>
+                                            <li>Suivi des KPI, reporting</li>
+                                            <li>
+                                                Validation qualité (tests
+                                                fonctionnels)
                                             </li>
                                             <li>
-                                                Organisation et priorisation des
-                                                livrables
+                                                Animation d’équipes
+                                                pluridisciplinaires
                                             </li>
-                                            <li>Coordination des équipes</li>
                                             <li>
-                                                Suivi méthodique des projets
+                                                Vision produit et parcours
+                                                utilisateur
                                             </li>
-                                            <li>Souci du détail et qualité</li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -266,8 +274,6 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-
-                {/* <Projects /> */}
             </Layout>
         </>
     )
