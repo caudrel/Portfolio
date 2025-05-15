@@ -118,7 +118,7 @@ export default function Home() {
                         <div className='photo'>
                             <Image
                                 className='picnow'
-                                src='/aurelPont.jpeg'
+                                src='/aurelie_now.webp'
                                 alt='Photo Aurelie'
                                 width={180}
                                 height={236}
@@ -166,10 +166,6 @@ export default function Home() {
                                         <h3>A propos : </h3>
 
                                         <ul>
-                                            <li aria-label='date de naissance'>
-                                                <strong>Anniversaire : </strong>
-                                                11/11/1977
-                                            </li>
                                             <li>
                                                 <strong>Adresse : </strong>
                                                 Bordeaux
@@ -195,11 +191,11 @@ export default function Home() {
                                             </li>
                                             <li>
                                                 2024 - Certification CDA - Wild
-                                                Code School - 1 an
+                                                Code School - 1 an - RNCP 6
                                             </li>
                                             <li>
                                                 2023 - Certification DWWM - Wild
-                                                Code School - 5 mois
+                                                Code School - 5 mois - RNCP 5
                                             </li>
                                             <li>
                                                 <Link
@@ -208,12 +204,9 @@ export default function Home() {
                                                     target='_blank'
                                                 >
                                                     2000 - Ecole de Commerce -
-                                                    ESCE - Paris la Défense
+                                                    ESCE - Paris la Défense -
+                                                    RNCP 7
                                                 </Link>
-                                            </li>
-                                            <li>
-                                                1996 - Bac Scientifique -
-                                                spécialité mathématiques
                                             </li>
                                         </ul>
                                     </li>
@@ -228,9 +221,9 @@ export default function Home() {
                                                 TypeScript)
                                             </li>
                                             <li>
-                                                SQL, GraphQL, Apollo, Docker,
-                                                CI-CD, Github Actions
+                                                SQL, GraphQL, Apollo, Docker
                                             </li>
+                                            <li>CI-CD, Github Actions</li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -238,10 +231,10 @@ export default function Home() {
                                     <li>
                                         <h3>Savoir-Être</h3>
                                         <ul>
-                                            <li>Bonne humeur</li>
+                                            <li>Leadership</li>
                                             <li>Communication</li>
                                             <li>Organisation</li>
-                                            <li>Rigueur</li>
+                                            <li>Engagement</li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -250,22 +243,31 @@ export default function Home() {
                                         <h3>Savoir-Faire</h3>
                                         <ul>
                                             <li>
-                                                Identification des besoins user
-                                            </li>
-                                            <li>Priorisation par la valeur</li>
-                                            <li>Rédaction de User Stories</li>
-                                            <li>Suivi des KPI, reporting</li>
-                                            <li>
-                                                Validation qualité (tests
-                                                fonctionnels)
+                                                Analyser les besoins
+                                                utilisateurs
                                             </li>
                                             <li>
-                                                Animation d’équipes
-                                                pluridisciplinaires
+                                                Prioriser par la valeur business
                                             </li>
                                             <li>
-                                                Vision produit et parcours
-                                                utilisateur
+                                                Rédiger des User Stories et
+                                                spécifications
+                                            </li>
+                                            <li>
+                                                Suivre les KPI et produire du
+                                                reporting
+                                            </li>
+                                            <li>
+                                                Valider la qualité via tests
+                                                fonctionnels
+                                            </li>
+                                            <li>
+                                                Animer la collaboration
+                                                métier-technique
+                                            </li>
+                                            <li>
+                                                Concevoir une vision produit
+                                                cohérente et centrée utilisateur
                                             </li>
                                         </ul>
                                     </li>

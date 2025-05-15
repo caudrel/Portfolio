@@ -70,7 +70,7 @@ export default function Projets() {
                             <Card key={project.id} {...project} />
                         ))
                     ) : (
-                        <p>Aucun projet disponible.</p>
+                        <p>Chargement...</p>
                     )}
                 </div>
             </section>
