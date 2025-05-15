@@ -183,6 +183,22 @@ export default function Home() {
                                 </ul>
                                 <ul className='degres-info'>
                                     <li>
+                                        <h3>Technos : </h3>
+                                        <ul>
+                                            <li>PHP (Laravel, Symfony)</li>
+                                            <li>
+                                                JS (React, Next, Node,
+                                                TypeScript)
+                                            </li>
+                                            <li>
+                                                SQL, GraphQL, Apollo, Docker
+                                            </li>
+                                            <li>CI-CD, Github Actions</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul className='degres-info'>
+                                    <li>
                                         <h3>Diplômes : </h3>
                                         <ul>
                                             <li>
@@ -211,22 +227,7 @@ export default function Home() {
                                         </ul>
                                     </li>
                                 </ul>
-                                <ul className='degres-info'>
-                                    <li>
-                                        <h3>Technos : </h3>
-                                        <ul>
-                                            <li>PHP (Laravel, Symfony)</li>
-                                            <li>
-                                                JS (React, Next, Node,
-                                                TypeScript)
-                                            </li>
-                                            <li>
-                                                SQL, GraphQL, Apollo, Docker
-                                            </li>
-                                            <li>CI-CD, Github Actions</li>
-                                        </ul>
-                                    </li>
-                                </ul>
+
                                 <ul className='degres-info'>
                                     <li>
                                         <h3>Savoir-Être</h3>
