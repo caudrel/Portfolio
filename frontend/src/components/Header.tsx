@@ -128,7 +128,7 @@ export default function Header() {
                                 className={`menu-link ${isScrolled ? 'scrolled' : ''}`}
                                 href='/projets'
                             >
-                                Projets
+                                Projets Dev
                             </Link>
 
                             {isConnected && (
@@ -184,7 +184,7 @@ export default function Header() {
                                                     {"Membres d'équipe"}
                                                 </Link>
                                                 <Link href='/admin/projects'>
-                                                    Projets
+                                                    Projets Dev
                                                 </Link>
                                             </div>
                                         </div>
@@ -283,7 +283,7 @@ export default function Header() {
                                             href='/projets'
                                             onClick={() => setMenuOpen(false)}
                                         >
-                                            Projets
+                                            Projets Dev
                                         </Link>
                                         {isConnected && (
                                             <Link
@@ -356,7 +356,7 @@ export default function Header() {
                                                                     )
                                                                 }
                                                             >
-                                                                Projets
+                                                                Projets Dev
                                                             </Link>
                                                         </div>
                                                     </div>

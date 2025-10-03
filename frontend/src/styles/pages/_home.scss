@@ -163,6 +163,18 @@
         // }
     }
 
+    .competences {
+        padding-top: 4rem;
+        h2 {
+            color: color.$color-blue;
+            font-family: 'Gotham XLight', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.7rem;
+        }
+    }
+
     .experience {
         display: flex;
         flex-direction: column;
