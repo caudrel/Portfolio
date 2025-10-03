@@ -17,7 +17,7 @@ export default function Home() {
             'Symfony',
             'PHP',
             'SQL',
-            'GraphQl',
+            'GraphQL',
             'SASS',
             'TypeScript',
             'CI CD',
@@ -51,7 +51,7 @@ export default function Home() {
                         priority
                     />
                     <h1>AURELIE LOZACH</h1>
-                    <h2>Product Owner</h2>
+                    <h2>Business Analyst</h2>
 
                     <ul>
                         <li className='tech-caroussel' key={currentLanguage}>
@@ -128,7 +128,7 @@ export default function Home() {
                         <div className='experience'>
                             <div className='paragraph'>
                                 <p className='jobtitle'>
-                                    Aurélie : BUSINESS ANALYST - MOA
+                                    BUSINESS ANALYST - AMOA
                                 </p>
                                 <p>
                                     {
@@ -276,6 +276,9 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
+                    {/* <div className='competences'>
+                        <h2 className=''>Compétences certifiés</h2>
+                    </div> */}
                 </section>
             </Layout>
         </>
