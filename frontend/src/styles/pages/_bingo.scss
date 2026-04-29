@@ -1,0 +1,166 @@
+@use '../abstracts/color' as color;
+@use '../abstracts/mixin' as mixin;
+
+/* ── Section pleine page ── */
+.bingo-section {
+    height: 100dvh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    background-image: linear-gradient(
+        180deg,
+        color.$color-indigo,
+        color.$color-turquoise
+    );
+    @include mixin.frame;
+    @include mixin.section; // padding-top: 6rem
+    padding-bottom: 1rem;   // override le 2rem du mixin
+
+    h1 {
+        color: color.$color-beige;
+        margin-bottom: 2rem;
+        flex-shrink: 0;
+        font-family: 'Gotham light', sans-serif;
+
+    }
+}
+
+/* ── Conteneur grille + bouton côte à côte ── */
+.bingo-content {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 4rem;
+    flex: 1;
+    min-height: 0;
+
+    --cell-size: min(
+        calc((100vw - 4rem) / 10),
+        calc((100dvh - 15rem) / 11)
+    );
+}
+
+/* ── Bouton à droite, centré verticalement ── */
+.bingo-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* ── Cadre : prend tout l'espace restant ── */
+.bingo-grid-wrapper {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid color.$color-turquoise;
+    border-radius: 16px;
+    padding: 1rem;
+    background: rgba(71, 30, 179, 0.15);
+    display: flex;
+    align-items: stretch;      // ← était: center
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* ── 9 colonnes côte à côte ── */
+.bingo-grid {
+    display: flex;
+    flex-direction: row;
+    gap: min(1.2vw, 10vh);
+    align-items: flex-start;
+
+    height: 100%;
+}
+
+/* ── Une colonne verticale ── */
+.bingo-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.bingo-column:first-child {
+    padding-top: calc(
+        min(calc((100vw - 4rem) / 10), calc((100dvh - 15rem) / 11))
+        + min(1.2vw, 0.8vh)
+    );
+}
+
+.bingo-column:last-child .bingo-cell:not(:first-child) {
+    visibility: hidden;
+    pointer-events: none; // empêche le clic sur les cellules cachées
+}
+
+
+/* ── Cercle : taille fluide via min() ──
+   Contrainte largeur : 9 colonnes dans (100vw - padding frame)
+   Contrainte hauteur : 11 rangées dans (100dvh - ~15rem overhead)
+   Le navigateur choisit automatiquement la plus petite  ── */
+.bingo-cell {
+    width: min(calc((100vw - 4rem) / 10),  calc((100dvh - 15rem) / 11));
+    height: min(calc((100vw - 4rem) / 10), calc((100dvh - 15rem) / 11));
+    font-size: min(
+        calc((100vw - 4rem) / 24),     // ← diviseur réduit = plus grand
+        calc((100dvh - 15rem) / 26)    // ← diviseur réduit = plus grand
+    );
+    font-weight: 700;
+    
+    border-radius: 50%;
+    border: none;
+    flex-shrink: 0;
+    background-image: radial-gradient(
+        100% 100% at 100% 0,
+        color.$color-beige 0,
+        color.$color-sunshine 100%
+    );
+    color: color.$color-indigo;
+
+ 
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-image: radial-gradient(
+            100% 100% at 100% 0,
+            color.$color-beige 0,
+            color.$color-turquoise 100%
+        );
+        transform: scale(1.08);
+    }
+
+    &.called {
+        background-image: radial-gradient(
+            100% 100% at 100% 0,
+            color.$color-sunshine 0,
+            color.$color-indigo 100%
+        );
+        border: solid;
+        border-width: 1px;
+        border-color: color.$color-white;
+        color: color.$color-beige;
+        font-weight: 700;
+        transform: scale(1.03);
+
+        &:hover {
+            background-image: radial-gradient(
+                100% 100% at 100% 0,
+                color.$color-warm 0,
+                color.$color-indigo 100%
+            );
+            color: color.$color-beige;
+        }
+    }
+}
