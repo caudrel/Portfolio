@@ -29,6 +29,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Call VPS webhook to update staging
-        uses: wei/curl@master
-        with:
-          args: -H "Content-Type:application/json" https://ops.caudrel.com/hooks/update-staging
+        run: curl -s https://ops.caudrel.com/hooks/update-staging

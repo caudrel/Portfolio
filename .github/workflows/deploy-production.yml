@@ -29,6 +29,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Call VPS webhook to update production
-        uses: wei/curl@master
-        with:
-          args: -H "Content-Type:application/json" https://ops.caudrel.com/hooks/update-production
+        run: curl -s https://ops.caudrel.com/hooks/update-production
