@@ -1,15 +1,16 @@
 #!/bin/sh
 # Mettre à jour le dépôt git et nettoyer les fichiers locaux
 echo "Mise à jour du dépôt Git..."
-git fetch origin && git reset --hard origin/dev && git clean -f -d && \
+git fetch origin && git reset --hard origin/dev && git clean -f -d -e .env.staging && \
 
-# Arrêter et supprimer les conteneurs en cours d'exécution
-docker compose -f docker-compose.staging.yml down && \
+# Forcer l'arrêt des containers
+docker compose -f docker-compose.staging.yml --env-file .env.staging kill 2>/dev/null || true && \
+docker compose -f docker-compose.staging.yml --env-file .env.staging down --remove-orphans && \
 
-# Télécharger les dernières images Docker
-docker compose -f docker-compose.staging.yml pull && \
+# Télécharger les dernières images
+docker compose -f docker-compose.staging.yml --env-file .env.staging pull && \
 
-# Lancer les services Docker en mode détaché avec les variables d'environnement
-docker compose -f docker-compose.staging.yml --env-file .env.staging up -d;
+# Relancer les services
+docker compose -f docker-compose.staging.yml --env-file .env.staging up -d
 
 echo "Déploiement terminé!"
