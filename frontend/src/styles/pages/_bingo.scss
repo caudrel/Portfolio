@@ -1,5 +1,6 @@
 @use '../abstracts/color' as color;
 @use '../abstracts/mixin' as mixin;
+@use '../abstracts/media-query' as media;
 
 /* ── Section pleine page ── */
 .bingo-section {
@@ -8,7 +9,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: .5rem;
+    gap: 0.5rem;
     background-image: linear-gradient(
         180deg,
         color.$color-indigo,
@@ -16,14 +17,13 @@
     );
     @include mixin.frame;
     @include mixin.section; // padding-top: 6rem
-    padding-bottom: 1rem;   // override le 2rem du mixin
+    padding-bottom: 1rem; // override le 2rem du mixin
 
     h1 {
         color: color.$color-beige;
         margin-bottom: 2rem;
         flex-shrink: 0;
         font-family: 'Gotham light', sans-serif;
-
     }
 }
 
@@ -36,10 +36,7 @@
     flex: 1;
     min-height: 0;
 
-    --cell-size: min(
-        calc((100vw - 4rem) / 10),
-        calc((100dvh - 15rem) / 11)
-    );
+    --cell-size: min(calc((100vw - 4rem) / 10), calc((100dvh - 15rem) / 11));
 }
 
 /* ── Bouton à droite, centré verticalement ── */
@@ -62,7 +59,7 @@
     padding: 1rem;
     background: rgba(71, 30, 179, 0.15);
     display: flex;
-    align-items: stretch;      // ← était: center
+    align-items: stretch; // ← était: center
     justify-content: center;
     overflow: hidden;
 }
@@ -86,32 +83,36 @@
     height: 100%;
 }
 
-.bingo-column:first-child {
-    padding-top: calc(
-        min(calc((100vw - 4rem) / 10), calc((100dvh - 15rem) / 11))
-        + min(1.2vw, 0.8vh)
-    );
-}
+// .bingo-column:last-child .bingo-cell:not(:first-child) {
+//     visibility: hidden;
+//     pointer-events: none; // empêche le clic sur les cellules cachées
+// }
 
 .bingo-column:last-child .bingo-cell:not(:first-child) {
     visibility: hidden;
-    pointer-events: none; // empêche le clic sur les cellules cachées
+    pointer-events: auto;
 }
 
+/* ── 0 invisible dans la première colonne ── */
+.bingo-column:first-child .bingo-cell:first-child {
+    visibility: hidden;
+    pointer-events: none;
+}
 
 /* ── Cercle : taille fluide via min() ──
    Contrainte largeur : 9 colonnes dans (100vw - padding frame)
    Contrainte hauteur : 11 rangées dans (100dvh - ~15rem overhead)
    Le navigateur choisit automatiquement la plus petite  ── */
 .bingo-cell {
-    width: min(calc((100vw - 4rem) / 10),  calc((100dvh - 15rem) / 11));
+    width: min(calc((100vw - 4rem) / 10), calc((100dvh - 15rem) / 11));
     height: min(calc((100vw - 4rem) / 10), calc((100dvh - 15rem) / 11));
     font-size: min(
-        calc((100vw - 4rem) / 24),     // ← diviseur réduit = plus grand
-        calc((100dvh - 15rem) / 26)    // ← diviseur réduit = plus grand
+        calc((100vw - 4rem) / 24),
+        // ← diviseur réduit = plus grand
+        calc((100dvh - 15rem) / 26) // ← diviseur réduit = plus grand
     );
     font-weight: 700;
-    
+
     border-radius: 50%;
     border: none;
     flex-shrink: 0;
@@ -122,7 +123,6 @@
     );
     color: color.$color-indigo;
 
- 
     cursor: pointer;
     transition:
         background 0.2s ease,
@@ -162,5 +162,44 @@
             );
             color: color.$color-beige;
         }
+    }
+}
+
+@media (max-width: media.$to-small) {
+    .bingo-section {
+        height: auto; // ← plus de hauteur fixe
+        min-height: 100dvh; // ← peut scroller si besoin
+    }
+
+    .bingo-content {
+        flex-direction: column; // ← grille au-dessus, bouton en dessous
+        align-items: center;
+    }
+
+    .bingo-grid {
+        height: auto;
+    }
+
+    .bingo-column {
+        height: auto;
+        justify-content: flex-start;
+        gap: min(1.5vw, 0.8vh);
+    }
+
+    .bingo-cell {
+        // Mobile : 9 colonnes au lieu de 10, 11 lignes au lieu de 10
+        width: min(calc((100vw - 4rem) / 9), calc((100dvh - 15rem) / 12));
+        height: min(calc((100vw - 4rem) / 9), calc((100dvh - 15rem) / 12));
+    }
+
+    .bingo-sidebar {
+        padding: 1rem 0;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bingo-column:last-child .bingo-cell:not(:first-child) {
+        visibility: visible;
+        pointer-events: auto;
     }
 }
