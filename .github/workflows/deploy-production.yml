@@ -28,5 +28,11 @@ jobs:
       - build-and-push-server
     runs-on: ubuntu-latest
     steps:
-      - name: Call VPS webhook to update production
-        run: curl -s https://ops.caudrel.com/hooks/update-production
+      - name: Deploy production via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: root
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 2216
+          script: bash /root/apps/portfolio-app/prod/deploy-production.sh
