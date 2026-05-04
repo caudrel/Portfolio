@@ -26,13 +26,7 @@ jobs:
     needs:
       - build-and-push-client
       - build-and-push-server
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - name: Deploy staging via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: root
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: 2216
-          script: bash /root/apps/portfolio-app/staging/deploy-staging.sh
+      - name: Deploy staging
+        run: bash /root/apps/portfolio-app/staging/deploy-staging.sh
