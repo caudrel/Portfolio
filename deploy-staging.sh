@@ -5,17 +5,16 @@ cd /root/apps/portfolio-app/staging/
 echo "Mise à jour du dépôt Git..."
 git fetch origin && git reset --hard origin/dev && git clean -f -d -e .env.staging
 
-# Tuer uniquement les containers applicatifs (pas DB ni Redis)
-for container in staging-gateway-1 staging-frontend-1 staging-backend-1; do
-    kill -9 $(docker inspect --format '{{.State.Pid}}' $container 2>/dev/null) 2>/dev/null || true
+# Tuer et supprimer tous les containers staging (y compris les anciens)
+for id in $(docker ps -a -q --filter "name=staging"); do
+    kill -9 $(docker inspect --format '{{.State.Pid}}' $id 2>/dev/null) 2>/dev/null || true
 done
-
-docker rm -f staging-gateway-1 staging-frontend-1 staging-backend-1 2>/dev/null || true
+docker ps -a -q --filter "name=staging" | xargs -r docker rm -f 2>/dev/null || true
 
 # Télécharger les nouvelles images
 docker compose -f docker-compose.staging.yml --env-file .env.staging pull
 
-# Relancer tous les services (DB et Redis ne seront pas recréés si inchangés)
+# Relancer tous les services
 docker compose -f docker-compose.staging.yml --env-file .env.staging up -d
 
 echo "Déploiement terminé!"
