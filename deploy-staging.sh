@@ -1,5 +1,7 @@
 #!/bin/sh
 # Mettre à jour le dépôt git et nettoyer les fichiers locaux
+cd /root/apps/portfolio-app/staging/
+
 echo "Mise à jour du dépôt Git..."
 git fetch origin && git reset --hard origin/dev && git clean -f -d -e .env.staging && \
 

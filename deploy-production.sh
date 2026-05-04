@@ -1,5 +1,7 @@
 #!/bin/sh
 # Mettre à jour le dépôt git et nettoyer les fichiers locaux
+cd /root/apps/portfolio-app/prod/
+
 echo "Mise à jour du dépôt Git..."
 git fetch origin && git reset --hard origin/main && git clean -f -d && \
 
