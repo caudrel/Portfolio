@@ -131,6 +131,13 @@ export default function Header() {
                                 Projets Dev
                             </Link>
 
+                            <Link
+                                className={`menu-link ${isScrolled ? 'scrolled' : ''}`}
+                                href='/bingo'
+                            >
+                                Bingo
+                            </Link>
+
                             {isConnected && (
                                 <Link
                                     className={`menu-link ${isScrolled ? 'scrolled' : ''}`}
@@ -284,6 +291,13 @@ export default function Header() {
                                             onClick={() => setMenuOpen(false)}
                                         >
                                             Projets Dev
+                                        </Link>
+                                        <Link
+                                            className='dropdown-link'
+                                            href='/bingo'
+                                            onClick={() => setMenuOpen(false)}
+                                        >
+                                            Bingo
                                         </Link>
                                         {isConnected && (
                                             <Link
