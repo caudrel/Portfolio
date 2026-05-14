@@ -16,6 +16,6 @@ done
 docker compose -f docker-compose.staging.yml --env-file .env.staging pull
 
 # Relancer les services (attend 180s que tout soit healthy)
-docker compose -f docker-compose.staging.yml --env-file .env.staging up -d --wait --wait-timeout 180
+docker compose -f docker-compose.staging.yml --env-file .env.staging up -d --no-recreate --wait --wait-timeout 180
 
 echo "Déploiement terminé!"

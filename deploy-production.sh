@@ -12,6 +12,6 @@ for name in prod-gateway-1 prod-frontend-1 prod-backend-1; do
 done
 
 docker compose -f docker-compose.production.yml --env-file .env.production pull
-docker compose -f docker-compose.production.yml --env-file .env.production up -d --wait --wait-timeout 180
+docker compose -f docker-compose.production.yml --env-file .env.production up -d --no-recreate --wait --wait-timeout 180
 
 echo "Déploiement terminé!"
