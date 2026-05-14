@@ -50,7 +50,7 @@ export default function Home() {
                         height={180}
                         priority
                     />
-                    <h1>AURELIE LOZACH</h1>
+                    <h1>AURELIE LOZACH-ENGELS</h1>
                     <h2>Business Analyst</h2>
 
                     <ul>
